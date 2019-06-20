@@ -1,0 +1,41 @@
+{
+  "scanningApp": {
+    "basicLinkuser": {
+      "home": {
+        "title": "Linkusers",
+        "createLabel": "创建新 Linkuser",
+        "createOrEditLabel": "创建或编辑 Linkuser"
+      },
+      "delete": {
+        "question": "你确定要删除 Linkuser {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Linkuser"
+      },
+      "userid": "Userid",
+      "phone": "Phone",
+      "name": "Name",
+      "idcard": "Idcard",
+      "sex": "Sex",
+      "address": "Address",
+      "province": "Province",
+      "city": "City",
+      "county": "County",
+      "loginnum": "Loginnum",
+      "creator": "Creator",
+      "createdate": "Createdate",
+      "modifier": "Modifier",
+      "modifierdate": "Modifierdate",
+      "modifiernum": "Modifiernum",
+      "logicdelete": "Logicdelete",
+      "other": "Other"
+    }
+  },
+  "basicApp": {
+    "basicLinkuser": {
+      "created": "Linkuser {{ param }} 创建成功",
+      "updated": "Linkuser {{ param }} 更新成功",
+      "deleted": "Linkuser {{ param }} 删除成功"
+    }
+  }
+}

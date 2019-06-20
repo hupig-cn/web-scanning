@@ -1,0 +1,43 @@
+{
+  "scanningApp": {
+    "merchantMerchant": {
+      "home": {
+        "title": "Merchants",
+        "createLabel": "创建新 Merchant",
+        "createOrEditLabel": "创建或编辑 Merchant"
+      },
+      "delete": {
+        "question": "你确定要删除 Merchant {{ id }} 吗？"
+      },
+      "detail": {
+        "title": "Merchant"
+      },
+      "userid": "Userid",
+      "merchantphoto": "Merchantphoto",
+      "name": "Name",
+      "businessid": "Businessid",
+      "state": "State",
+      "address": "Address",
+      "province": "Province",
+      "city": "City",
+      "county": "County",
+      "concession": "Concession",
+      "rebate": "Rebate",
+      "weight": "Weight",
+      "creator": "Creator",
+      "createdate": "Createdate",
+      "modifier": "Modifier",
+      "modifierdate": "Modifierdate",
+      "modifiernum": "Modifiernum",
+      "logicdelete": "Logicdelete",
+      "other": "Other"
+    }
+  },
+  "merchantApp": {
+    "merchantMerchant": {
+      "created": "Merchant {{ param }} 创建成功",
+      "updated": "Merchant {{ param }} 更新成功",
+      "deleted": "Merchant {{ param }} 删除成功"
+    }
+  }
+}
