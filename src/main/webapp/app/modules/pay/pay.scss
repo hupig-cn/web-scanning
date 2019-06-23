@@ -1,0 +1,93 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+.hipster {
+  display: inline-block;
+  width: 100%;
+  height: 497px;
+  background-size: contain;
+}
+
+.jh-body {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.jh-body p {
+  text-align: left;
+  font-size: 0.8em;
+  color: #666666;
+}
+
+.jh-body h6 {
+  text-align: left;
+}
+
+.jh-body img {
+  float: right;
+  margin-top: 0px;
+  width: 50px;
+  height: 50px;
+}
+
+.jh-amount {
+  font-size: 2.5em;
+  padding-bottom: 10px;
+  border: 0;
+  background-color: transparent;
+  float: left;
+  width: 100%;
+  text-align: right;
+  outline: none;
+  margin-top: -1.4em;
+  padding-right: 0px;
+}
+
+.jh-integral {
+  float: right;
+  width: 70%;
+  border-bottom: thin solid #aaaaaa;
+  text-align: right;
+  height: 1.5em;
+}
+
+.jh-body button {
+  background-color: #fe4365; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin-top: 5px;
+  width: 100%;
+  height: 45px;
+  border-radius: 4px;
+}
+
+.jh-amount-h6 {
+  margin: 10px 0px 0px 0px;
+}
+
+.jh-body h1 {
+  text-align: left;
+  font-size: 2.5em;
+  margin: 0px;
+}
+
+.jh-android-hr {
+  background-color: #aaaaaa;
+  width: 100%;
+  margin: -1px 0px 1px 0px;
+}
+
+.jh-iphone-hr {
+  background-color: #aaaaaa;
+  width: 100%;
+  float: left;
+  border: none;
+  border-top: thin solid #aaaaaa;
+  margin: -10px 0px 10px 0px;
+}

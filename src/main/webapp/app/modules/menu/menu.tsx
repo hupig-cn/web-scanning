@@ -1,27 +1,26 @@
-import './scanning.scss';
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
-import Pay from '../pay/pay';
-import Menu from '../menu/menu';
+import Titles from './titles';
+import Lowercolumn from './lowercolumn';
+import Adv from './adv';
+import Content from './content';
 
-export interface IScanningProp extends StateProps, DispatchProps {}
+export interface IMenuProp extends StateProps, DispatchProps {}
 
-export const ScanningType = () => {
-  return window.location.hash.match(/loc/i) ? <Menu /> : <Pay />;
-};
-
-export class Scanning extends React.Component<IScanningProp> {
+export class Menu extends React.Component<IMenuProp> {
   componentDidMount() {
     this.props.getSession();
   }
 
   render() {
     return (
-      <div>
-        <ScanningType />
+      <div style={{ backgroundColor: '#f2f2f2' }}>
+        <Titles />
+        <Adv />
+        <Content />
+        <Lowercolumn />
       </div>
     );
   }
@@ -40,4 +39,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Scanning);
+)(Menu);

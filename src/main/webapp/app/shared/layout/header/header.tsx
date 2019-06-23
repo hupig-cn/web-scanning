@@ -3,19 +3,7 @@ import './header.scss';
 import React from 'react';
 import { Navbar } from 'reactstrap';
 
-import LoadingBar from 'react-redux-loading-bar';
-
-export interface IHeaderProps {
-  ribbonEnv: string;
-  isInProduction: boolean;
-  isSwaggerEnabled: boolean;
-  currentLocale: string;
-  onLocaleChange: Function;
-}
-
-export interface IHeaderState {
-  menuOpen: boolean;
-}
+export interface IHeaderProps {}
 
 const Alipayorwechat = () => {
   let userAgent = navigator.userAgent.toLowerCase();
@@ -28,31 +16,30 @@ const Alipayorwechat = () => {
   } else {
     userAgent = '其他';
   }
-  return (
-    userAgent
-  );
+  return userAgent;
 };
 
-export default class Header extends React.Component<IHeaderProps, IHeaderState> {
-  state: IHeaderState = {
-    menuOpen: false
-  };
-
+export default class Header extends React.Component<IHeaderProps> {
   render() {
+    function goBack() {
+      history.go(-1);
+    }
+
     return (
       <div id="app-header">
-        <LoadingBar className="loading-bar" />
         <Navbar dark expand="sm" fixed="top" className="jh-navbar">
-          <h4 onClick={() => {
-            history.go(-1);
-          }}><img
-            src = "./content/images/back.png"
-            style={{
-            width: '24px',
-            height: '24px',
-          }} /></h4>
+          <h4 onClick={goBack}>
+            <img
+              src="./content/images/back.png"
+              style={{
+                width: '24px',
+                height: '24px'
+              }}
+            />
+          </h4>
           <h5 className="jh-navbar-h4">{Alipayorwechat()}</h5>
         </Navbar>
+        <div style={{ height: '50px' }} />
       </div>
     );
   }
