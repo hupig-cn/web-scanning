@@ -51,7 +51,8 @@ export default function LongMenu() {
           borderRadius: '50px',
           fontSize: '0.1em',
           position: 'absolute',
-          left: '35px'
+          left: '35px',
+          fontFamily: 'SimHei'
         }}
       >
         2

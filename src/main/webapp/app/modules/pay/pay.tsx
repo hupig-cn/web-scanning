@@ -10,7 +10,7 @@ export interface IPayProp extends StateProps, DispatchProps {}
 
 export class Pay extends React.Component<IPayProp> {
   componentDidMount() {
-    this.props.getMerchantsEntity(window.location.hash.substring(1, window.location.hash.length));
+    this.props.getMerchantsEntity(window.location.hash.substring(window.location.hash.indexOf("=")+1));
   }
 
   render() {
