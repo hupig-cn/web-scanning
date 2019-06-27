@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon. 1`] = `
+<div
+  id="app-header"
+>
+  <Navbar
+    className="jh-navbar"
+    dark={true}
+    expand="sm"
+    fixed="top"
+    tag="nav"
+  >
+    <h4
+      onClick={[Function]}
+    >
+      <img
+        src="./content/images/back.png"
+        style={
+          Object {
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      />
+    </h4>
+    <h5
+      className="jh-navbar-h4"
+    >
+      其他
+    </h5>
+  </Navbar>
+  <div
+    style={
+      Object {
+        "height": "50px",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`Header Renders a Header component in prod profile with LoadingBar, Navbar, Nav. 1`] = `
+<div
+  id="app-header"
+>
+  <Navbar
+    className="jh-navbar"
+    dark={true}
+    expand="sm"
+    fixed="top"
+    tag="nav"
+  >
+    <h4
+      onClick={[Function]}
+    >
+      <img
+        src="./content/images/back.png"
+        style={
+          Object {
+            "height": "24px",
+            "width": "24px",
+          }
+        }
+      />
+    </h4>
+    <h5
+      className="jh-navbar-h4"
+    >
+      其他
+    </h5>
+  </Navbar>
+  <div
+    style={
+      Object {
+        "height": "50px",
+      }
+    }
+  />
+</div>
+`;
