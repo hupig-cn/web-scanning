@@ -7,7 +7,7 @@ import LoadingBar from 'react-redux-loading-bar';
 import { Navbar, Nav } from 'reactstrap';
 
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from 'app/shared/layout/menus';
-import Header from 'app/shared/layout/header/header';
+import Header from 'app/modules/pay/header';
 
 describe('Header', () => {
   let mountedWrapper;

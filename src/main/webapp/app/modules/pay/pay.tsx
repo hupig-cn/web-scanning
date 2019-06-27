@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { getMerchantsEntity } from 'app/entities/merchant/merchant/merchant.reducer';
 import { IRootState } from 'app/shared/reducers';
 
-import Header from 'app/shared/layout/header/header';
+import Header from 'app/modules/pay/header';
 
 export interface IPayProp extends StateProps, DispatchProps {}
 
 export class Pay extends React.Component<IPayProp> {
   componentDidMount() {
-    this.props.getMerchantsEntity(window.location.hash.substring(window.location.hash.indexOf("=")+1));
+    this.props.getMerchantsEntity(window.location.hash.substring(window.location.hash.indexOf('=') + 1));
   }
 
   render() {

@@ -1,25 +1,18 @@
 import React from 'react';
 import MenuItem from 'app/shared/layout/menus/menu-item';
-import { DropdownItem } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink as Link } from 'react-router-dom';
 import { Translate, translate } from 'react-jhipster';
 import { NavDropdown } from './menu-components';
 
 const accountMenuItemsAuthenticated = (
-  <>
-    <MenuItem icon="sign-out-alt" to="/logout">
-      <Translate contentKey="global.menu.account.logout">Sign out</Translate>
-    </MenuItem>
-  </>
+  <MenuItem icon="sign-out-alt" to="/logout">
+    <Translate contentKey="global.menu.account.logout">Sign out</Translate>
+  </MenuItem>
 );
 
 const accountMenuItems = (
-  <>
-    <MenuItem id="login-item" icon="sign-in-alt" to="/login">
-      <Translate contentKey="global.menu.account.login">Sign in</Translate>
-    </MenuItem>
-  </>
+  <MenuItem id="login-item" icon="sign-in-alt" to="/login">
+    <Translate contentKey="global.menu.account.login">Sign in</Translate>
+  </MenuItem>
 );
 
 export const AccountMenu = ({ isAuthenticated = false }) => (
