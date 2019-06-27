@@ -38,7 +38,9 @@ export class Pay extends React.Component<IPayProp> {
 
     return (
       <div className="jh-body">
-        <Header />
+        <Header
+          isAuthenticated
+        />
         <img src={merchantEntity.merchantphoto} />
         <h6>付款给商家({merchantEntity.concession}%)</h6>
         <p>昵称:{merchantEntity.name}</p>

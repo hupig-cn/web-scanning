@@ -1,8 +1,6 @@
 import React from 'react';
 
-export const titleName = () => {
-  return '￥12.00';
-};
+export const titleName = () => '￥12.00';
 
 export default function LongMenu() {
   function goBack() {
@@ -65,7 +63,7 @@ export default function LongMenu() {
           float: 'left'
         }}
       >
-        {titleName()}
+        {titleName}
       </h5>
       <div style={{ height: '48px' }} />
     </div>

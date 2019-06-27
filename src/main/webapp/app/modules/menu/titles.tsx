@@ -1,8 +1,6 @@
 import React from 'react';
 
-export const titleName = () => {
-  return '某某商家';
-};
+export const titleName = () => '某某商家';
 
 export default function LongMenu() {
   function goBack() {
@@ -39,7 +37,7 @@ export default function LongMenu() {
             fontSize: '1.05rem'
           }}
         >
-          {titleName()}
+          {titleName}
         </h5>
       </div>
       <div style={{ height: '40px' }} />

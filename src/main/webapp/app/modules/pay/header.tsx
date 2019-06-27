@@ -3,7 +3,9 @@ import './header.scss';
 import React from 'react';
 import { Navbar } from 'reactstrap';
 
-export interface IHeaderProps {}
+export interface IHeaderProps {
+  isAuthenticated: boolean;
+}
 
 const Alipayorwechat = () => {
   let userAgent = navigator.userAgent.toLowerCase();

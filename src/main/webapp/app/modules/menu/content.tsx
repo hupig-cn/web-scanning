@@ -52,6 +52,9 @@ export const food = [
 ];
 
 export default function LongMenu() {
+  function spanalert() {
+    alert('点了：');
+  }
   return (
     <div>
       <div style={{ width: '20%', overflow: 'hidden', float: 'left' }}>
@@ -69,9 +72,7 @@ export default function LongMenu() {
               borderBottom: '1px solid #ececec',
               color: '#00000095'
             }}
-            onClick={() => {
-              alert('点了：' + name.name);
-            }}
+            onClick={spanalert}
           >
             {name.name}
           </span>

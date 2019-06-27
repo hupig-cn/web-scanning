@@ -9,9 +9,7 @@ import Menu from '../menu/menu';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 
-export const ScanningType = () => {
-  return window.location.hash.match(/loc/i) ? <Menu /> : <Pay />;
-};
+export const ScanningType = () => window.location.hash.match(/loc/i) ? <Menu /> : <Pay />;
 
 export class Scanning extends React.Component<IScanningProp> {
   componentDidMount() {
