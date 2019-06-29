@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.weisen.www.code.yjf.scanning",
       "nativeLanguage": "zh-cn",
-      "microservicePath": "../sys-merchant"
+      "microservicePath": "../sys-basic"
     },
     "jhipsterVersion": "6.0.1",
     "applicationType": "gateway",
@@ -36,8 +36,6 @@
     "otherModules": [],
     "enableTranslation": true,
     "nativeLanguage": "zh-cn",
-    "languages": [
-      "zh-cn"
-    ]
+    "languages": ["zh-cn"]
   }
 }
