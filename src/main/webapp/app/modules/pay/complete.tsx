@@ -94,7 +94,7 @@ export default function complete() {
             height: '45px',
             borderRadius: '4px'
           }}
-          onClick={() => goBack()}
+          onClick={goBack}
         >
           查看订单详情
         </button>
