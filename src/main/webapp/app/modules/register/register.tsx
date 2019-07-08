@@ -1,32 +1,35 @@
 import React from 'react';
-import { connect, Provider } from 'react-redux';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Label, Row, Col } from 'reactstrap';
-import { AvForm, AvField, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { connect } from 'react-redux';
+import { Button, Col, Label, ModalBody, ModalFooter, Row } from 'reactstrap';
+import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 
 import { IRootState } from 'app/shared/reducers';
 
-import { sendSms, register } from 'app/shared/reducers/authentication';
-import { login } from 'app/shared/reducers/authentication';
+import { login, register, sendSms } from 'app/shared/reducers/authentication';
+import { createUserByScanning } from 'app/requests/basic/basic.reducer';
 import { toast } from 'react-toastify';
 import ReactDOM from "react-dom";
 import Registersuccess from './registersuccess';
 
-export interface IRegisterProps extends StateProps, DispatchProps {}
+export interface IRegisterProps extends StateProps, DispatchProps {
+}
 
 const names = (key) => {
   let temp = window.location.hash;
-  if ('id' === key){
-    return temp.substring(temp.indexOf('=') + 1,temp.indexOf('&'));
-  }else{
-    return temp.substring(temp.lastIndexOf('=')+1);
+  if ('id' === key) {
+    return temp.substring(temp.indexOf('=') + 1, temp.indexOf('&'));
+  } else {
+    return temp.substring(temp.lastIndexOf('=') + 1);
   }
 };
 
 export class Register extends React.Component<IRegisterProps> {
   state = { time: 10, btnDisable: false, btnContent: '发送验证码', backgroundColor: '#fe4365' };
+
   // window.location.hash.substring(window.location.hash.indexOf('=') + 1)
   componentDidUpdate(prevProps: IRegisterProps, prevState) {
   }
+
   handleSubmit = (event, errors, { phone, code, password, repassword, agreement }) => {
     if (!agreement) {
       toast.info('提示：请先阅读并同意《用户协议》。');
@@ -62,10 +65,11 @@ export class Register extends React.Component<IRegisterProps> {
     // @ts-ignore
     result.then(res => {
       if (!isNaN(res.value.data)) {
-          ReactDOM.render(
-              <Registersuccess />,
-            document.getElementsByClassName('jh-body').item(0)
-          );
+        this.props.createUserByScanning(res.value.data, phone, names('id'));
+        ReactDOM.render(
+          <Registersuccess/>,
+          document.getElementsByClassName('jh-body').item(0)
+        );
       } else {
         // tslint:disable-next-line: no-multi-spaces
         toast.error('错误：' + res.value.data.toString());
@@ -77,9 +81,9 @@ export class Register extends React.Component<IRegisterProps> {
   };
 
   testss = () => {
-      ReactDOM.render(
-        <Registersuccess />,
-        document.getElementsByClassName('jh-body').item(0));
+    ReactDOM.render(
+      <Registersuccess/>,
+      document.getElementsByClassName('jh-body').item(0));
 
   };
 
@@ -108,15 +112,16 @@ export class Register extends React.Component<IRegisterProps> {
       }
     };
     return (
-      <div style={{textAlign: "left"}}>
+      <div style={{ textAlign: "left" }}>
         <AvForm onSubmit={this.handleSubmit}>
-            <div style={{
-              width:'100%',
-              textAlign:"center",
-              padding: '10px',
-              fontSize: '1.2rem',
-              borderBottom: '1px solid #00000015'
-            }}>注册账户</div>
+          <div style={{
+            width: '100%',
+            textAlign: "center",
+            padding: '10px',
+            fontSize: '1.2rem',
+            borderBottom: '1px solid #00000015'
+          }}>注册账户
+          </div>
           <ModalBody>
             <Row>
               <Col md="12">
@@ -186,7 +191,7 @@ export class Register extends React.Component<IRegisterProps> {
                 />
                 <AvGroup check inline>
                   <Label className="form-check-label">
-                    <AvInput type="checkbox" name="agreement" />
+                    <AvInput type="checkbox" name="agreement"/>
                     我已阅读并同意<u>《用户协议》</u>
                   </Label>
                 </AvGroup>
@@ -202,7 +207,7 @@ export class Register extends React.Component<IRegisterProps> {
             </Button>
           </ModalFooter>
         </AvForm>
-          <button type='button' onClick={this.testss}>测试按钮</button>
+        <button type='button' onClick={this.testss}>测试按钮</button>
       </div>
     );
   }
@@ -212,7 +217,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   isAuthenticated: authentication.isAuthenticated,
 });
 
-const mapDispatchToProps = { sendSms, register, login };
+const mapDispatchToProps = { sendSms, register, login, createUserByScanning };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
