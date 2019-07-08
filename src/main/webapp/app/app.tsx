@@ -8,12 +8,18 @@ import { hot } from 'react-hot-loader';
 import { IRootState } from 'app/shared/reducers';
 import { setLocale } from 'app/shared/reducers/locale';
 import AppRoutes from 'app/routes';
+import { ToastContainer, toast } from 'react-toastify';
 
 export interface IAppProps extends StateProps, DispatchProps {}
 
 export class App extends React.Component<IAppProps> {
   render() {
-    return <AppRoutes />;
+    return (
+    <div>
+    <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
+    <AppRoutes />
+    </div>
+    );
   }
 }
 
