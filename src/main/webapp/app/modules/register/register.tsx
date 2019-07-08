@@ -79,14 +79,6 @@ export class Register extends React.Component<IRegisterProps> {
   handleClose = () => {
     this.setState({ showModal: false });
   };
-
-  testss = () => {
-    ReactDOM.render(
-      <Registersuccess/>,
-      document.getElementsByClassName('jh-body').item(0));
-
-  };
-
   render() {
     // tslint:disable-next-line: one-variable-per-declaration
     let timeChange,
@@ -207,7 +199,6 @@ export class Register extends React.Component<IRegisterProps> {
             </Button>
           </ModalFooter>
         </AvForm>
-        <button type='button' onClick={this.testss}>测试按钮</button>
       </div>
     );
   }
