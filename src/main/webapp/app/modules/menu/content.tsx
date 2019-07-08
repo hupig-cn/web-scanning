@@ -110,7 +110,8 @@ export default function LongMenu() {
                 float: 'left',
                 width: 'calc(100% - 75px)',
                 fontSize: '1.05rem',
-                marginLeft: '15px'
+                marginLeft: '15px',
+                textAlign: 'left'
               }}
             >
               {name.name}
@@ -120,14 +121,15 @@ export default function LongMenu() {
                 float: 'left',
                 width: 'calc(100% - 75px)',
                 fontSize: '0.93rem',
-                marginLeft: '15px'
+                marginLeft: '15px',
+                textAlign: 'left'
               }}
             >
               <span style={{ color: '#fe4365' }}>￥{name.price}</span>/份
               <span style={{ float: 'right' }}>
-                <img style={{ width: '20px', height: '20px' }} src="./content/images/cut.png" />
-                <span> 1 </span>
-                <img src="./content/images/plus.png" />
+                <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
+                <span style={{ float: 'right'}}>- 1 -</span>
+                <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
               </span>
             </span>
           </div>

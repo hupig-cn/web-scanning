@@ -43,11 +43,11 @@ export class Pay extends React.Component<IPayProp> {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
-        alert('使用的是元积分支付，支付金额是：' + key);
+        alert('使用的是微信支付，支付金额是：' + key);
       } else if (userAgent.match(/Alipay/i)) {
         alert('使用的是支付宝付款，支付金额是：' + key);
       } else if (userAgent.match(/Weisen/i)) {
-        alert('使用的是微信支付，支付金额是：' + key);
+        alert('使用的是元积分支付，支付金额是：' + key);
       } else {
         render(Complete);
         // alert('不支持除支付宝，微信，元积分之外的支付方式。');
@@ -56,6 +56,7 @@ export class Pay extends React.Component<IPayProp> {
 
     return (
       <div className="jh-body">
+        <div style={{width: '80%', marginLeft: '10%'}}>
         <Header isAuthenticated />
         <img src={merchantEntity.merchantphoto} />
         <h6>付款给商家({merchantEntity.concession}%)</h6>
@@ -73,6 +74,7 @@ export class Pay extends React.Component<IPayProp> {
         <button type="button" onClick={AlipayOrwechat}>
           立即支付
         </button>
+        </div>
       </div>
     );
   }

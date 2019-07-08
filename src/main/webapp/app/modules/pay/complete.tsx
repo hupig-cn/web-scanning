@@ -67,7 +67,7 @@ export default function complete() {
           zIndex: 1000
         }}
       >
-        <img src="./content/images/check.png" />
+        <img src="./content/images/success.png" />
         <h4>恭喜你支付成功</h4>
       </div>
       <div

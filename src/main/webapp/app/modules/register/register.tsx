@@ -191,7 +191,7 @@ export class Register extends React.Component<IRegisterProps> {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button style={{ width: '50%' }} onClick={this.handleClose} tabIndex="1">
+            <Button style={{ width: '50%' ,backgroundColor:'#6c757d'}} onClick={this.handleClose} tabIndex="1">
               取消
             </Button>{' '}
             <Button style={{ backgroundColor: '#fe4365', border: '1px solid #fe4365', width: '50%' }} type="submit">

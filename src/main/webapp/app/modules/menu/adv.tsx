@@ -13,7 +13,7 @@ export default function LongMenu() {
       >
         <img style={{ width: '100%', height: '65px' }} src="./content/images/adv.png" />
       </div>
-      <div style={{ height: '65px' }} />
+      <div style={{ height: '45px' }} />
     </div>
   );
 }
