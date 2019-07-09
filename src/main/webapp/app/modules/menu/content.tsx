@@ -128,7 +128,7 @@ export default function LongMenu() {
               <span style={{ color: '#fe4365' }}>￥{name.price}</span>/份
               <span style={{ float: 'right' }}>
                 <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
-                <span style={{ float: 'right'}}>- 1 -</span>
+                <span style={{ float: 'right' }}>- 1 -</span>
                 <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
               </span>
             </span>

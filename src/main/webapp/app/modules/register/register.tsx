@@ -8,14 +8,13 @@ import { IRootState } from 'app/shared/reducers';
 import { login, register, sendSms } from 'app/shared/reducers/authentication';
 import { createUserByScanning } from 'app/requests/basic/basic.reducer';
 import { toast } from 'react-toastify';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 import Registersuccess from './registersuccess';
 
-export interface IRegisterProps extends StateProps, DispatchProps {
-}
+export interface IRegisterProps extends StateProps, DispatchProps {}
 
-const names = (key) => {
-  let temp = window.location.hash;
+const names = (key: string) => {
+  const temp = window.location.hash;
   if ('id' === key) {
     return temp.substring(temp.indexOf('=') + 1, temp.indexOf('&'));
   } else {
@@ -27,8 +26,7 @@ export class Register extends React.Component<IRegisterProps> {
   state = { time: 10, btnDisable: false, btnContent: '发送验证码', backgroundColor: '#fe4365' };
 
   // window.location.hash.substring(window.location.hash.indexOf('=') + 1)
-  componentDidUpdate(prevProps: IRegisterProps, prevState) {
-  }
+  componentDidUpdate(prevProps: IRegisterProps, prevState) {}
 
   handleSubmit = (event, errors, { phone, code, password, repassword, agreement }) => {
     if (!agreement) {
@@ -66,10 +64,7 @@ export class Register extends React.Component<IRegisterProps> {
     result.then(res => {
       if (!isNaN(res.value.data)) {
         this.props.createUserByScanning(res.value.data, phone, names('id'));
-        ReactDOM.render(
-          <Registersuccess/>,
-          document.getElementsByClassName('jh-body').item(0)
-        );
+        ReactDOM.render(<Registersuccess />, document.getElementsByClassName('jh-body').item(0));
       } else {
         // tslint:disable-next-line: no-multi-spaces
         toast.error('错误：' + res.value.data.toString());
@@ -104,15 +99,18 @@ export class Register extends React.Component<IRegisterProps> {
       }
     };
     return (
-      <div style={{ textAlign: "left" }}>
+      <div style={{ textAlign: 'left' }}>
         <AvForm onSubmit={this.handleSubmit}>
-          <div style={{
-            width: '100%',
-            textAlign: "center",
-            padding: '10px',
-            fontSize: '1.2rem',
-            borderBottom: '1px solid #00000015'
-          }}>注册账户
+          <div
+            style={{
+              width: '100%',
+              textAlign: 'center',
+              padding: '10px',
+              fontSize: '1.2rem',
+              borderBottom: '1px solid #00000015'
+            }}
+          >
+            注册账户
           </div>
           <ModalBody>
             <Row>
@@ -183,7 +181,7 @@ export class Register extends React.Component<IRegisterProps> {
                 />
                 <AvGroup check inline>
                   <Label className="form-check-label">
-                    <AvInput type="checkbox" name="agreement"/>
+                    <AvInput type="checkbox" name="agreement" />
                     我已阅读并同意<u>《用户协议》</u>
                   </Label>
                 </AvGroup>
@@ -191,7 +189,7 @@ export class Register extends React.Component<IRegisterProps> {
             </Row>
           </ModalBody>
           <ModalFooter>
-            <Button style={{ width: '50%' ,backgroundColor:'#6c757d'}} onClick={this.handleClose} tabIndex="1">
+            <Button style={{ width: '50%', backgroundColor: '#6c757d' }} onClick={this.handleClose} tabIndex="1">
               取消
             </Button>{' '}
             <Button style={{ backgroundColor: '#fe4365', border: '1px solid #fe4365', width: '50%' }} type="submit">
@@ -205,7 +203,7 @@ export class Register extends React.Component<IRegisterProps> {
 }
 
 const mapStateToProps = ({ authentication }: IRootState) => ({
-  isAuthenticated: authentication.isAuthenticated,
+  isAuthenticated: authentication.isAuthenticated
 });
 
 const mapDispatchToProps = { sendSms, register, login, createUserByScanning };

@@ -56,24 +56,24 @@ export class Pay extends React.Component<IPayProp> {
 
     return (
       <div className="jh-body">
-        <div style={{width: '80%', marginLeft: '10%'}}>
-        <Header isAuthenticated />
-        <img src={merchantEntity.merchantphoto} />
-        <h6>付款给商家({merchantEntity.concession}%)</h6>
-        <p>昵称:{merchantEntity.name}</p>
-        <p className={'jh-amount-h6'}>付款金额</p>
-        <div>
-          <h1>￥</h1>
-          <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} />
-        </div>
-        <Hrmargin />
-        <label id="bonusValue" className="jh-integral">
-          0
-        </label>
-        <p>可获得积分:</p>
-        <button type="button" onClick={AlipayOrwechat}>
-          立即支付
-        </button>
+        <div style={{ width: '80%', marginLeft: '10%' }}>
+          <Header isAuthenticated />
+          <img src={merchantEntity.merchantphoto} />
+          <h6>付款给商家({merchantEntity.concession}%)</h6>
+          <p>昵称:{merchantEntity.name}</p>
+          <p className={'jh-amount-h6'}>付款金额</p>
+          <div>
+            <h1>￥</h1>
+            <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} />
+          </div>
+          <Hrmargin />
+          <label id="bonusValue" className="jh-integral">
+            0
+          </label>
+          <p>可获得积分:</p>
+          <button type="button" onClick={AlipayOrwechat}>
+            立即支付
+          </button>
         </div>
       </div>
     );
