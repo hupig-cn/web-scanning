@@ -17,8 +17,11 @@ const names = (key: string) => {
   const temp = window.location.hash;
   if ('id' === key) {
     return temp.substring(temp.indexOf('=') + 1, temp.indexOf('&'));
+  } else if ('name' === key) {
+    const name = temp.substring(temp.indexOf('&') + 1);
+    return name.substring(name.indexOf('=') + 1,name.indexOf('=') + 12);
   } else {
-    return temp.substring(temp.lastIndexOf('=') + 1);
+    return ('推荐码错误，请重新生成');
   }
 };
 
