@@ -13,15 +13,19 @@ export interface IPayProp extends StateProps, DispatchProps {
 export class Pay extends React.Component<IPayProp> {
   state = { file: '', fileContentType: '' };
   componentDidMount() {
-    this.props.getMerchantsEntity(this.props.id);
     this.props
-      .getMyImg(this.props.merchantEntity.merchantphoto)
+      .getMerchantsEntity(this.props.id)
       // @ts-ignore
-      .then(photo => {
-        this.setState({
-          file: photo.value.data.file,
-          fileContentType: photo.value.data.fileContentType
-        });
+      .then(key => {
+        this.props
+          .getMyImg(key.value.data.merchantphoto)
+          // @ts-ignore
+          .then(photo => {
+            this.setState({
+              file: photo.value.data.file,
+              fileContentType: photo.value.data.fileContentType
+            });
+          });
       });
   }
 
