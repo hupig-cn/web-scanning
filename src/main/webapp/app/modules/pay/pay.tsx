@@ -4,14 +4,25 @@ import { connect } from 'react-redux';
 import { getMerchantsEntity } from 'app/entities/merchant/merchant/merchant.reducer';
 import { IRootState } from 'app/shared/reducers';
 import Header from 'app/modules/pay/header';
+import { getMyImg } from 'app/entities/basic/files.reducer';
 
 export interface IPayProp extends StateProps, DispatchProps {
-  id:string;
+  id: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
+  state = { file: '', fileContentType: '' };
   componentDidMount() {
     this.props.getMerchantsEntity(this.props.id);
+    this.props
+      .getMyImg(this.props.merchantEntity.merchantphoto)
+      // @ts-ignore
+      .then(photo => {
+        this.setState({
+          file: photo.value.data.file,
+          fileContentType: photo.value.data.fileContentType
+        });
+      });
   }
 
   render() {
@@ -41,7 +52,7 @@ export class Pay extends React.Component<IPayProp> {
       <div className="jh-body">
         <div style={{ width: '80%', marginLeft: '10%' }}>
           <Header isAuthenticated />
-          <img src={merchantEntity.merchantphoto} />
+          <img src={this.state.fileContentType ? `data:${this.state.fileContentType};base64,${this.state.file}` : null} />
           <h6>付款给商家({merchantEntity.concession}%)</h6>
           <p>昵称:{merchantEntity.name}</p>
           <p className={'jh-amount-h6'}>付款金额</p>
@@ -72,7 +83,7 @@ const mapStateToProps = ({ merchant }: IRootState) => ({
   merchantEntity: merchant.entity
 });
 
-const mapDispatchToProps = { getMerchantsEntity };
+const mapDispatchToProps = { getMerchantsEntity, getMyImg };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
