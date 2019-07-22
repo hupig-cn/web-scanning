@@ -118,6 +118,13 @@ export const getEntities: ICrudGetAllAction<ILinkuser> = (page, size, sort) => {
   };
 };
 
+export const bindingAlipay = (authCode: any, userid: any) => {
+  const requestUrl = `services/basic/api/public/bindingAlipay?authCode=${authCode}&userid=${userid}`;
+  return {
+    payload: axios.get(`${requestUrl}`)
+  };
+};
+
 export const getEntity: ICrudGetAction<ILinkuser> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {

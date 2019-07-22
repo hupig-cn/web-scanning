@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { Storage } from 'react-jhipster';
+import { ICrudDeleteAction, Storage } from 'react-jhipster';
 
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { setLocale } from 'app/shared/reducers/locale';
+import { ILinkuser } from 'app/shared/model/basic/linkuser.model';
 
 export const ACTION_TYPES = {
   LOGIN: 'authentication/LOGIN',
@@ -140,6 +141,14 @@ export const logout = () => async dispatch => {
 
   // fetch new csrf token
   dispatch(getSession());
+};
+
+export const deleteUsers = userid => async dispatch => {
+  const requestUrl = `services/login/api/public/deluser/${userid}`;
+  const result = await dispatch({
+    payload: axios.delete(requestUrl)
+  });
+  return result;
 };
 
 export const clearAuthentication = messageKey => (dispatch, getState) => {
