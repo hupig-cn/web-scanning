@@ -10,8 +10,8 @@ import ReactDOM from 'react-dom';
 import Registersuccess from './registersuccess';
 
 export interface IRegisterProps extends DispatchProps {
-  id:string;
-  name:string;
+  id: string;
+  name: string;
 }
 
 export class Register extends React.Component<IRegisterProps> {

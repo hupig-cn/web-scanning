@@ -6,7 +6,7 @@ import { IRootState } from 'app/shared/reducers';
 import Header from 'app/modules/pay/header';
 
 export interface IPayProp extends StateProps, DispatchProps {
-  id:string;
+  id: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
