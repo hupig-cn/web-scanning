@@ -12,9 +12,7 @@ export default function complete() {
 
   const render = Component =>
     ReactDOM.render(
-      <Provider store={store}>
-        <Component />
-      </Provider>,
+        <Component />,
       rootEl
     );
 

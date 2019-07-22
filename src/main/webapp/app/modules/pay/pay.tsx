@@ -1,33 +1,17 @@
 import './pay.scss';
 import React from 'react';
-import { connect, Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import { getMerchantsEntity } from 'app/entities/merchant/merchant/merchant.reducer';
 import { IRootState } from 'app/shared/reducers';
-
 import Header from 'app/modules/pay/header';
-import Complete from '../pay/complete';
-import initStore from 'app/config/store';
-import { registerLocale } from 'app/config/translation';
-import ReactDOM from 'react-dom';
 
-const store = initStore();
-registerLocale(store);
-
-const rootEl = document.getElementById('root');
-
-const render = Component =>
-  ReactDOM.render(
-    <Provider store={store}>
-      <Component />
-    </Provider>,
-    rootEl
-  );
-
-export interface IPayProp extends StateProps, DispatchProps {}
+export interface IPayProp extends StateProps, DispatchProps {
+  id:string;
+}
 
 export class Pay extends React.Component<IPayProp> {
   componentDidMount() {
-    this.props.getMerchantsEntity(window.location.hash.substring(window.location.hash.indexOf('=') + 1));
+    this.props.getMerchantsEntity(this.props.id);
   }
 
   render() {
@@ -39,7 +23,7 @@ export class Pay extends React.Component<IPayProp> {
       el.textContent = String((Number(els) * merchantEntity.rebate) / 100);
     }
 
-    function AlipayOrwechat() {
+    function Payment() {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
@@ -49,8 +33,7 @@ export class Pay extends React.Component<IPayProp> {
       } else if (userAgent.match(/Weisen/i)) {
         alert('使用的是元积分支付，支付金额是：' + key);
       } else {
-        render(Complete);
-        // alert('不支持除支付宝，微信，元积分之外的支付方式。');
+        alert('不支持除支付宝，微信，元积分之外的支付方式。');
       }
     }
 
@@ -71,7 +54,7 @@ export class Pay extends React.Component<IPayProp> {
             0
           </label>
           <p>可获得积分:</p>
-          <button type="button" onClick={AlipayOrwechat}>
+          <button type="button" onClick={Payment}>
             立即支付
           </button>
         </div>

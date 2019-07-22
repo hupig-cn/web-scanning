@@ -3,32 +3,20 @@ import { connect } from 'react-redux';
 import { Button, Col, Label, ModalBody, ModalFooter, Row } from 'reactstrap';
 import { AvField, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
 
-import { IRootState } from 'app/shared/reducers';
-
-import { login, register, sendSms } from 'app/shared/reducers/authentication';
+import { register, sendSms } from 'app/shared/reducers/authentication';
 import { createUserByScanning } from 'app/requests/basic/basic.reducer';
 import { toast } from 'react-toastify';
 import ReactDOM from 'react-dom';
 import Registersuccess from './registersuccess';
 
-export interface IRegisterProps extends StateProps, DispatchProps {}
-
-const names = (key: string) => {
-  const temp = window.location.hash;
-  if ('id' === key) {
-    return temp.substring(temp.indexOf('=') + 1, temp.indexOf('&'));
-  } else if ('name' === key) {
-    const name = temp.substring(temp.indexOf('&') + 1);
-    return name.substring(name.indexOf('=') + 1, name.indexOf('=') + 12);
-  } else {
-    return '推荐码错误，请重新生成';
-  }
-};
+export interface IRegisterProps extends DispatchProps {
+  id:string;
+  name:string;
+}
 
 export class Register extends React.Component<IRegisterProps> {
   state = { time: 10, btnDisable: false, btnContent: '发送验证码', backgroundColor: '#fe4365' };
 
-  // window.location.hash.substring(window.location.hash.indexOf('=') + 1)
   componentDidUpdate(prevProps: IRegisterProps, prevState) {}
 
   handleSubmit = (event, errors, { phone, code, password, repassword, agreement }) => {
@@ -66,16 +54,13 @@ export class Register extends React.Component<IRegisterProps> {
     // @ts-ignore
     result.then(res => {
       if (!isNaN(res.value.data)) {
-        this.props.createUserByScanning(res.value.data, phone, names('id'));
+        this.props.createUserByScanning(res.value.data, phone, this.props.id);
         ReactDOM.render(<Registersuccess />, document.getElementsByClassName('jh-body').item(0));
       } else {
         // tslint:disable-next-line: no-multi-spaces
         toast.error('错误：' + res.value.data.toString());
       }
     });
-  };
-  handleClose = () => {
-    this.setState({ showModal: false });
   };
   render() {
     // tslint:disable-next-line: one-variable-per-declaration
@@ -175,11 +160,9 @@ export class Register extends React.Component<IRegisterProps> {
                   name="share"
                   type="password"
                   label={<span style={{ float: 'left', marginTop: '7px' }}>推荐人：</span>}
-                  placeholder={names('name')}
-                  required
+                  placeholder={this.props.name}
                   readonly
                   disabled
-                  errorMessage=" "
                   style={{ width: '70%', float: 'right' }}
                 />
                 <AvGroup check inline>
@@ -202,13 +185,10 @@ export class Register extends React.Component<IRegisterProps> {
   }
 }
 
-const mapStateToProps = ({ authentication }: IRootState) => ({
-  isAuthenticated: authentication.isAuthenticated
-});
+const mapStateToProps = () => {};
 
-const mapDispatchToProps = { sendSms, register, login, createUserByScanning };
+const mapDispatchToProps = { sendSms, register, createUserByScanning };
 
-type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
 export default connect(
