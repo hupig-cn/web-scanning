@@ -46,7 +46,7 @@ export class Pay extends React.Component<IPayProp> {
 
     function Payment() {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
-      if (Number(userassetsEntity.usablebalance) - Number(key) < 0) {
+      if (Number(userassetsEntity.usablebalance) < Number(key)) {
         toast.error('提示：余额不足，更换支付方式？');
       } else {
         const userAgent = navigator.userAgent.toLowerCase();
