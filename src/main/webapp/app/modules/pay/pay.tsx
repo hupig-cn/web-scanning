@@ -47,17 +47,18 @@ export class Pay extends React.Component<IPayProp> {
     function Payment() {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
       if (Number(userassetsEntity.usablebalance) - Number(key) < 0) {
-        toast.info('提示：余额不足，更换支付方式？');
-      }
-      const userAgent = navigator.userAgent.toLowerCase();
-      if (userAgent.match(/MicroMessenger/i)) {
-        alert('使用的是微信支付，支付金额是：' + key);
-      } else if (userAgent.match(/Alipay/i)) {
-        alert('使用的是支付宝付款，支付金额是：' + key);
-      } else if (userAgent.match(/Weisen/i)) {
-        alert('使用的是元积分支付，支付金额是：' + key);
+        toast.error('提示：余额不足，更换支付方式？');
       } else {
-        alert('不支持除支付宝，微信，元积分之外的支付方式。');
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.match(/MicroMessenger/i)) {
+          toast.info('使用的是微信支付，支付金额是：' + key);
+        } else if (userAgent.match(/Alipay/i)) {
+          toast.info('使用的是支付宝付款，支付金额是：' + key);
+        } else if (userAgent.match(/Weisen/i)) {
+          toast.info('使用的是元积分支付，支付金额是：' + key);
+        } else {
+          toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
+        }
       }
     }
 

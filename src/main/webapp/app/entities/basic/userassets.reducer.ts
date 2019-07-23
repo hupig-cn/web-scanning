@@ -127,7 +127,7 @@ export const getEntity: ICrudGetAction<IUserassets> = id => {
 };
 
 export const queryBalance: ICrudGetAction<IUserassets> = userid => {
-  const requestUrl = `${apiUrl}/findUserAssets/${userid}`;
+  const requestUrl = `services/basic/api/userassets/findUserAssets/${userid}`;
   return {
     type: ACTION_TYPES.FETCH_USERASSETS,
     payload: axios.get<IUserassets>(requestUrl)
