@@ -5,14 +5,20 @@ import { getMerchantsEntity } from 'app/entities/merchant/merchant/merchant.redu
 import { IRootState } from 'app/shared/reducers';
 import Header from 'app/modules/pay/header';
 import { getMyImg } from 'app/entities/basic/files.reducer';
+import { queryBalance } from 'app/entities/basic/userassets.reducer';
+import { toast } from 'react-toastify';
 
 export interface IPayProp extends StateProps, DispatchProps {
   id: string;
+  userid: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
   state = { file: '', fileContentType: '' };
   componentDidMount() {
+    if (this.props.userid !== '') {
+      this.props.queryBalance(this.props.userid);
+    }
     this.props
       .getMerchantsEntity(this.props.id)
       // @ts-ignore
@@ -30,7 +36,7 @@ export class Pay extends React.Component<IPayProp> {
   }
 
   render() {
-    const { merchantEntity } = this.props;
+    const { merchantEntity, userassetsEntity } = this.props;
 
     function AmountOnInput() {
       const el = document.getElementById('bonusValue') as HTMLInputElement;
@@ -40,6 +46,9 @@ export class Pay extends React.Component<IPayProp> {
 
     function Payment() {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
+      if (Number(userassetsEntity.usablebalance) - Number(key) < 0) {
+        toast.info('提示：余额不足，更换支付方式？');
+      }
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
         alert('使用的是微信支付，支付金额是：' + key);
@@ -83,11 +92,12 @@ const Hrmargin = userAgent => {
   return <hr className={userAgent.match(/iphone/i) ? 'jh-iphone-hr' : 'jh-android-hr'} />;
 };
 
-const mapStateToProps = ({ merchant }: IRootState) => ({
-  merchantEntity: merchant.entity
+const mapStateToProps = ({ merchant, userassets }: IRootState) => ({
+  merchantEntity: merchant.entity,
+  userassetsEntity: userassets.entity
 });
 
-const mapDispatchToProps = { getMerchantsEntity, getMyImg };
+const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

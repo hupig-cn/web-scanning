@@ -6,12 +6,9 @@ import authentication, { AuthenticationState } from './authentication';
 import applicationProfile, { ApplicationProfileState } from './application-profile';
 
 import administration, { AdministrationState } from 'app/modules/administration/administration.reducer';
-import linkuser, {
-  LinkuserState
-} from 'app/entities/basic/linkuser/linkuser.reducer';
-import merchant, {
-  MerchantState
-} from 'app/entities/merchant/merchant/merchant.reducer';
+import linkuser, { LinkuserState } from 'app/entities/basic/linkuser/linkuser.reducer';
+import merchant, { MerchantState } from 'app/entities/merchant/merchant/merchant.reducer';
+import userassets, { UserassetsState } from 'app/entities/basic/userassets.reducer';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -20,6 +17,7 @@ export interface IRootState {
   readonly administration: AdministrationState;
   readonly linkuser: LinkuserState;
   readonly merchant: MerchantState;
+  readonly userassets: UserassetsState;
   readonly loadingBar: any;
 }
 
@@ -30,6 +28,7 @@ const rootReducer = combineReducers<IRootState>({
   administration,
   linkuser,
   merchant,
+  userassets,
   loadingBar
 });
 

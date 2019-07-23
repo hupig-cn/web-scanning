@@ -110,6 +110,14 @@ export const getSession = () => async (dispatch, getState) => {
     await dispatch(setLocale(langKey));
   }
 };
+
+// tslint:disable-next-line: ter-arrow-body-style
+export const getSessionRE = () => async (dispatch, getState) => {
+  return {
+    payload: axios.get('services/login/api/account')
+  };
+};
+
 // tslint:disable-next-line: ter-arrow-body-style
 export const sendSms = (phone: any) => async (dispatch: any) => {
   return dispatch({
@@ -122,6 +130,14 @@ export const register = (login: any, password: any, lastName: any) => async (dis
   // tslint:disable-next-line: ter-arrow-body-style
   return dispatch({
     payload: axios.post('services/login/api/public/phone-user', { login, password, lastName })
+  });
+};
+
+// tslint:disable-next-line: no-shadowed-variable
+export const registerRandom = () => async (dispatch: any) => {
+  // tslint:disable-next-line: ter-arrow-body-style
+  return dispatch({
+    payload: axios.get('services/login/api/public/random-user')
   });
 };
 
