@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 export interface IInfoProp extends StateProps, DispatchProps {
-  message: string;
+  message: any;
 }
 
 export class Info extends React.Component<IInfoProp> {

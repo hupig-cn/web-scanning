@@ -80,7 +80,6 @@ export class Scanning extends React.Component<IScanningProp> {
             return <Info message="您还没有登陆，请先登陆客户端在进行付款。" />;
           }
         } else {
-          // @ts-ignore
           return (
             <Info
               message={
