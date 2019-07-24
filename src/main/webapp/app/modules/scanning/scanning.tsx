@@ -80,7 +80,7 @@ export class Scanning extends React.Component<IScanningProp> {
             return <Info message="您还没有登陆，请先登陆客户端在进行付款。" />;
           }
         } else {
-          return <Info message="暂不支持当前支付方式，下载《圆积分》APP，支付领奖品！" />;
+          return <Info message="暂不支持当前支付方式，点击下载<a href='http://www.yuanscore.com'>《圆积分》</a>APP，支付享好礼！" />;
         }
       }
     }
