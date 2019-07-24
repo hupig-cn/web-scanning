@@ -17,7 +17,7 @@ export class Registersuccess extends React.Component {
         <div>恭喜您，成功成为《圆积分》黄金会员，点击下载APP，获取更多权益。</div>
         <div>
           下载地址：
-          <a style={{ color: 'blue' }} href="http://www.yuanscore.com/download/yuanscore.apk">
+          <a style={{ color: 'blue' }} href="http://www.yuanscore.com/">
             <u>www.yuanscore.com</u>
           </a>
         </div>
