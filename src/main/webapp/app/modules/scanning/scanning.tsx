@@ -77,7 +77,15 @@ export class Scanning extends React.Component<IScanningProp> {
           if (account && account.login) {
             return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} />;
           } else {
-            return <Info message="您还没有登陆，请先登陆客户端在进行付款。" />;
+            return (
+              <Info
+                message={
+                  <span>
+                    您还没有登陆，点击<a href="http://app.yuanscore.com:8081/login">《登陆》</a>客户端后在进行付款。
+                  </span>
+                }
+              />
+            );
           }
         } else {
           return (
