@@ -66,7 +66,7 @@ export class Scanning extends React.Component<IScanningProp> {
             'alipays://platformapi/startapp?' +
               'appId=20000067&' +
               'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
-              'app_id%3D2019062565651444%26' +
+              'app_id%3D2019061965597545%26' +
               'scope%3Dauth_base%26' +
               'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
               'state%3D' +
