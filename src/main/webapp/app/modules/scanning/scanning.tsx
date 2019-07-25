@@ -39,7 +39,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   .then(res => {
                     if (!isNaN(res.value.data)) {
                       // tslint:disable-next-line: no-invalid-this
-                      this.props.createUserByScanningMerchant(res.value.data, state.substring(6), alipeyuser.value.data, '支付宝');
+                      this.props.createUserByScanningMerchant(res.value.data, alipeyuser.value.data, '支付宝');
                     } else {
                       return <Info message={res.value.data.toString()} />;
                     }

@@ -165,8 +165,8 @@ export const queryAlipayUser = (authCode: string) => {
   };
 };
 
-export const createUserByScanningMerchant = (userid: string, merchantid: string, token: string, accounttype: string) => {
-  const requestUrl = `services/basic/api/public/user/createUserByScanningMerchant/?userid=${userid}&merchantid=${merchantid}&token=${token}&accounttype=${accounttype}`;
+export const createUserByScanningMerchant = (userid: string, token: string, accounttype: string) => {
+  const requestUrl = `services/basic/api/public/user/createUserByScanningMerchant/?userid=${userid}&token=${token}&accounttype=${accounttype}`;
   return {
     payload: axios.get(requestUrl)
   };
