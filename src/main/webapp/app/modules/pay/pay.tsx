@@ -7,6 +7,7 @@ import Header from 'app/modules/pay/header';
 import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
+import { merchantPayment } from 'app/entities/basic/linkuser/linkuser.reducer';
 
 export interface IPayProp extends StateProps, DispatchProps {
   id: string;
@@ -46,19 +47,27 @@ export class Pay extends React.Component<IPayProp> {
 
     function Payment() {
       const key = (document.getElementById('amount') as HTMLInputElement).value;
-      if (Number(userassetsEntity.usablebalance) < Number(key)) {
-        toast.error('提示：余额不足，更换支付方式？');
-      } else {
-        const userAgent = navigator.userAgent.toLowerCase();
-        if (userAgent.match(/MicroMessenger/i)) {
-          toast.info('使用的是微信支付，支付金额是：' + key);
-        } else if (userAgent.match(/Alipay/i)) {
-          toast.info('使用的是支付宝付款，支付金额是：' + key);
-        } else if (userAgent.match(/Weisen/i)) {
-          toast.info('使用的是元积分支付，支付金额是：' + key);
+      const userAgent = navigator.userAgent.toLowerCase();
+      if (userAgent.match(/MicroMessenger/i)) {
+        toast.info('暂不支持微信支付');
+      } else if (userAgent.match(/Alipay/i)) {
+        this.props
+          .merchantPayment(this.props.userid, key, merchantEntity.id, merchantEntity.concession, merchantEntity.rebate)
+          .then(val => {
+            if (val.value.data != '订单生成错误') {
+              window.location.replace('alipays://platformapi/startapp?' + 'appId=20000067&' + 'url=' + val.value.data);
+            } else {
+              toast.info('链接超时');
+            }
+          });
+      } else if (userAgent.match(/Weisen/i)) {
+        if (Number(userassetsEntity.usablebalance) < Number(key)) {
+          toast.error('提示：余额不足，更换支付方式？');
         } else {
-          toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
+          toast.info('使用的是元积分支付，支付金额是：' + key);
         }
+      } else {
+        toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
       }
     }
 
@@ -98,7 +107,7 @@ const mapStateToProps = ({ merchant, userassets }: IRootState) => ({
   userassetsEntity: userassets.entity
 });
 
-const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance };
+const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance, merchantPayment };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

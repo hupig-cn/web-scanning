@@ -165,6 +165,13 @@ export const queryAlipayUser = (authCode: string) => {
   };
 };
 
+export const merchantPayment = (userid: string, money: string, merchantid: string, concession: number, rebate: number) => {
+  const requestUrl = `services/basic/api/public/merchantPayment/?userid=${userid}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}`;
+  return {
+    payload: axios.get(requestUrl)
+  };
+};
+
 export const createUserByScanningMerchant = (userid: string, token: string, accounttype: string) => {
   const requestUrl = `services/basic/api/public/user/createUserByScanningMerchant/?userid=${userid}&token=${token}&accounttype=${accounttype}`;
   return {
