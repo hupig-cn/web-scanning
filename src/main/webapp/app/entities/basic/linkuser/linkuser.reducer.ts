@@ -167,7 +167,24 @@ export const queryAlipayUser = (authCode: string) => async dispatch => {
 };
 
 export const merchantPayment = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string) => {
+  // tslint:disable-next-line: max-line-length
   const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
+  return {
+    payload: axios.get(requestUrl)
+  };
+};
+
+export const merchantPaymentYue = (userid: string, money: string, merchantid: string, concession: number, rebate: number) => {
+  // tslint:disable-next-line: max-line-length
+  const requestUrl = `services/basic/api/public/merchantPayment-yue/?userid=${userid}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}`;
+  return {
+    payload: axios.get(requestUrl)
+  };
+};
+
+export const merchantPaymentCoupon = (userid: string, money: string, merchantid: string, concession: number, rebate: number) => {
+  // tslint:disable-next-line: max-line-length
+  const requestUrl = `services/basic/api/public/merchantPayment-coupon/?userid=${userid}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}`;
   return {
     payload: axios.get(requestUrl)
   };
@@ -190,3 +207,25 @@ export const paymethods = (online: boolean, os: string) => async dispatch => {
 export const reset = () => ({
   type: ACTION_TYPES.RESET
 });
+
+// 余额支付
+export const yuePay = (orderid: any, password: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/basic/api/pay/BalencePayment', { orderid, password })
+  });
+  return result;
+};
+// 积分支付
+export const integralPay = (orderId: any, passWord: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/basic/api/pay/IntegralPayment', { orderId, passWord })
+  });
+  return result;
+};
+// 优惠券支付
+export const couponPayment = (orderId: any, passWord: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/basic/api/pay/couponPayment', { orderId, passWord })
+  });
+  return result;
+};

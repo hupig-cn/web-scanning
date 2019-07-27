@@ -174,3 +174,17 @@ export const clearAuthentication = messageKey => (dispatch, getState) => {
     type: ACTION_TYPES.CLEAR_AUTH
   });
 };
+
+// tslint:disable-next-line: ter-arrow-body-style
+export const passwordCheck = () => async (dispatch: any) => {
+  return dispatch({
+    payload: axios.get('services/basic/api/payment/check')
+  });
+};
+
+// tslint:disable-next-line: ter-arrow-body-style
+export const updatePassword = (payPassword: any) => async (dispatch: any) => {
+  return dispatch({
+    payload: axios.post('services/basic/api/payment/update-password', { payPassword })
+  });
+};

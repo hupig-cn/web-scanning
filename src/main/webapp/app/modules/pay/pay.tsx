@@ -8,6 +8,9 @@ import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
 import { merchantPayment, paymethods } from 'app/entities/basic/linkuser/linkuser.reducer';
+import FirstSetPayPass from 'app/modules/pay/firstSetPayPass';
+import Payment from 'app/modules/pay/payment';
+import { passwordCheck } from 'app/shared/reducers/authentication';
 
 export interface IPayProp extends StateProps, DispatchProps {
   id: string;
@@ -23,7 +26,9 @@ export class Pay extends React.Component<IPayProp> {
     userid: this.props.userid,
     auth_code: this.props.auth_code,
     balance: false,
-    coupon: false
+    coupon: false,
+    paymethod: '',
+    money: ''
   };
   componentDidMount() {
     if (this.state.userid !== '') {
@@ -97,7 +102,17 @@ export class Pay extends React.Component<IPayProp> {
       if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
         toast.error('提示：余额不足，请更换其他支付方式。');
       } else {
-        toast.info('使用的是余额支付，支付金额是：' + key);
+        const result = this.props.passwordCheck();
+        // @ts-ignore
+        result.then(res => {
+          if (res.value.data.code === 0) {
+            document.getElementById('superbottomdiv').style.height = '80%';
+          } else {
+            this.setState({ paymethod: 'yue', money: key });
+            alert(this.state.paymethod);
+            document.getElementById('supersuperbottomdiv').style.height = '100%';
+          }
+        });
       }
     }
   };
@@ -108,7 +123,16 @@ export class Pay extends React.Component<IPayProp> {
       if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.couponsum) < Number(key)) {
         toast.error('提示：优惠劵不足，请更换其他支付方式。');
       } else {
-        toast.info('使用的是优惠券支付，支付金额是：' + key);
+        const result = this.props.passwordCheck();
+        // @ts-ignore
+        result.then(res => {
+          if (res.value.data.code === 0) {
+            document.getElementById('superbottomdiv').style.height = '80%';
+          } else {
+            this.setState({ paymethod: 'coupon', money: key });
+            document.getElementById('supersuperbottomdiv').style.height = '100%';
+          }
+        });
       }
     }
   };
@@ -126,68 +150,83 @@ export class Pay extends React.Component<IPayProp> {
     }
 
     return (
-      <div className="jh-body">
-        <div style={{ width: '80%', marginLeft: '10%' }}>
-          <Header isAuthenticated />
-          <img src={this.state.fileContentType ? `data:${this.state.fileContentType};base64,${this.state.file}` : null} />
-          <h6>付款给商家({merchantEntity.concession}%)</h6>
-          <p>昵称:{merchantEntity.name}</p>
-          <p className={'jh-amount-h6'}>付款金额</p>
-          <div>
-            <h1>￥</h1>
-            <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} />
+      <div>
+        <div className="jh-body">
+          <div style={{ width: '80%', marginLeft: '10%' }}>
+            <Header isAuthenticated />
+            <img src={this.state.fileContentType ? `data:${this.state.fileContentType};base64,${this.state.file}` : null} />
+            <h6>付款给商家({merchantEntity.concession}%)</h6>
+            <p>昵称:{merchantEntity.name}</p>
+            <p className={'jh-amount-h6'}>付款金额</p>
+            <div>
+              <h1>￥</h1>
+              <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} />
+            </div>
+            <Hrmargin />
+            <label id="bonusValue" className="jh-integral">
+              0
+            </label>
+            <p>可获得积分:</p>
+            <button type="button" onClick={this.Payment}>
+              立即支付
+            </button>
           </div>
-          <Hrmargin />
-          <label id="bonusValue" className="jh-integral">
-            0
-          </label>
-          <p>可获得积分:</p>
-          <button type="button" onClick={this.Payment}>
-            立即支付
-          </button>
-        </div>
-        <div
-          id="bottomdiv"
-          style={{
-            backgroundColor: '#fbfbfb',
-            width: '100%',
-            position: 'fixed',
-            bottom: '0px',
-            textAlign: 'left',
-            height: '0%',
-            transition: 'height 500ms'
-          }}
-        >
-          <div style={{ padding: '10px 20px 15px 20px  ', borderTop: '1px solid #cccccc' }}>
-            请选择支付方式：
-            <span style={{ float: 'right' }} onClick={bottomdivheight}>
-              ㄨ
-            </span>
-          </div>
+          <div
+            id="bottomdiv"
+            style={{
+              backgroundColor: '#fbfbfb',
+              width: '100%',
+              position: 'fixed',
+              bottom: '0px',
+              textAlign: 'left',
+              height: '0%',
+              transition: 'height 500ms'
+            }}
+          >
+            <div style={{ padding: '10px 20px 15px 20px  ', borderTop: '1px solid #cccccc' }}>
+              请选择支付方式：
+              <span style={{ float: 'right' }} onClick={bottomdivheight}>
+                ㄨ
+              </span>
+            </div>
 
-          {this.state.balance ? (
-            <div style={{ width: '100%' }} onClick={this.balancePay}>
-              <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
-                <span>○ </span>余额支付
-                <span style={{ float: 'right' }}>可用余额：{userassetsEntity.usablebalance}</span>
+            {this.state.balance ? (
+              <div style={{ width: '100%' }} onClick={this.balancePay}>
+                <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
+                  <span>○ </span>余额支付
+                  <span style={{ float: 'right' }}>可用余额：{userassetsEntity.usablebalance}</span>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div />
-          )}
-          {this.state.coupon ? (
-            <div style={{ width: '100%' }} onClick={this.couponPay}>
-              <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
-                <span>○ </span>优惠劵支付
-                <span style={{ float: 'right' }}>可用优惠劵：{userassetsEntity.couponsum}</span>
+            ) : (
+              <div />
+            )}
+            {this.state.coupon ? (
+              <div style={{ width: '100%' }} onClick={this.couponPay}>
+                <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
+                  <span>○ </span>优惠劵支付
+                  <span style={{ float: 'right' }}>可用优惠劵：{userassetsEntity.couponsum}</span>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div />
-          )}
-          {!this.state.balance && !this.state.coupon ? <div style={{ width: '100%', textAlign: 'center' }}>暂无可用支付方式</div> : <div />}
-          <div style={{ borderTop: '1px solid #eeeeee' }} />
+            ) : (
+              <div />
+            )}
+            {!this.state.balance && !this.state.coupon ? (
+              <div style={{ width: '100%', textAlign: 'center' }}>暂无可用支付方式</div>
+            ) : (
+              <div />
+            )}
+            <div style={{ borderTop: '1px solid #eeeeee' }} />
+          </div>
         </div>
+        <FirstSetPayPass />
+        <Payment
+          paymethod={this.state.paymethod}
+          userid={this.props.userid}
+          money={this.state.money}
+          merchantid={merchantEntity.userid}
+          concession={merchantEntity.concession}
+          rebate={merchantEntity.rebate}
+        />
       </div>
     );
   }
@@ -203,7 +242,7 @@ const mapStateToProps = ({ merchant, userassets }: IRootState) => ({
   userassetsEntity: userassets.entity
 });
 
-const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance, merchantPayment, paymethods };
+const mapDispatchToProps = { passwordCheck, getMerchantsEntity, getMyImg, queryBalance, merchantPayment, paymethods };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

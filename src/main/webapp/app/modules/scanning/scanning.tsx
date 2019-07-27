@@ -108,6 +108,12 @@ export class Scanning extends React.Component<IScanningProp> {
             }
           />
         );
+      } else if (str[0].match(/resapp/i)) {
+        return decodeURIComponent(str[0].replace('resapp=', '')) === 'coupon' ? (
+          <Info message={<span>支付完成。</span>} />
+        ) : (
+          <Info message={<span>支付完成，获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。</span>} />
+        );
       }
     }
   };
