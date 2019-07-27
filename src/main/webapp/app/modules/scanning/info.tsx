@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Title from './title';
 
 export interface IInfoProp extends StateProps, DispatchProps {
   message: any;
@@ -18,6 +19,7 @@ export class Info extends React.Component<IInfoProp> {
           marginTop: '-20px'
         }}
       >
+        <Title />
         <div
           style={{
             width: '100%',

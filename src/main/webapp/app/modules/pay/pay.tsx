@@ -109,7 +109,6 @@ export class Pay extends React.Component<IPayProp> {
             document.getElementById('superbottomdiv').style.height = '80%';
           } else {
             this.setState({ paymethod: 'yue', money: key });
-            alert(this.state.paymethod);
             document.getElementById('supersuperbottomdiv').style.height = '100%';
           }
         });

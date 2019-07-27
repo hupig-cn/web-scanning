@@ -216,16 +216,16 @@ export const yuePay = (orderid: any, password: any) => async dispatch => {
   return result;
 };
 // 积分支付
-export const integralPay = (orderId: any, passWord: any) => async dispatch => {
+export const integralPay = (orderid: any, password: any) => async dispatch => {
   const result = await dispatch({
-    payload: axios.post('services/basic/api/pay/IntegralPayment', { orderId, passWord })
+    payload: axios.post('services/basic/api/pay/IntegralPayment', { orderid, password })
   });
   return result;
 };
 // 优惠券支付
-export const couponPayment = (orderId: any, passWord: any) => async dispatch => {
+export const couponPayment = (orderid: any, password: any) => async dispatch => {
   const result = await dispatch({
-    payload: axios.post('services/basic/api/pay/couponPayment', { orderId, passWord })
+    payload: axios.post('services/basic/api/pay/couponPayment', { orderid, password })
   });
   return result;
 };
