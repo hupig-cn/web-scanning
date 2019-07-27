@@ -158,15 +158,16 @@ export const deleteEntity: ICrudDeleteAction<ILinkuser> = id => async dispatch =
   return result;
 };
 
-export const queryAlipayUser = (authCode: string) => {
+export const queryAlipayUser = (authCode: string) => async dispatch => {
   const requestUrl = `services/basic/api/public/queryAlipayUser/?authCode=${authCode}`;
-  return {
+  const result = await dispatch({
     payload: axios.get(requestUrl)
-  };
+  });
+  return result;
 };
 
-export const merchantPayment = (userid: string, money: string, merchantid: string, concession: number, rebate: number) => {
-  const requestUrl = `services/basic/api/public/merchantPayment/?userid=${userid}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}`;
+export const merchantPayment = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string) => {
+  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
   return {
     payload: axios.get(requestUrl)
   };

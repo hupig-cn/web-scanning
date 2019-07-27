@@ -12,16 +12,17 @@ import { merchantPayment } from 'app/entities/basic/linkuser/linkuser.reducer';
 export interface IPayProp extends StateProps, DispatchProps {
   id: string;
   userid: string;
+  auth_code: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
-  state = { file: '', fileContentType: '' };
+  state = { file: '', fileContentType: '', id: this.props.id, userid: this.props.userid, auth_code: this.props.auth_code };
   componentDidMount() {
-    if (this.props.userid !== '') {
-      this.props.queryBalance(this.props.userid);
+    if (this.state.userid !== '') {
+      this.props.queryBalance(this.state.userid);
     }
     this.props
-      .getMerchantsEntity(this.props.id)
+      .getMerchantsEntity(this.state.id)
       // @ts-ignore
       .then(key => {
         this.props
@@ -36,32 +37,32 @@ export class Pay extends React.Component<IPayProp> {
       });
   }
 
-  render() {
-    const { merchantEntity, userassetsEntity } = this.props;
-
-    function AmountOnInput() {
-      const el = document.getElementById('bonusValue') as HTMLInputElement;
-      const els = (document.getElementById('amount') as HTMLInputElement).value;
-      el.textContent = String((Number(els) * merchantEntity.rebate) / 100);
-    }
-
-    function Payment() {
-      const key = (document.getElementById('amount') as HTMLInputElement).value;
+  Payment = () => {
+    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    if (Number(key) > 0) {
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
         toast.info('暂不支持微信支付');
       } else if (userAgent.match(/Alipay/i)) {
         this.props
-          .merchantPayment(this.props.userid, key, merchantEntity.id, merchantEntity.concession, merchantEntity.rebate)
+          .merchantPayment(
+            this.state.auth_code,
+            key,
+            this.props.merchantEntity.userid,
+            this.props.merchantEntity.concession,
+            this.props.merchantEntity.rebate,
+            this.props.merchantEntity.name
+          )
+          // @ts-ignore
           .then(val => {
-            if (val.value.data != '订单生成错误') {
+            if (val.value.data !== '订单生成错误') {
               window.location.replace('alipays://platformapi/startapp?' + 'appId=20000067&' + 'url=' + val.value.data);
             } else {
               toast.info('链接超时');
             }
           });
       } else if (userAgent.match(/Weisen/i)) {
-        if (Number(userassetsEntity.usablebalance) < Number(key)) {
+        if (Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
           toast.error('提示：余额不足，更换支付方式？');
         } else {
           toast.info('使用的是元积分支付，支付金额是：' + key);
@@ -69,6 +70,16 @@ export class Pay extends React.Component<IPayProp> {
       } else {
         toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
       }
+    }
+  };
+
+  render() {
+    const { merchantEntity } = this.props;
+
+    function AmountOnInput() {
+      const el = document.getElementById('bonusValue') as HTMLInputElement;
+      const els = (document.getElementById('amount') as HTMLInputElement).value;
+      el.textContent = String((Number(els) * merchantEntity.rebate) / 100);
     }
 
     return (
@@ -88,7 +99,7 @@ export class Pay extends React.Component<IPayProp> {
             0
           </label>
           <p>可获得积分:</p>
-          <button type="button" onClick={Payment}>
+          <button type="button" onClick={this.Payment}>
             立即支付
           </button>
         </div>

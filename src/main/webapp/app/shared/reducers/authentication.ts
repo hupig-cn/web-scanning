@@ -134,11 +134,12 @@ export const register = (login: any, password: any, lastName: any) => async (dis
 };
 
 // tslint:disable-next-line: no-shadowed-variable
-export const registerRandom = () => async (dispatch: any) => {
+export const registerRandom = () => async dispatch => {
   // tslint:disable-next-line: ter-arrow-body-style
-  return dispatch({
+  const result = await dispatch({
     payload: axios.get('services/login/api/public/random-user')
   });
+  return result;
 };
 
 export const login = (username, password, rememberMe = false) => async (dispatch, getState) => {
