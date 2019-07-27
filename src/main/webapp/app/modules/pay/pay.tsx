@@ -7,7 +7,7 @@ import Header from 'app/modules/pay/header';
 import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
-import { merchantPayment } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { merchantPayment, paymethods } from 'app/entities/basic/linkuser/linkuser.reducer';
 
 export interface IPayProp extends StateProps, DispatchProps {
   id: string;
@@ -16,10 +16,32 @@ export interface IPayProp extends StateProps, DispatchProps {
 }
 
 export class Pay extends React.Component<IPayProp> {
-  state = { file: '', fileContentType: '', id: this.props.id, userid: this.props.userid, auth_code: this.props.auth_code };
+  state = {
+    file: '',
+    fileContentType: '',
+    id: this.props.id,
+    userid: this.props.userid,
+    auth_code: this.props.auth_code,
+    balance: false,
+    coupon: false
+  };
   componentDidMount() {
     if (this.state.userid !== '') {
       this.props.queryBalance(this.state.userid);
+      this.props
+        .paymethods(false, navigator.userAgent.toLowerCase().match(/iphone/i) ? 'ios' : 'android')
+        // @ts-ignore
+        .then(val => {
+          if (val.value.data.code > 0) {
+            val.value.data.data.map(pays => {
+              if (pays.other === '余额') {
+                this.setState({ balance: true });
+              } else if (pays.other === '优惠劵') {
+                this.setState({ coupon: true });
+              }
+            });
+          }
+        });
     }
     this.props
       .getMerchantsEntity(this.state.id)
@@ -62,24 +84,45 @@ export class Pay extends React.Component<IPayProp> {
             }
           });
       } else if (userAgent.match(/Weisen/i)) {
-        if (Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
-          toast.error('提示：余额不足，更换支付方式？');
-        } else {
-          toast.info('使用的是元积分支付，支付金额是：' + key);
-        }
+        document.getElementById('bottomdiv').style.height = '50%';
       } else {
         toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
       }
     }
   };
 
+  balancePay = () => {
+    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    if (Number(key) > 0) {
+      if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
+        toast.error('提示：余额不足，请更换其他支付方式。');
+      } else {
+        toast.info('使用的是余额支付，支付金额是：' + key);
+      }
+    }
+  };
+
+  couponPay = () => {
+    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    if (Number(key) > 0) {
+      if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.couponsum) < Number(key)) {
+        toast.error('提示：优惠劵不足，请更换其他支付方式。');
+      } else {
+        toast.info('使用的是优惠券支付，支付金额是：' + key);
+      }
+    }
+  };
+
   render() {
-    const { merchantEntity } = this.props;
+    const { merchantEntity, userassetsEntity } = this.props;
 
     function AmountOnInput() {
       const el = document.getElementById('bonusValue') as HTMLInputElement;
       const els = (document.getElementById('amount') as HTMLInputElement).value;
       el.textContent = String((Number(els) * merchantEntity.rebate) / 100);
+    }
+    function bottomdivheight() {
+      document.getElementById('bottomdiv').style.height = '0%';
     }
 
     return (
@@ -92,7 +135,7 @@ export class Pay extends React.Component<IPayProp> {
           <p className={'jh-amount-h6'}>付款金额</p>
           <div>
             <h1>￥</h1>
-            <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} />
+            <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} />
           </div>
           <Hrmargin />
           <label id="bonusValue" className="jh-integral">
@@ -102,6 +145,48 @@ export class Pay extends React.Component<IPayProp> {
           <button type="button" onClick={this.Payment}>
             立即支付
           </button>
+        </div>
+        <div
+          id="bottomdiv"
+          style={{
+            backgroundColor: '#fbfbfb',
+            width: '100%',
+            position: 'fixed',
+            bottom: '0px',
+            textAlign: 'left',
+            height: '0%',
+            transition: 'height 500ms'
+          }}
+        >
+          <div style={{ padding: '10px 20px 15px 20px  ', borderTop: '1px solid #cccccc' }}>
+            请选择支付方式：
+            <span style={{ float: 'right' }} onClick={bottomdivheight}>
+              ㄨ
+            </span>
+          </div>
+
+          {this.state.balance ? (
+            <div style={{ width: '100%' }} onClick={this.balancePay}>
+              <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
+                <span>○ </span>余额支付
+                <span style={{ float: 'right' }}>可用余额：{userassetsEntity.usablebalance}</span>
+              </div>
+            </div>
+          ) : (
+            <div />
+          )}
+          {this.state.coupon ? (
+            <div style={{ width: '100%' }} onClick={this.couponPay}>
+              <div style={{ padding: '13px 30px', borderTop: '1px solid #eeeeee' }}>
+                <span>○ </span>优惠劵支付
+                <span style={{ float: 'right' }}>可用优惠劵：{userassetsEntity.couponsum}</span>
+              </div>
+            </div>
+          ) : (
+            <div />
+          )}
+          {!this.state.balance && !this.state.coupon ? <div style={{ width: '100%', textAlign: 'center' }}>暂无可用支付方式</div> : <div />}
+          <div style={{ borderTop: '1px solid #eeeeee' }} />
         </div>
       </div>
     );
@@ -118,7 +203,7 @@ const mapStateToProps = ({ merchant, userassets }: IRootState) => ({
   userassetsEntity: userassets.entity
 });
 
-const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance, merchantPayment };
+const mapDispatchToProps = { getMerchantsEntity, getMyImg, queryBalance, merchantPayment, paymethods };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

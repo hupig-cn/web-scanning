@@ -99,7 +99,15 @@ export class Scanning extends React.Component<IScanningProp> {
           );
         }
       } else if (str[0].match(/result/i)) {
-        return <div> 支付完成之后的回掉地址，订单号是：{decodeURIComponent(str[0].replace('result=', ''))}</div>;
+        return (
+          <Info
+            message={
+              <span>
+                支付完成，点击下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，积分兑好礼！
+              </span>
+            }
+          />
+        );
       }
     }
   };

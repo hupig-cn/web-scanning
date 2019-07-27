@@ -167,7 +167,8 @@ export const queryAlipayUser = (authCode: string) => async dispatch => {
 };
 
 export const merchantPayment = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string) => {
-  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
+  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}
+  &money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
   return {
     payload: axios.get(requestUrl)
   };
@@ -178,6 +179,13 @@ export const createUserByScanningMerchant = (userid: string, token: string, acco
   return {
     payload: axios.get(requestUrl)
   };
+};
+
+export const paymethods = (online: boolean, os: string) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/basic/api/get-paymethods', { online, os })
+  });
+  return result;
 };
 
 export const reset = () => ({

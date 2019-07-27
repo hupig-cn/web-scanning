@@ -4,6 +4,7 @@ export interface IUserassets {
   balance?: string;
   usablebalance?: string;
   frozenbalance?: string;
+  couponsum?: string;
   integral?: string;
   creator?: string;
   createdate?: string;
