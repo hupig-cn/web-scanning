@@ -167,8 +167,7 @@ export const queryAlipayUser = (authCode: string) => async dispatch => {
 };
 
 export const merchantPayment = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string) => {
-  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}
-  &money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
+  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
   return {
     payload: axios.get(requestUrl)
   };
