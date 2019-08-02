@@ -8,18 +8,17 @@ import Info from './info';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession, registerRandom } from 'app/shared/reducers/authentication';
-import { queryAlipayUser, createUserByScanningMerchant } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { queryAlipayUser, createUserByScanningMerchant, queryWeChatUser } from 'app/entities/basic/linkuser/linkuser.reducer';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 
 export class Scanning extends React.Component<IScanningProp> {
+  state = { userid: '' };
   componentDidMount() {
     this.props.getSession();
   }
   ScanningType = () => {
     const url = location.search;
-    // @ts-ignore
-    alert(url);
     // tslint:disable-next-line: triple-equals
     if (url.indexOf('?') != -1) {
       const str = url.substr(1).split('&');
@@ -48,11 +47,9 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} />;
-        } else if (state.match(/WeChat/i)) {
+          return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
           return <Alipay auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} state={state} />;
-        } else {
         }
       } else if (str.length > 1 && str[1].match(/share/i)) {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
@@ -64,13 +61,14 @@ export class Scanning extends React.Component<IScanningProp> {
           const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
           window.location.replace(
             'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-            'appid=wx5450b0124166c23d&' +
-            'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
-            'response_type=code&' +
-            'scope=snsapi_base&' +
-            'state=' + state +
-            '#wechat_redirect');
-          return <Info message="暂不支持微信支付！" />;
+              'appid=wx5450b0124166c23d&' +
+              'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+              'response_type=code&' +
+              'scope=snsapi_base&' +
+              'state=' +
+              state +
+              '#wechat_redirect'
+          );
         } else if (userAgent.match(/Alipay/i)) {
           const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
           window.location.replace(
@@ -86,7 +84,7 @@ export class Scanning extends React.Component<IScanningProp> {
         } else if (userAgent.match(/Weisen/i)) {
           const { account } = this.props;
           if (account && account.login) {
-            return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" />;
+            return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
           } else {
             return (
               <Info
@@ -125,6 +123,36 @@ export class Scanning extends React.Component<IScanningProp> {
         ) : (
           <Info message={<span>支付完成，获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。</span>} />
         );
+      } else if (str[0].match(/code/i)) {
+        const state = decodeURIComponent(str[1].replace('state=', ''));
+        if (state.match(/WeChat/i)) {
+          // tslint:disable-next-line: no-invalid-this
+          this.props
+            .queryWeChatUser(decodeURIComponent(str[0].replace('code=', '')))
+            // @ts-ignore
+            .then(wechatuser => {
+              if (wechatuser.value.data === '获取微信会员信息失败') {
+                return <Info message="获取微信会员信息失败" />;
+              } else if (wechatuser.value.data.match(/用户/i)) {
+                this.setState({ userid: wechatuser.value.data.substring(2) });
+              } else {
+                // tslint:disable-next-line: no-invalid-this
+                this.props
+                  .registerRandom()
+                  // @ts-ignore
+                  .then(res => {
+                    if (!isNaN(res.value.data)) {
+                      // tslint:disable-next-line: no-invalid-this
+                      this.props.createUserByScanningMerchant(res.value.data, wechatuser.value.data, '微信');
+                      this.setState({ userid: res.value.data });
+                    } else {
+                      return <Info message={res.value.data.toString()} />;
+                    }
+                  });
+              }
+            });
+          return <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />;
+        }
       }
     }
   };
@@ -143,7 +171,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, queryAlipayUser, createUserByScanningMerchant, registerRandom };
+const mapDispatchToProps = { getSession, queryAlipayUser, createUserByScanningMerchant, registerRandom, queryWeChatUser };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

@@ -166,9 +166,32 @@ export const queryAlipayUser = (authCode: string) => async dispatch => {
   return result;
 };
 
+export const queryWeChatUser = (code: string) => async dispatch => {
+  const requestUrl = `services/basic/api/public/queryWeChatUser/?code=${code}`;
+  const result = await dispatch({
+    payload: axios.get(requestUrl)
+  });
+  return result;
+};
+
 export const merchantPayment = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string) => {
   // tslint:disable-next-line: max-line-length
   const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
+  return {
+    payload: axios.get(requestUrl)
+  };
+};
+
+export const merchantPaymentWeChat = (
+  userid: string,
+  money: string,
+  merchantid: string,
+  concession: number,
+  rebate: number,
+  name: string
+) => {
+  // tslint:disable-next-line: max-line-length
+  const requestUrl = `services/basic/api/public/merchantPaymentWeChat/?userid=${userid}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}`;
   return {
     payload: axios.get(requestUrl)
   };

@@ -7,7 +7,7 @@ import Header from 'app/modules/pay/header';
 import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
-import { merchantPayment, paymethods } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { merchantPayment, paymethods, merchantPaymentWeChat } from 'app/entities/basic/linkuser/linkuser.reducer';
 import FirstSetPayPass from 'app/modules/pay/firstSetPayPass';
 import Payment from 'app/modules/pay/payment';
 import { passwordCheck } from 'app/shared/reducers/authentication';
@@ -16,6 +16,7 @@ export interface IPayProp extends StateProps, DispatchProps {
   id: string;
   userid: string;
   auth_code: string;
+  wechat: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
@@ -25,6 +26,7 @@ export class Pay extends React.Component<IPayProp> {
     id: this.props.id,
     userid: this.props.userid,
     auth_code: this.props.auth_code,
+    wechat: this.props.wechat,
     balance: false,
     coupon: false,
     paymethod: '',
@@ -69,7 +71,24 @@ export class Pay extends React.Component<IPayProp> {
     if (Number(key) > 0) {
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
-        toast.info('暂不支持微信支付');
+        this.props
+          .merchantPaymentWeChat(
+            this.state.wechat,
+            key,
+            this.props.merchantEntity.userid,
+            this.props.merchantEntity.concession,
+            this.props.merchantEntity.rebate,
+            this.props.merchantEntity.name
+          )
+          // @ts-ignore
+          .then(val => {
+            if (val.value.data !== '订单生成错误') {
+              // window.location.replace('alipays://platformapi/startapp?' + 'appId=20000067&' + 'url=' + val.value.data);
+              // 启动支付
+            } else {
+              toast.info('链接超时');
+            }
+          });
       } else if (userAgent.match(/Alipay/i)) {
         this.props
           .merchantPayment(
@@ -241,7 +260,15 @@ const mapStateToProps = ({ merchant, userassets }: IRootState) => ({
   userassetsEntity: userassets.entity
 });
 
-const mapDispatchToProps = { passwordCheck, getMerchantsEntity, getMyImg, queryBalance, merchantPayment, paymethods };
+const mapDispatchToProps = {
+  passwordCheck,
+  getMerchantsEntity,
+  getMyImg,
+  queryBalance,
+  merchantPayment,
+  paymethods,
+  merchantPaymentWeChat
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
