@@ -18,6 +18,8 @@ export class Scanning extends React.Component<IScanningProp> {
   }
   ScanningType = () => {
     const url = location.search;
+    // @ts-ignore
+    alert(url);
     // tslint:disable-next-line: triple-equals
     if (url.indexOf('?') != -1) {
       const str = url.substr(1).split('&');
@@ -59,6 +61,15 @@ export class Scanning extends React.Component<IScanningProp> {
       } else if (str[0].match(/id/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
+          const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
+          window.location.replace(
+            'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+            'appid=wx5450b0124166c23d&' +
+            'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+            'response_type=code&' +
+            'scope=snsapi_base&' +
+            'state=' + state +
+            '#wechat_redirect');
           return <Info message="暂不支持微信支付！" />;
         } else if (userAgent.match(/Alipay/i)) {
           const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
