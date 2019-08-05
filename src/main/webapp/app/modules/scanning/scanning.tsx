@@ -135,8 +135,6 @@ export class Scanning extends React.Component<IScanningProp> {
                 return <Info message="获取微信会员信息失败" />;
               } else if (wechatuser.value.data.match(/用户/i)) {
                 this.setState({ userid: wechatuser.value.data.substring(2) });
-                // @ts-ignore
-                alert('已经存在用户id' + this.state.userid);
               } else {
                 // tslint:disable-next-line: no-invalid-this
                 this.props
@@ -147,16 +145,12 @@ export class Scanning extends React.Component<IScanningProp> {
                       // tslint:disable-next-line: no-invalid-this
                       this.props.createUserByScanningMerchant(res.value.data, wechatuser.value.data, '微信');
                       this.setState({ userid: res.value.data });
-                      // @ts-ignore
-                      alert('新创建的用户id' + this.state.userid);
                     } else {
                       return <Info message={res.value.data.toString()} />;
                     }
                   });
               }
             });
-          // @ts-ignore
-          alert('到下一个页面的id' + this.state.userid);
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
           ) : (

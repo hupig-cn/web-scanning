@@ -68,16 +68,12 @@ export class Pay extends React.Component<IPayProp> {
 
   Payment = () => {
     const key = (document.getElementById('amount') as HTMLInputElement).value;
-    // @ts-ignore
-    alert(this.state.wechat);
-    // @ts-ignore
-    alert(this.props.wechat);
     if (Number(key) > 0) {
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
         this.props
           .merchantPaymentWeChat(
-            this.state.wechat,
+            this.props.wechat,
             key,
             this.props.merchantEntity.userid,
             this.props.merchantEntity.concession,
