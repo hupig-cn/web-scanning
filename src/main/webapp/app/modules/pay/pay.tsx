@@ -82,7 +82,9 @@ export class Pay extends React.Component<IPayProp> {
           )
           // @ts-ignore
           .then(val => {
-            if (val.value.data !== '订单生成错误') {
+            if (val.value.data !== '订单生成错误' && val.value.data !== '获取微信会员信息失败' && val.value.data !== '调用微信支付失败') {
+              // @ts-ignore
+              alert(val.value.data);
               // window.location.replace('alipays://platformapi/startapp?' + 'appId=20000067&' + 'url=' + val.value.data);
               // 启动支付
             } else {
