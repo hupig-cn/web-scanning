@@ -16,7 +16,7 @@ export interface IPayProp extends StateProps, DispatchProps {
   id: string;
   userid: string;
   auth_code: string;
-  wechat: string;
+  wechat: any;
 }
 
 export class Pay extends React.Component<IPayProp> {
@@ -73,7 +73,7 @@ export class Pay extends React.Component<IPayProp> {
       if (userAgent.match(/MicroMessenger/i)) {
         this.props
           .merchantPaymentWeChat(
-            this.state.wechat,
+            this.state.wechat.wechat,
             key,
             this.props.merchantEntity.userid,
             this.props.merchantEntity.concession,

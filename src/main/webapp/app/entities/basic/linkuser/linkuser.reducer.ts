@@ -167,7 +167,7 @@ export const queryAlipayUser = (authCode: string) => async dispatch => {
 };
 
 export const queryWeChatUser = (code: string) => async dispatch => {
-  const requestUrl = `services/basic/api/public/queryWeChatUser/?code=${code}`;
+  const requestUrl = `services/basic/api/public/queryWeChatUser/${code}`;
   const result = await dispatch({
     payload: axios.get(requestUrl)
   });

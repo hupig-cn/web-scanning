@@ -151,7 +151,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          return <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />;
+          return <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state} />;
         }
       }
     }
