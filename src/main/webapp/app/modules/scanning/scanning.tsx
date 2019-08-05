@@ -61,7 +61,7 @@ export class Scanning extends React.Component<IScanningProp> {
           const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
           window.location.replace(
             'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-              'appid=wx5450b0124166c23d&' +
+              'appid=wx66cb03334f396adf&' +
               'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
               'response_type=code&' +
               'scope=snsapi_base&' +
