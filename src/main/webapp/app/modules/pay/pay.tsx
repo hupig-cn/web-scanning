@@ -77,7 +77,7 @@ export class Pay extends React.Component<IPayProp> {
       if (userAgent.match(/MicroMessenger/i)) {
         this.props
           .merchantPaymentWeChat(
-            this.state.wechat.wechat,
+            this.state.wechat,
             key,
             this.props.merchantEntity.userid,
             this.props.merchantEntity.concession,
