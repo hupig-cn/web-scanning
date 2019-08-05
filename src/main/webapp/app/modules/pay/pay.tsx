@@ -16,7 +16,7 @@ export interface IPayProp extends StateProps, DispatchProps {
   id: string;
   userid: string;
   auth_code: string;
-  wechat: any;
+  wechat: string;
 }
 
 export class Pay extends React.Component<IPayProp> {
@@ -69,7 +69,7 @@ export class Pay extends React.Component<IPayProp> {
   Payment = () => {
     const key = (document.getElementById('amount') as HTMLInputElement).value;
     // @ts-ignore
-    alert(this.state.wechat.wechat);
+    alert(this.state.wechat);
     // @ts-ignore
     alert(this.props.wechat);
     if (Number(key) > 0) {
