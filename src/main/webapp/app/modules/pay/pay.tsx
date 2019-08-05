@@ -69,7 +69,7 @@ export class Pay extends React.Component<IPayProp> {
   Payment = () => {
     const key = (document.getElementById('amount') as HTMLInputElement).value;
     // @ts-ignore
-    alert(this.state.wechat);
+    alert(this.state.wechat.wechat);
     // @ts-ignore
     alert(this.props.wechat);
     if (Number(key) > 0) {
