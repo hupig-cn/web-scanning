@@ -4,6 +4,7 @@ import Pay from '../pay/pay';
 import Menu from '../menu/menu';
 import Register from '../register/register';
 import Alipay from '../authorization/alipay';
+import Wechat from '../authorization/wechat';
 import Info from './info';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
@@ -156,6 +157,25 @@ export class Scanning extends React.Component<IScanningProp> {
           ) : (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={''} />
           );
+        } else if (state.match(/bindingwx/i)) {
+          return <Wechat code={decodeURIComponent(str[0].replace('code=', ''))} userid={state.substring(9)} />;
+        }
+      } else if (str[0].match(/bindingWeChat/i)) {
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.match(/MicroMessenger/i)) {
+          const userid = 'bindingwx' + decodeURIComponent(str[1].replace('userid=', ''));
+          window.location.replace(
+            'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+              'appid=wx5450b0124166c23d&' +
+              'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+              'response_type=code&' +
+              'scope=snsapi_base&' +
+              'state=' +
+              userid +
+              '#wechat_redirect'
+          );
+        } else {
+          <Info message={<span>请在微信端扫码绑定</span>} />;
         }
       }
     }

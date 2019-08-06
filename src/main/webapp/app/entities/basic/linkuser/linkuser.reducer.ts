@@ -125,6 +125,13 @@ export const bindingAlipay = (authCode: any, userid: any) => {
   };
 };
 
+export const bindingWeChat = (code: any, userid: any) => {
+  const requestUrl = `services/basic/api/public/bindingWeChat?code=${code}&userid=${userid}`;
+  return {
+    payload: axios.get(`${requestUrl}`)
+  };
+};
+
 export const getEntity: ICrudGetAction<ILinkuser> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {
