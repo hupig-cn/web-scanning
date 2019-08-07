@@ -178,9 +178,9 @@ export class Scanning extends React.Component<IScanningProp> {
           // tslint:disable-next-line: no-unused-expression
           <Info message={<span>请在微信端扫码绑定</span>} />;
         }
-      } else {
+      } else if (str[0].match(/error/i)) {
         // tslint:disable-next-line: no-unused-expression
-        <Info message={<span>得到的结果是：{str}</span>} />;
+        <Info message={<span>支付失败</span>} />;
       }
     }
   };
