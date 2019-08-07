@@ -90,7 +90,6 @@ export class Pay extends React.Component<IPayProp> {
               alert(val.value.code);
               alert(val.value.message);
               alert(val.value.data.data);
-              // @ts-ignore
               // WeixinJSBridge.invoke(
               //   'getBrandWCPayRequest',
               //   {
