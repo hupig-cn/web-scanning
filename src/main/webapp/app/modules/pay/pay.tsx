@@ -90,7 +90,7 @@ export class Pay extends React.Component<IPayProp> {
                 'getBrandWCPayRequest',
                 {
                   appId: key.appId, //公众号名称，由商户传入
-                  timeStamp: key.timeStamp, //时间戳，自1970年以来的秒数
+                  timeStamp: key.timeStamp.toString(), //时间戳，自1970年以来的秒数
                   nonceStr: key.nonceStr, //随机串
                   package: key.package,
                   signType: 'MD5', //微信签名方式：
