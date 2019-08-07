@@ -87,9 +87,10 @@ export class Pay extends React.Component<IPayProp> {
               alert(val);
               alert(val.value);
               alert(val.value.data);
-              alert(val.value.code);
-              alert(val.value.message);
-              alert(val.value.data.data);
+              alert(val.value.data.code);
+              alert(val.value.data.message);
+              alert(val.value.data.data[0]);
+              alert(val.value.data.data[0].timeStamp);
               // WeixinJSBridge.invoke(
               //   'getBrandWCPayRequest',
               //   {
