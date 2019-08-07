@@ -175,12 +175,10 @@ export class Scanning extends React.Component<IScanningProp> {
               '#wechat_redirect'
           );
         } else {
-          // tslint:disable-next-line: no-unused-expression
-          <Info message={<span>请在微信端扫码绑定</span>} />;
+          return <Info message={<span>请在微信端扫码绑定</span>} />;
         }
       } else if (str[0].match(/error/i)) {
-        // tslint:disable-next-line: no-unused-expression
-        <Info message={<span>支付失败</span>} />;
+        return <Info message={<span>支付失败</span>} />;
       }
     }
   };
