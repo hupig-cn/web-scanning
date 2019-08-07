@@ -87,12 +87,6 @@ export class Pay extends React.Component<IPayProp> {
               // tslint:disable-next-line: no-shadowed-variable
               const key = val.value.data.data[0];
               // @ts-ignore
-              alert(key.appId);
-              alert(key.timeStamp.toString());
-              alert(key.nonceStr);
-              alert(key.package);
-              alert(key.paySign);
-              // @ts-ignore
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
                 {
