@@ -84,7 +84,12 @@ export class Pay extends React.Component<IPayProp> {
           .then(val => {
             if (val.value.data !== '订单生成错误' && val.value.data !== '获取微信会员信息失败' && val.value.data !== '调用微信支付失败') {
               // @ts-ignore
+              alert(val);
+              alert(val.value);
+              alert(val.data);
+              alert(JSON.parse(val.value.data));
               alert(val.value.data);
+
               // @ts-ignore
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
