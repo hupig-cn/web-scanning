@@ -30,7 +30,8 @@ export class Pay extends React.Component<IPayProp> {
     balance: false,
     coupon: false,
     paymethod: '',
-    money: ''
+    money: '',
+    statics: 1
   };
   componentDidMount() {
     if (this.state.userid !== '') {
@@ -67,6 +68,11 @@ export class Pay extends React.Component<IPayProp> {
   }
 
   Payment = () => {
+    if (this.state.statics === 2) {
+      toast.info('请勿才同一时间多次提交订单。');
+      return;
+    }
+    this.setState({ statics: 2 });
     const key = (document.getElementById('amount') as HTMLInputElement).value;
     if (Number(key) > 0) {
       const userAgent = navigator.userAgent.toLowerCase();
@@ -210,7 +216,7 @@ export class Pay extends React.Component<IPayProp> {
               0
             </label>
             <p>可获得积分:</p>
-            <button type="button" onClick={this.Payment}>
+            <button type="button" onClick={this.Payment} id="thisbuttonpay">
               立即支付
             </button>
           </div>
