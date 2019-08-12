@@ -68,13 +68,13 @@ export class Pay extends React.Component<IPayProp> {
   }
 
   Payment = () => {
-    if (this.state.statics === 2) {
-      toast.info('请勿才同一时间多次提交订单。');
-      return;
-    }
-    this.setState({ statics: 2 });
     const key = (document.getElementById('amount') as HTMLInputElement).value;
     if (Number(key) > 0) {
+      if (this.state.statics === 2) {
+        toast.info('请勿才同一时间多次提交订单。');
+        return;
+      }
+      this.setState({ statics: 2 });
       const userAgent = navigator.userAgent.toLowerCase();
       if (userAgent.match(/MicroMessenger/i)) {
         this.props
