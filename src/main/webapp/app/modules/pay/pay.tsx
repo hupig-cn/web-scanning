@@ -222,6 +222,9 @@ export class Pay extends React.Component<IPayProp> {
               立即支付
             </button>
           </div>
+          <div>
+            <img src="./content/images/adv.jpg" style={{ float: 'none', width: '100%', height: '200px', marginTop: '50px' }} />
+          </div>
           <div
             id="bottomdiv"
             style={{
