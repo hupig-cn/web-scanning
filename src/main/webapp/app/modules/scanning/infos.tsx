@@ -15,7 +15,7 @@ export class Info extends React.Component<IInfoProp> {
           height: '100%',
           position: 'fixed',
           left: '0px',
-          backgroundColor: '#fe4365',
+          backgroundColor: '#ffffff',
           marginTop: '-20px'
         }}
       >
@@ -25,7 +25,7 @@ export class Info extends React.Component<IInfoProp> {
             width: '100%',
             height: 'auto',
             left: '0px',
-            backgroundColor: '#fe4365'
+            backgroundColor: '#ffffff'
           }}
         >
           <div
