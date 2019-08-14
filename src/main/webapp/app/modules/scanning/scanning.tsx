@@ -6,6 +6,7 @@ import Register from '../register/register';
 import Alipay from '../authorization/alipay';
 import Wechat from '../authorization/wechat';
 import Info from './info';
+import Infos from './infos';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession, registerRandom } from 'app/shared/reducers/authentication';
@@ -110,19 +111,44 @@ export class Scanning extends React.Component<IScanningProp> {
         }
       } else if (str[0].match(/result/i)) {
         return (
-          <Info
+          <Infos
             message={
               <span>
-                支付完成，点击下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，积分兑好礼！
+                支付成功，下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分消费付款，可获得更多积分！
+                <br />
+                <span>
+                  <a href="http://www.yuanscore.com">点击下载</a>
+                </span>
               </span>
             }
           />
         );
       } else if (str[0].match(/resapp/i)) {
         return decodeURIComponent(str[0].replace('resapp=', '')) === 'coupon' ? (
-          <Info message={<span>支付完成。</span>} />
+          <Infos
+            message={
+              <span>
+                支付成功，下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分消费付款，可获得更多积分！
+                <br />
+                <span>
+                  <a href="http://www.yuanscore.com">点击下载</a>
+                </span>
+              </span>
+            }
+          />
         ) : (
-          <Info message={<span>支付完成，获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。</span>} />
+          <Infos
+            message={
+              <span>
+                支付成功，恭喜你获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。 下载
+                <a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分消费付款，可获得更多积分！
+                <br />
+                <span>
+                  <a href="http://www.yuanscore.com">点击下载</a>
+                </span>
+              </span>
+            }
+          />
         );
       } else if (str[0].match(/code/i)) {
         const state = decodeURIComponent(str[1].replace('state=', ''));
