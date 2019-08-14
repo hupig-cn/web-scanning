@@ -41,9 +41,26 @@ export class Info extends React.Component<IInfoProp> {
           >
             <div style={{ color: '#fe4365', padding: '5px', backgroundColor: '#fe436515' }}>提示</div>
             <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-              <img src="./content/images/info.png" style={{ float: 'none', width: '200px', height: '200px', marginTop: '50px' }} />
+              <img
+                src="./content/images/info.png"
+                style={{
+                  float: 'none',
+                  width: '93%',
+                  height: 'auto',
+                  marginTop: '3%',
+                  borderRadius: '12px 12px 0px 0px'
+                }}
+              />
             </div>
-            <div style={{ padding: '40px 30px' }}>
+            <div
+              style={{
+                backgroundColor: 'rgba(254, 67, 101, 0.082)',
+                width: '93%',
+                margin: '0 auto',
+                marginBottom: '3%',
+                padding: '5px'
+              }}
+            >
               <span>{this.props.message}</span>
             </div>
           </div>

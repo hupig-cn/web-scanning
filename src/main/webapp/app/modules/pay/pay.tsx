@@ -223,7 +223,15 @@ export class Pay extends React.Component<IPayProp> {
             </button>
           </div>
           <div>
-            <img src="./content/images/adv.jpg" style={{ float: 'none', width: '100%', height: '200px', marginTop: '50px' }} />
+            <img
+              src="./content/images/adv.jpg"
+              style={{
+                float: 'none',
+                width: '100%',
+                height: 'auto',
+                marginTop: '35px'
+              }}
+            />
           </div>
           <div
             id="bottomdiv"
