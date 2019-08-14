@@ -116,11 +116,11 @@ export class Scanning extends React.Component<IScanningProp> {
               <span>
                 支付成功。
                 <br />
-                下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
-                <br />
-                <span>
-                  <a href="http://www.yuanscore.com">点击下载</a>
-                </span>
+                点击下载
+                <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
+                  <u>《圆积分》</u>
+                </a>
+                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
               </span>
             }
           />
@@ -132,11 +132,11 @@ export class Scanning extends React.Component<IScanningProp> {
               <span>
                 支付成功。
                 <br />
-                下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
-                <br />
-                <span>
-                  <a href="http://www.yuanscore.com">点击下载</a>
-                </span>
+                点击下载
+                <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
+                  <u>《圆积分》</u>
+                </a>
+                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
               </span>
             }
           />
@@ -146,11 +146,11 @@ export class Scanning extends React.Component<IScanningProp> {
               <span>
                 支付成功，恭喜你获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。
                 <br />
-                下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
-                <br />
-                <span>
-                  <a href="http://www.yuanscore.com">点击下载</a>
-                </span>
+                点击下载
+                <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
+                  <u>《圆积分》</u>
+                </a>
+                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
               </span>
             }
           />

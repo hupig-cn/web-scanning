@@ -25,8 +25,7 @@ export class Info extends React.Component<IInfoProp> {
             width: '100%',
             height: 'auto',
             left: '0px',
-            backgroundColor: '#fe4365',
-            padding: '15px'
+            backgroundColor: '#fe4365'
           }}
         >
           <div
@@ -39,7 +38,6 @@ export class Info extends React.Component<IInfoProp> {
               borderRadius: '3px'
             }}
           >
-            <div style={{ color: '#fe4365', padding: '5px', backgroundColor: '#fe436515' }}>提示</div>
             <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
               <img
                 src="./content/images/infos.png"
@@ -58,7 +56,8 @@ export class Info extends React.Component<IInfoProp> {
                 width: '93%',
                 margin: '0 auto',
                 marginBottom: '3%',
-                padding: '5px'
+                padding: '5px',
+                borderRadius: '0px 0px 15px 15px'
               }}
             >
               <span>{this.props.message}</span>
