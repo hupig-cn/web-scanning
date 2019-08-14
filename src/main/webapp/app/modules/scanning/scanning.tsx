@@ -114,13 +114,16 @@ export class Scanning extends React.Component<IScanningProp> {
           <Infos
             message={
               <span>
-                支付成功。
+                <h3>支付成功</h3>
+                恭喜你本次消费，获得<span style={{ color: 'red', fontSize: '1.4rem' }}>{' 商城购物 '}</span>积分。
                 <br />
                 点击下载
                 <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
                   <u>《圆积分》</u>
                 </a>
-                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
+                免费兑换海量商品
+                <br />
+                使用圆积分付款，可获得更多积分！
               </span>
             }
           />
@@ -130,13 +133,16 @@ export class Scanning extends React.Component<IScanningProp> {
           <Infos
             message={
               <span>
-                支付成功。
+                <h3>支付成功</h3>
+                恭喜你本次消费，获得<span style={{ color: 'red', fontSize: '1.4rem' }}>{' 商城购物 '}</span>积分。
                 <br />
                 点击下载
                 <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
                   <u>《圆积分》</u>
                 </a>
-                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
+                免费兑换海量商品
+                <br />
+                使用圆积分付款，可获得更多积分！
               </span>
             }
           />
@@ -144,13 +150,18 @@ export class Scanning extends React.Component<IScanningProp> {
           <Infos
             message={
               <span>
-                支付成功，恭喜你获得({decodeURIComponent(str[0].replace('resapp=', ''))})积分。
+                <h3>支付成功</h3>
+                恭喜你获得
+                <span style={{ color: 'red', fontSize: '2rem' }}>{' ' + decodeURIComponent(str[0].replace('resapp=', '')) + ' '}</span>
+                个积分。
                 <br />
                 点击下载
                 <a href="http://www.yuanscore.com" style={{ color: 'red' }}>
                   <u>《圆积分》</u>
                 </a>
-                APP，可免费兑换海量商品，使用圆积分付款，可获得更多积分！
+                APP，兑换海量商品
+                <br />
+                使用圆积分付款，可获得更多积分！
               </span>
             }
           />

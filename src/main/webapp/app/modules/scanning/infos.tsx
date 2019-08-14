@@ -38,29 +38,30 @@ export class Info extends React.Component<IInfoProp> {
               borderRadius: '3px'
             }}
           >
-            <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
-              <img
-                src="./content/images/infos.png"
-                style={{
-                  float: 'none',
-                  width: '93%',
-                  height: 'auto',
-                  marginTop: '3%',
-                  borderRadius: '12px 12px 0px 0px'
-                }}
-              />
-            </div>
             <div
               style={{
                 backgroundColor: 'rgba(254, 67, 101, 0.082)',
                 width: '93%',
                 margin: '0 auto',
-                marginBottom: '3%',
-                padding: '5px',
-                borderRadius: '0px 0px 15px 15px'
+                padding: '10px 5px',
+                borderRadius: '12px 12px 0px 0px',
+                marginTop: '10px'
               }}
             >
               <span>{this.props.message}</span>
+            </div>
+            <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
+              <a href="http://www.yuanscore.com">
+                <img
+                  src="./content/images/infos.png"
+                  style={{
+                    float: 'none',
+                    width: '93%',
+                    height: 'auto',
+                    borderRadius: '0px 0px 12px 12px'
+                  }}
+                />
+              </a>
             </div>
           </div>
         </div>
