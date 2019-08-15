@@ -7,6 +7,7 @@ import Alipay from '../authorization/alipay';
 import Wechat from '../authorization/wechat';
 import Info from './info';
 import Infos from './infos';
+import Errors from './errors';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession, registerRandom } from 'app/shared/reducers/authentication';
@@ -264,8 +265,35 @@ export class Scanning extends React.Component<IScanningProp> {
         } else {
           return <Info message={<span>请在微信端扫码绑定</span>} />;
         }
-      } else if (str[0].match(/error/i)) {
-        return <Info message={<span>支付失败</span>} />;
+      } else if (str[0].match(/payerror/i)) {
+        return (
+          <Errors
+            message={
+              <span>
+                <h3>支付失败</h3>
+                很遗憾，你暂未获得积分
+                <br />
+                点击下载
+                <a
+                  href="http://www.yuanscore.com"
+                  style={{
+                    color: 'red',
+                    textDecoration: 'underline',
+                    fontWeight: 'bold',
+                    fontSize: '1.2rem'
+                  }}
+                >
+                  (圆积分)
+                </a>
+                免费兑换海量商品
+                <br />
+                <a href="http://www.yuanscore.com" style={{ color: 'red', textDecoration: 'underline', fontSize: '1.2rem' }}>
+                  点击此处下载
+                </a>
+              </span>
+            }
+          />
+        );
       }
     }
   };
