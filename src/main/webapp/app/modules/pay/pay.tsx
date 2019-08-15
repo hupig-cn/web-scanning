@@ -106,7 +106,7 @@ export class Pay extends React.Component<IPayProp> {
                 // tslint:disable-next-line: only-arrow-functions
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                    let values = String((key * this.props.merchantEntity.rebate) / 100);
+                    const values = String((key * this.props.merchantEntity.rebate) / 100);
                     window.location.replace('http://app.yuanscore.com/?resapp=' + values);
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?error=0');
