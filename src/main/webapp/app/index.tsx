@@ -12,10 +12,8 @@ const rootEl = document.getElementById('root');
 
 const render = Component =>
   ReactDOM.render(
-    <// @ts-ignore
-    Provider
-      store={store}
-    >
+    // @ts-ignore
+    <Provider store={store}>
       <Component />
     </Provider>,
     rootEl
