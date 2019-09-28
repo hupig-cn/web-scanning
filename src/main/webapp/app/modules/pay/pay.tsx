@@ -205,8 +205,8 @@ export class Pay extends React.Component<IPayProp> {
           <div style={{ width: '80%', marginLeft: '10%' }}>
             <Header isAuthenticated />
             <img src={this.state.fileContentType ? `data:${this.state.fileContentType};base64,${this.state.file}` : null} />
-            <h6>付款给商家({merchantEntity.concession}%)</h6>
-            <p>昵称:{merchantEntity.name}</p>
+            <h6>付款给{merchantEntity.name}</h6>
+            <p>可获得积分({merchantEntity.rebate}%)</p>
             <p className={'jh-amount-h6'}>付款金额</p>
             <div>
               <h1>￥</h1>
