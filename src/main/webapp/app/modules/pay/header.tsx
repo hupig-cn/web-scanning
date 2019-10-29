@@ -29,19 +29,25 @@ export default class Header extends React.Component<IHeaderProps> {
 
     return (
       <div id="app-header">
-        <Navbar dark expand="sm" fixed="top" className="jh-navbar">
-          <h4 onClick={goBack}>
-            <img
-              src="./content/images/back.png"
-              style={{
-                width: '24px',
-                height: '24px'
-              }}
-            />
-          </h4>
-          <h5 className="jh-navbar-h4">{Alipayorwechat()}</h5>
-        </Navbar>
-        <div style={{ height: '50px' }} />
+        {Alipayorwechat() === '元积分支付' ? (
+          <div style={{ height: '0px' }} />
+        ) : (
+          <div>
+            <Navbar dark expand="sm" fixed="top" className="jh-navbar">
+              <h4 onClick={goBack}>
+                <img
+                  src="./content/images/back.png"
+                  style={{
+                    width: '24px',
+                    height: '24px'
+                  }}
+                />
+              </h4>
+              <h5 className="jh-navbar-h4">{Alipayorwechat()}</h5>
+            </Navbar>
+            <div style={{ height: '50px' }} />
+          </div>
+        )}
       </div>
     );
   }
