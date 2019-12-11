@@ -27,11 +27,17 @@ export class Payment extends React.Component<IPaymentProp> {
     money: this.props.money,
     merchantid: this.props.merchantid,
     concession: this.props.concession,
-    rebate: this.props.rebate
+    rebate: this.props.rebate,
+    statics: 1
   };
   superHandleSubmit = (event, errors, { password }) => {
     const { paymethod, userid, money, merchantid, concession, rebate } = this.props;
     if (paymethod === 'yue') {
+      if (this.state.statics === 2) {
+        toast.info('请勿在同一时间多次支付订单。');
+        return;
+      }
+      this.setState({ statics: 2 });
       const orderResult = this.props.merchantPaymentYue(userid, money, merchantid, concession, rebate);
       // @ts-ignore
       orderResult.then(res => {

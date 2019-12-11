@@ -72,7 +72,7 @@ export class Pay extends React.Component<IPayProp> {
     const nums = (Number(key) * this.props.merchantEntity.rebate) / 100;
     if (Number(key) > 0) {
       if (this.state.statics === 2) {
-        toast.info('请勿才同一时间多次提交订单。');
+        toast.info('请勿在同一时间多次提交订单。');
         return;
       }
       this.setState({ statics: 2 });
