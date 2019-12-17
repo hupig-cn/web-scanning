@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const titleName = () => '￥12.00';
+export const titleName =  '￥12.00';
 
 export default function LongMenu() {
   function goBack() {
