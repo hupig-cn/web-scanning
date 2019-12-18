@@ -1,115 +1,11 @@
-// import React from 'react';
-// import { connect } from 'react-redux';
-// import {menu} from 'app/requests/menu/menu.reducer';
-// import { IRootState } from 'app/shared/reducers';
-
-// export interface ContentInt extends StateProps, DispatchProps {}
-
-// export class Content extends React.Component<ContentInt> {
-  
-//   state = {
-//     getAllOrderList: [],
-//     order:{
-//       id:Number, 
-//       ordercode:"", 
-//       orderstatus:"",
-//       sum:"",
-//       userid:"",
-//       payee:"", 
-//       payway:"",
-//       payresult:"",
-//       paytime:"",
-//       concession:"",
-//       rebate:"",
-//       creator:"", 
-//       createdate:"",
-//       modifier:"", 
-//       modifierdate:"",
-//       modifiernum:"",
-//       logicdelete:"",
-//       other:"" , 
-//       expressCompany:"", 
-//       expressNo:"" }
-//     };
-    
-//     componentDidMount() {
-//       // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
-//       // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
-//       // @ts-ignore
-//       // this.props.menu("12","34")
-      
-//       this.props.menu((window.location.search.substring(1).split("&")[0]).split("=")[1],(window.location.search.substring(1).split("&")[1]).split("=")[1]).then(res => {
-//         console.log(res);
-//         if (res.value.data.data) {
-//           // let reactor = "1";
-//           console.log(res.value.data.data)
-//           this.setState({
-//             getAllOrderList: res.value.data.data
-            
-//           });
-//           }
-//       });
-      
-//     }
-
-//   render() {
-    
-//     return (
-//       <div>
-//          {...this.state.getAllOrderList.map(order => (
-//         // console.log(order.id)
-//        <div key={order.id}>   
-//           {order.id}
-//         </div>
-
-//       ))}
-//       </div>
-//         // <div></div>
-//     );
-//   }
-// }
-// const mapStateToProps = ({ authentication }: IRootState) => ({
-//   account: authentication.account,
-//   isAuthenticated: authentication.isAuthenticated
-// });
-
-// const mapDispatchToProps = { menu };
-
-// type StateProps = ReturnType<typeof mapStateToProps>;
-// type DispatchProps = typeof mapDispatchToProps;
-
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Content);
-
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { IRootState } from 'app/shared/reducers';
+import {merchantDishestype} from 'app/requests/menu/menu.reducer';
 
-class Axios extends React.Component{
-  constructor(props){
-    super(props);
-    this.state ={
-      list:[]
-    }
-  }
-  getData = () =>{
-    let data1 = {"Loc":"12","userId":"51"};
-    // var api = 'http://localhost:8084/services/basic/api/incomeDetails/test/loc';
-    axios.post('http://localhost:8084/services/basic/api/incomeDetails/test/loc',data1)
-    .then((response)=>{
-      if(response.data){
-        console.log(response.data);
-      }
-    })
-    .catch(function (error) {
-  });
-  }
-
-}
-
+export interface ContentInt extends StateProps, DispatchProps {}
 export const type = [
-  
+
   {
     position: '1',
     name: '热销'
@@ -130,8 +26,8 @@ export const type = [
     position: '5',
     name: '酒水'
   }
-  
-  
+
+
 ];
 
 
@@ -163,53 +59,111 @@ export const food = [
   }
 ];
 
-export default function LongMenu() {
-  function spanalert(name) {
-    alert('点了：'+name);
-    
-  }
-  return (
-    <div>
-      <div style={{ width: '20%', overflow: 'hidden', float: 'left' }}>
-        {type.map((name, index) => (
-          <span
-          key={name.position}
-            style={{
-              float: 'left',
-              backgroundColor: name.position === '1' ? '#ffffff' : '#f8f8f8',
-              borderRight: name.position === '1' ? 'none' : '1px solid #ececec',
-              borderLeft: name.position === '1' ? '1px solid #fe4365' : 'none',
-              width: '100%',
-              padding: '10px',
-              textAlign: 'center',
-              borderBottom: '1px solid #ececec',
-              color: '#00000095'
-            }}
-            onClick={spanalert}
-            
-          >
+export class Content extends React.Component<ContentInt> {
+
+  state = {
+    getAllOrderList: [],
+    order:{
+      id:Number,
+      ordercode:"",
+      orderstatus:"",
+      sum:"",
+      userid:"",
+      payee:"",
+      payway:"",
+      payresult:"",
+      paytime:"",
+      concession:"",
+      rebate:"",
+      creator:"",
+      createdate:"",
+      modifier:"",
+      modifierdate:"",
+      modifiernum:"",
+      logicdelete:"",
+      other:"" ,
+      expressCompany:"",
+      expressNo:"" },
+    // type:{
+    //   name:String,
+    //   id:Number
+    // }
+    typeList: []
+    };
+
+    componentDidMount() {
+      // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
+      // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
+      // @ts-ignore
+      // this.props.menu("12","34")
+
+ 
+      this.props.merchantDishestype((window.location.search.substring(1).split("&")[0]).split("=")[1],(window.location.search.substring(1).split("&")[1]).split("=")[1]).then(res => {
+        console.log(res);
+        if (res.value.data.data) {
+          // let reactor = "1";
+          console.log(res.value.data.data)
+          this.setState({
+            typeList: res.value.data.data
+
+          });
+        }
+      });
+
+    }
+
+  render() {
+
+    return (
+        /*<div>
+      {...this.state.getAllOrderList.map(order => (
+        // console.log(order.id)
+        <div key={order.id}>
+          {order.id}
+        </div>
+
+      ))}
+    </div>*/
+        <div>
+          <div style={{ width: '20%', overflow: 'hidden', float: 'left' }}>
+            {...this.state.typeList.map((name, index) => (
+              <span
+                key={index}
+                style={{
+                  float: 'left',
+                  backgroundColor: name.id === '1' ? '#ffffff' : '#f8f8f8',
+                  borderRight: name.id === '1' ? 'none' : '1px solid #ececec',
+                  borderLeft: name.id === '1' ? '1px solid #fe4365' : 'none',
+                  width: '100%',
+                  padding: '10px',
+                  textAlign: 'center',
+                  borderBottom: '1px solid #ececec',
+                  color: '#00000095'
+                }}
+
+              >
             {name.name}
           </span>
-        ))}
-        <span
-          style={{
-            float: 'left',
-            height: 'calc(100vh - ' + type.length * 44 + 'px)',
-            width: '100%',
-            borderRight: '1px solid #ececec'
-          }}
-        />
-      </div>
-      <div style={{ width: '80%', overflow: 'hidden', float: 'right' }}>
-        {food.map((name, index) => (
-          <div
-          key={name.name}
-            style={{
-              padding: '10px',
-              borderBottom: '1px solid #ececec',
-              overflow: 'hidden'
-            }}
-          >
+            ))}
+            <span
+              style={{
+                float: 'left',
+                height: 'calc(100vh - ' + 6 * 44 + 'px)',
+                width: '100%',
+                borderRight: '1px solid #ececec'
+              }}
+            />
+          </div>
+          <div style={{ width: '80%', overflow: 'hidden', float: 'right' }}>
+            {food.map((name, index) => (
+              <div
+                key={name.name}
+                style={{
+                  padding: '10px',
+                  borderBottom: '1px solid #ececec',
+                  overflow: 'hidden'
+                }}
+              >
             <span>
               <img
                 style={{
@@ -220,26 +174,26 @@ export default function LongMenu() {
                 src={name.img}
               />
             </span>
-            <span
-              style={{
-                float: 'left',
-                width: 'calc(100% - 75px)',
-                fontSize: '1.05rem',
-                marginLeft: '15px',
-                textAlign: 'left'
-              }}
-            >
+                <span
+                  style={{
+                    float: 'left',
+                    width: 'calc(100% - 75px)',
+                    fontSize: '1.05rem',
+                    marginLeft: '15px',
+                    textAlign: 'left'
+                  }}
+                >
               {name.name}
             </span>
-            <span
-              style={{
-                float: 'left',
-                width: 'calc(100% - 75px)',
-                fontSize: '0.93rem',
-                marginLeft: '15px',
-                textAlign: 'left'
-              }}
-            >
+                <span
+                  style={{
+                    float: 'left',
+                    width: 'calc(100% - 75px)',
+                    fontSize: '0.93rem',
+                    marginLeft: '15px',
+                    textAlign: 'left'
+                  }}
+                >
               <span style={{ color: '#fe4365' }}>￥{name.price}</span>/份
               <span style={{ float: 'right' }}>
                 <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
@@ -247,9 +201,53 @@ export default function LongMenu() {
                 <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
               </span>
             </span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+        </div>
+    );
+    }
+        // <div></div>
+  }
+
+const mapStateToProps = ({ authentication }: IRootState) => ({
+  account: authentication.account,
+  isAuthenticated: authentication.isAuthenticated
+});
+
+const mapDispatchToProps = { merchantDishestype };
+
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = typeof mapDispatchToProps;
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Content);
+
+// import React from 'react';
+// import axios from 'axios';
+//
+// class Axios extends React.Component{
+//   constructor(props){
+//     super(props);
+//     this.state ={
+//       list:[]
+//     }
+//   }
+//   getData = () =>{
+//     let data1 = {"Loc":"12","userId":"51"};
+//     // var api = 'http://localhost:8084/services/basic/api/incomeDetails/test/loc';
+//     axios.post('http://localhost:8084/services/basic/api/incomeDetails/test/loc',data1)
+//     .then((response)=>{
+//       if(response.data){
+//         console.log(response.data);
+//       }
+//     })
+//     .catch(function (error) {
+//   });
+//   }
+//
+// }
+//
+
