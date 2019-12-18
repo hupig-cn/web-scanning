@@ -13,3 +13,10 @@ export const menu = (userId : any,loc: any) => async dispatch => {
     });
     return result;
   };
+
+  export const ContentType = (id : any) => async dispatch => {
+    const result = await dispatch({
+      payload: axios.post('http://localhost:8084/services/merchant/api/public/get/merchantNameAndData?id='+`${id}`)
+    });
+    return result;
+  };
