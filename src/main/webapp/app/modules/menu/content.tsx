@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype } from 'app/requests/menu/menu.reducer';
+import { merchantDishestype, merchantName } from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
-import { merchantName } from 'app/requests/menu/menu.reducer';
 import Lowercolumn from './lowercolumn';
 
-export interface ContentInt extends StateProps, DispatchProps {}
+export interface IContentInt extends StateProps, DispatchProps {}
 
 export const type = [
   {
@@ -126,10 +125,10 @@ export class Content extends React.Component<ContentInt> {
           .split('=')[1]
       )
       .then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.value.data.data) {
           // let reactor = "1";
-          console.log(res.value.data.data);
+          // console.log(res.value.data.data);
           this.setState({
             typeList: res.value.data.data
           });
@@ -199,7 +198,8 @@ export class Content extends React.Component<ContentInt> {
               }}
             >
               <div>{name.name}</div>
-              {name.dishesList.map((name, index) => (
+              {// tslint:disable-next-line: no-shadowed-variable
+              name.dishesList.map((name, index) => (
                 <div
                   key={index}
                   style={{

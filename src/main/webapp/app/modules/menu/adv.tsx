@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import { IRootState } from 'app/shared/reducers';
 
-export interface ContentInt extends StateProps, DispatchProps {}
+export interface IContentInt extends StateProps, DispatchProps {}
 
-export class Title extends React.Component<ContentInt> {
+export class Title extends React.Component<IContentInt> {
   state = {
     getImagesList: []
   };
