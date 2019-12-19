@@ -11,7 +11,12 @@ import Errors from './errors';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession, registerRandom } from 'app/shared/reducers/authentication';
-import { queryAlipayUser, createUserByScanningMerchant, queryWeChatUser } from 'app/entities/basic/linkuser/linkuser.reducer';
+import {
+  queryAlipayUser,
+  createUserByScanningMerchant,
+  createUserByShareLink,
+  queryWeChatUser
+} from 'app/entities/basic/linkuser/linkuser.reducer';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 
@@ -281,7 +286,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   .then(res => {
                     if (!isNaN(res.value.data)) {
                       // tslint:disable-next-line: no-invalid-this
-                      this.props.createUserByScanningMerchant(res.value.data, wechatuser.value.data, '微信');
+                      this.props.createUserByShareLink(res.value.data, wechatuser.value.data, '微信', state.substring(7));
                       this.setState({ userid: res.value.data });
                     } else {
                       return <Info message={res.value.data.toString()} />;
@@ -357,7 +362,14 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, queryAlipayUser, createUserByScanningMerchant, registerRandom, queryWeChatUser };
+const mapDispatchToProps = {
+  getSession,
+  queryAlipayUser,
+  createUserByScanningMerchant,
+  createUserByShareLink,
+  registerRandom,
+  queryWeChatUser
+};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

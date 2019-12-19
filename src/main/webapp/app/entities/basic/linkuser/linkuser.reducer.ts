@@ -227,6 +227,13 @@ export const createUserByScanningMerchant = (userid: string, token: string, acco
   };
 };
 
+export const createUserByShareLink = (userid: string, token: string, accounttype: string, referrer: string) => {
+  const requestUrl = `services/basic/api/public/user/createUserByShareLink/?userid=${userid}&token=${token}&accounttype=${accounttype}&referrer=${referrer}`;
+  return {
+    payload: axios.get(requestUrl)
+  };
+};
+
 export const paymethods = (online: boolean, os: string) => async dispatch => {
   const result = await dispatch({
     payload: axios.post('services/basic/api/get-paymethods', { online, os })
