@@ -46,12 +46,12 @@ export class Title extends React.Component<ContentInt> {
           }}
         >
 
-          
-            <img 
+
+            <img
             style={{ width: '100%', height: '65px' }} src=
-            {merchant.merchantphoto} 
+            {merchant.merchantphoto}
             />
-            
+
         </div>
             ))}
         <div style={{ height: '45px' }} />
@@ -60,7 +60,6 @@ export class Title extends React.Component<ContentInt> {
     )
   }
 }
-
 
 const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,

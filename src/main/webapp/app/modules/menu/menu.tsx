@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
 import { getSession } from 'app/shared/reducers/authentication';
 import Titles from './titles';
-import Lowercolumn from './lowercolumn';
 import Adv from './adv';
 import Content from './content';
 
@@ -18,9 +17,8 @@ export class Menu extends React.Component<IMenuProp> {
     return (
       <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
         <Titles />
-        <Adv />
+        <Adv/>
         <Content />
-        <Lowercolumn />
       </div>
     );
   }
