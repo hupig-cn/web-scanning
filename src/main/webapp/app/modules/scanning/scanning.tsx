@@ -58,6 +58,22 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
+      } else if (str[0].match(/articleid/i)) {
+        // http://app.yuanscore.com/?articleid=3
+        const userAgent = navigator.userAgent.toLowerCase();
+        if (userAgent.match(/MicroMessenger/i)) {
+          const state = 'Article' + decodeURIComponent(str[0].replace('articleid=', ''));
+          window.location.replace(
+            'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+              'appid=wx5450b0124166c23d&' +
+              'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+              'response_type=code&' +
+              'scope=snsapi_base&' +
+              'state=' +
+              state +
+              '#wechat_redirect'
+          );
+        }
       } else if (str[0].match(/id/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
@@ -247,6 +263,35 @@ export class Scanning extends React.Component<IScanningProp> {
           );
         } else if (state.match(/bindingwx/i)) {
           return <Wechat code={decodeURIComponent(str[0].replace('code=', ''))} userid={state.substring(9)} />;
+        } else if (state.match(/Article/i)) {
+          // tslint:disable-next-line: no-invalid-this
+          this.props
+            .queryWeChatUser(decodeURIComponent(str[0].replace('code=', '')))
+            // @ts-ignore
+            .then(wechatuser => {
+              if (wechatuser.value.data === '获取微信会员信息失败') {
+                return <Info message="获取微信会员信息失败" />;
+              } else if (wechatuser.value.data.match(/用户/i)) {
+                this.setState({ userid: wechatuser.value.data.substring(2) });
+              } else {
+                // tslint:disable-next-line: no-invalid-this
+                this.props
+                  .registerRandom()
+                  // @ts-ignore
+                  .then(res => {
+                    if (!isNaN(res.value.data)) {
+                      // tslint:disable-next-line: no-invalid-this
+                      this.props.createUserByScanningMerchant(res.value.data, wechatuser.value.data, '微信');
+                      this.setState({ userid: res.value.data });
+                    } else {
+                      return <Info message={res.value.data.toString()} />;
+                    }
+                  });
+              }
+            });
+          window.location.replace(
+            'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + this.state.userid
+          );
         }
       } else if (str[0].match(/bindingWeChat/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
