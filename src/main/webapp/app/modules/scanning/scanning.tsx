@@ -277,7 +277,12 @@ export class Scanning extends React.Component<IScanningProp> {
               if (wechatuser.value.data === '获取微信会员信息失败') {
                 return <Info message="获取微信会员信息失败" />;
               } else if (wechatuser.value.data.match(/用户/i)) {
-                this.setState({ userid: wechatuser.value.data.substring(2) });
+                window.location.replace(
+                  'http://www.yuanscore.com/ArticleDeatil.html?deailId=' +
+                    state.substring(7) +
+                    '&userid=' +
+                    wechatuser.value.data.substring(2)
+                );
               } else {
                 // tslint:disable-next-line: no-invalid-this
                 this.props
@@ -287,16 +292,15 @@ export class Scanning extends React.Component<IScanningProp> {
                     if (!isNaN(res.value.data)) {
                       // tslint:disable-next-line: no-invalid-this
                       this.props.createUserByShareLink(res.value.data, wechatuser.value.data, '微信', state.substring(7));
-                      this.setState({ userid: res.value.data });
+                      window.location.replace(
+                        'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + res.value.data
+                      );
                     } else {
                       return <Info message={res.value.data.toString()} />;
                     }
                   });
               }
             });
-          window.location.replace(
-            'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + this.state.userid
-          );
         }
       } else if (str[0].match(/bindingWeChat/i)) {
         const userAgent = navigator.userAgent.toLowerCase();

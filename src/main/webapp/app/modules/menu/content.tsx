@@ -75,7 +75,7 @@ export const food = [
 //   }
 // }
 
-export class Content extends React.Component<ContentInt> {
+export class Content extends React.Component<IContentInt> {
   state = {
     getAllOrderList: [],
     order: {

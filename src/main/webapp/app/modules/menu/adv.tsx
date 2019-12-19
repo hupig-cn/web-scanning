@@ -24,6 +24,7 @@ export class Title extends React.Component<IContentInt> {
           .split('&')[0]
           .split('=')[1]
       )
+      // @ts-ignore
       .then(res => {
         if (res.value.data.data) {
           // let reactor = "1";
