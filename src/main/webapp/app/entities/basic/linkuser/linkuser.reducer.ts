@@ -227,8 +227,8 @@ export const createUserByScanningMerchant = (userid: string, token: string, acco
   };
 };
 
-export const createUserByShareLink = (userid: string, token: string, accounttype: string, referrer: string) => {
-  const requestUrl = `services/basic/api/public/user/createUserByShareLink/?userid=${userid}&token=${token}&accounttype=${accounttype}&referrer=${referrer}`;
+export const createUserByShareLink = (userid: string, token: string, accounttype: string, articleid: string) => {
+  const requestUrl = `services/basic/api/public/user/createUserByShareLink/?userid=${userid}&token=${token}&accounttype=${accounttype}&articleid=${articleid}`;
   return {
     payload: axios.get(requestUrl)
   };
