@@ -68,41 +68,15 @@ export class Scanning extends React.Component<IScanningProp> {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
           const state = 'Article' + decodeURIComponent(str[0].replace('articleid=', ''));
-          // window.location.replace(
-          //   'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-          //     'appid=wx5450b0124166c23d&' +
-          //     'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
-          //     'response_type=code&' +
-          //     'scope=snsapi_base&' +
-          //     'state=' +
-          //     state +
-          //     '#wechat_redirect'
-          // );
-          window.location.replace('http://www.baidu.com');
-        } else if (userAgent.match(/Weisen/i)) {
-          const { account } = this.props;
-          if (account && account.login) {
-            return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
-          } else {
-            return (
-              <Info
-                message={
-                  <span>
-                    您还没有登陆，点击<a href="http://app.yuanscore.com:8081/login">《登陆》</a>客户端后在进行付款。
-                  </span>
-                }
-              />
-            );
-          }
-        } else {
-          return (
-            <Info
-              message={
-                <span>
-                  暂不支持当前支付方式，点击下载<a href="http://www.yuanscore.com">《圆积分》</a>APP，支付享好礼！
-                </span>
-              }
-            />
+          window.location.replace(
+            'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+              'appid=wx5450b0124166c23d&' +
+              'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+              'response_type=code&' +
+              'scope=snsapi_base&' +
+              'state=' +
+              state +
+              '#wechat_redirect'
           );
         }
       } else if (str[0].match(/id/i)) {
@@ -303,7 +277,12 @@ export class Scanning extends React.Component<IScanningProp> {
               if (wechatuser.value.data === '获取微信会员信息失败') {
                 return <Info message="获取微信会员信息失败" />;
               } else if (wechatuser.value.data.match(/用户/i)) {
-                this.setState({ userid: wechatuser.value.data.substring(2) });
+                window.location.replace(
+                  'http://www.yuanscore.com/ArticleDeatil.html?deailId=' +
+                    state.substring(7) +
+                    '&userid=' +
+                    wechatuser.value.data.substring(2)
+                );
               } else {
                 // tslint:disable-next-line: no-invalid-this
                 this.props
@@ -313,16 +292,15 @@ export class Scanning extends React.Component<IScanningProp> {
                     if (!isNaN(res.value.data)) {
                       // tslint:disable-next-line: no-invalid-this
                       this.props.createUserByShareLink(res.value.data, wechatuser.value.data, '微信', state.substring(7));
-                      this.setState({ userid: res.value.data });
+                      window.location.replace(
+                        'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + res.value.data
+                      );
                     } else {
                       return <Info message={res.value.data.toString()} />;
                     }
                   });
               }
             });
-          window.location.replace(
-            'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + this.state.userid
-          );
         }
       } else if (str[0].match(/bindingWeChat/i)) {
         const userAgent = navigator.userAgent.toLowerCase();

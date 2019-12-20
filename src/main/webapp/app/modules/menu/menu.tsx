@@ -17,7 +17,7 @@ export class Menu extends React.Component<IMenuProp> {
     return (
       <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
         <Titles />
-        <Adv/>
+        <Adv />
         <Content />
       </div>
     );

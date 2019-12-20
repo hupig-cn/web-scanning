@@ -1,17 +1,13 @@
 import React from 'react';
 
-import {IRootState} from 'app/shared/reducers';
-import {merchantDishestype} from 'app/requests/menu/menu.reducer';
-import {connect} from 'react-redux'
-import {merchantName} from 'app/requests/menu/menu.reducer';
+import { IRootState } from 'app/shared/reducers';
+import { merchantDishestype, merchantName } from 'app/requests/menu/menu.reducer';
+import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 
-
-export interface ContentInt extends StateProps, DispatchProps {
-}
+export interface IContentInt extends StateProps, DispatchProps {}
 
 export const type = [
-
   {
     position: '1',
     name: '热销'
@@ -32,10 +28,7 @@ export const type = [
     position: '5',
     name: '酒水'
   }
-
-
 ];
-
 
 export const food = [
   {
@@ -82,40 +75,37 @@ export const food = [
 //   }
 // }
 
-export class Content extends React.Component<ContentInt> {
-
+export class Content extends React.Component<IContentInt> {
   state = {
     getAllOrderList: [],
     order: {
       id: Number,
-      ordercode: "",
-      orderstatus: "",
-      sum: "",
-      userid: "",
-      payee: "",
-      payway: "",
-      payresult: "",
-      paytime: "",
-      concession: "",
-      rebate: "",
-      creator: "",
-      createdate: "",
-      modifier: "",
-      modifierdate: "",
-      modifiernum: "",
-      logicdelete: "",
-      other: "",
-      expressCompany: "",
-      expressNo: ""
+      ordercode: '',
+      orderstatus: '',
+      sum: '',
+      userid: '',
+      payee: '',
+      payway: '',
+      payresult: '',
+      paytime: '',
+      concession: '',
+      rebate: '',
+      creator: '',
+      createdate: '',
+      modifier: '',
+      modifierdate: '',
+      modifiernum: '',
+      logicdelete: '',
+      other: '',
+      expressCompany: '',
+      expressNo: ''
     },
-    type:{
-      name:String,
-      num:Number
-    },
-    typeList: [],
-    list:[]
+    // type:{
+    //   name:String,
+    //   id:Number
+    // }
+    typeList: []
   };
-
 
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
@@ -123,22 +113,30 @@ export class Content extends React.Component<ContentInt> {
     // @ts-ignore
     // this.props.menu("12","34")
 
-
-    this.props.merchantDishestype((window.location.search.substring(1).split("&")[0]).split("=")[1], (window.location.search.substring(1).split("&")[1]).split("=")[1]).then(res => {
-      console.log(res);
-      if (res.value.data.data) {
-        // let reactor = "1";
-        console.log(res.value.data.data);
-        this.setState({
-          typeList: res.value.data.data
-        });
-      }
-    });
-
+    this.props
+      .merchantDishestype(
+        window.location.search
+          .substring(1)
+          .split('&')[0]
+          .split('=')[1],
+        window.location.search
+          .substring(1)
+          .split('&')[1]
+          .split('=')[1]
+      )
+      .then(res => {
+        // console.log(res);
+        if (res.value.data.data) {
+          // let reactor = "1";
+          // console.log(res.value.data.data);
+          this.setState({
+            typeList: res.value.data.data
+          });
+        }
+      });
   }
 
   render() {
-
     return (
       /*<div>
     {...this.state.getAllOrderList.map(order => (
@@ -150,22 +148,25 @@ export class Content extends React.Component<ContentInt> {
     ))}
   </div>*/
       <div>
-        <div style={{
-          width: '20%',
-          float: 'left',
-          overflow: 'hidden',
-          position: 'fixed',
-          zIndex: 1000,
-          textAlign: 'center'
-        }}>
+        <div
+          style={{
+            width: '20%',
+            float: 'left',
+            overflow: 'hidden',
+            position: 'fixed',
+            zIndex: 1000,
+            textAlign: 'center'
+          }}
+        >
           {...this.state.typeList.map((name, index) => (
             <span
-              key={index}        id="pig"
+              key={index}
+              id="pig"
               style={{
                 float: 'left',
                 backgroundColor: name.id === '1' ? '#ffffff' : '#f8f8f8',
-                borderRight: name.id === '1'  ? 'none' : '1px solid #ececec',
-                borderLeft: name.id === '1'  ? '1px solid #fe4365' : 'none',
+                borderRight: name.id === '1' ? 'none' : '1px solid #ececec',
+                borderLeft: name.id === '1' ? '1px solid #fe4365' : 'none',
                 width: '100%',
                 padding: '10px',
                 textAlign: 'center',
@@ -174,12 +175,19 @@ export class Content extends React.Component<ContentInt> {
               }}
             >
               {name.name}
-          </span>
+            </span>
           ))}
-
-
+          <span
+            style={{
+              float: 'left',
+              height: 'calc(100vh - ' + this.state.typeList.length * 44 + 'px)',
+              width: '100%',
+              position: 'fixed',
+              borderRight: '1px solid #ececec'
+            }}
+          />
         </div>
-        <div style={{width: '80%', overflow: 'hidden', float: 'right'}}>
+        <div style={{ width: '80%', overflow: 'hidden', float: 'right' }}>
           {...this.state.typeList.map((name, index) => (
             <div
               key={index}
@@ -190,7 +198,8 @@ export class Content extends React.Component<ContentInt> {
               }}
             >
               <div>{name.name}</div>
-              {name.dishesList.map((name, index) => (
+              {// tslint:disable-next-line: no-shadowed-variable
+              name.dishesList.map((name, index) => (
                 <div
                   key={index}
                   style={{
@@ -200,15 +209,15 @@ export class Content extends React.Component<ContentInt> {
                   }}
                 >
                   <span>
-              <img
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  float: 'left'
-                }}
-                src={name.image}
-              />
-            </span>
+                    <img
+                      style={{
+                        width: '50px',
+                        height: '50px',
+                        float: 'left'
+                      }}
+                      src={name.image}
+                    />
+                  </span>
                   <span
                     style={{
                       float: 'left',
@@ -218,7 +227,7 @@ export class Content extends React.Component<ContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                {name.name}
+                    {name.name}
                   </span>
                   <span
                     style={{
@@ -229,19 +238,18 @@ export class Content extends React.Component<ContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                  <span style={{color: '#fe4365'}}>￥{name.price}</span>/份
-                  <span style={{float: 'right'}}>
-                  <img style={{width: '20px', height: '20px', float: 'right'}}  src="./content/images/cut.png"/>
-                  <span style={{float: 'right'}}>- {} -</span>
-                  <img style={{width: '20px', height: '20px', float: 'right'}} src="./content/images/plus.png"/>
-                  </span>
+                    <span style={{ color: '#fe4365' }}>￥{name.price}</span>/份
+                    <span style={{ float: 'right' }}>
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
+                      <span style={{ float: 'right' }}>- 1 -</span>
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
+                    </span>
                   </span>
                 </div>
               ))}
-
-            </div >
+            </div>
           ))}
-          <div style={{ height:'49px',width:'100%' }}/>
+          <div style={{ height: '49px', width: '100%' }} />
         </div>
         <Lowercolumn />
       </div>
@@ -250,14 +258,12 @@ export class Content extends React.Component<ContentInt> {
 
   // <div></div>
 }
-;
-
-const mapStateToProps = ({authentication}: IRootState) => ({
+const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = {merchantDishestype};
+const mapDispatchToProps = { merchantDishestype };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

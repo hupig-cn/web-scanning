@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 
 import { IRootState } from 'app/shared/reducers';
 
-export interface ContentInt extends StateProps, DispatchProps { }
+export interface IContentInt extends StateProps, DispatchProps {}
 
-
-export class Title extends React.Component<ContentInt> {
+export class Title extends React.Component<IContentInt> {
   state = {
     getImagesList: []
   };
@@ -18,46 +17,43 @@ export class Title extends React.Component<ContentInt> {
     // @ts-ignore
     // this.props.menu("12","34")
 
-    this.props.merchantName((window.location.search.substring(1).split("&")[0]).split("=")[1]).then(res => {
-
-      if (res.value.data.data) {
-        // let reactor = "1";
-        this.setState({
-          getImagesList: res.value.data.data
-
-        });
-      }
-    });
-
+    this.props
+      .merchantName(
+        window.location.search
+          .substring(1)
+          .split('&')[0]
+          .split('=')[1]
+      )
+      // @ts-ignore
+      .then(res => {
+        if (res.value.data.data) {
+          // let reactor = "1";
+          this.setState({
+            getImagesList: res.value.data.data
+          });
+        }
+      });
   }
 
   render() {
     return (
       <div>
-
         {...this.state.getImagesList.map(merchant => (
-        <div
-          key = {merchant.id}
-          style={{
-            width: '100%',
-            position: 'fixed',
-            top: '40px',
-            zIndex: 1000
-          }}
-        >
-
-
-            <img
-            style={{ width: '100%', height: '65px' }} src=
-            {merchant.merchantphoto}
-            />
-
-        </div>
-            ))}
+          <div
+            key={merchant.id}
+            style={{
+              width: '100%',
+              position: 'fixed',
+              top: '40px',
+              zIndex: 1000
+            }}
+          >
+            <img style={{ width: '100%', height: '65px' }} src={merchant.merchantphoto} />
+          </div>
+        ))}
         <div style={{ height: '45px' }} />
       </div>
-
-    )
+    );
   }
 }
 
@@ -75,4 +71,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Title);
-
