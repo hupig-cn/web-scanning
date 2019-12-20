@@ -21,9 +21,9 @@ export const ContentType = (id: any) => async dispatch => {
   return result;
 };
 
-export const merchantDishestype = (id: any) => async dispatch => {
+export const merchantDishestype = (id: any, loc: any) => async dispatch => {
   const result = await dispatch({
-    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/merchantDishestype?id=' + `${id}`)
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/merchantDishestype?id=' + `${id}`+'&iocid=' + `${loc}`)
   });
   return result;
 };

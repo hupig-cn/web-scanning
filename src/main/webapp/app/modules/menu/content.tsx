@@ -198,8 +198,7 @@ export class Content extends React.Component<IContentInt> {
               }}
             >
               <div>{name.name}</div>
-              {// tslint:disable-next-line: no-shadowed-variable
-              name.dishesList.map((name, index) => (
+              {name.list.map((name, index) => (
                 <div
                   key={index}
                   style={{
@@ -215,7 +214,7 @@ export class Content extends React.Component<IContentInt> {
                         height: '50px',
                         float: 'left'
                       }}
-                      src={name.image}
+                      src={name.url}
                     />
                   </span>
                   <span
@@ -227,7 +226,7 @@ export class Content extends React.Component<IContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                    {name.name}
+                    {name.cainame}
                   </span>
                   <span
                     style={{
@@ -238,10 +237,10 @@ export class Content extends React.Component<IContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                    <span style={{ color: '#fe4365' }}>￥{name.price}</span>/份
+                    <span style={{ color: '#fe4365' }}>￥{name.caiprice}</span>/份
                     <span style={{ float: 'right' }}>
                       <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
-                      <span style={{ float: 'right' }}>- 1 -</span>
+                      <span style={{ float: 'right' }}>- {name.cainum} -</span>
                       <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
                     </span>
                   </span>
