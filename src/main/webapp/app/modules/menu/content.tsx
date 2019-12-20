@@ -108,11 +108,12 @@ export class Content extends React.Component<ContentInt> {
       expressCompany: "",
       expressNo: ""
     },
-    // type:{
-    //   name:String,
-    //   id:Number
-    // }
-    typeList: []
+    type:{
+      name:String,
+      num:Number
+    },
+    typeList: [],
+    list:[]
   };
 
 
@@ -175,15 +176,7 @@ export class Content extends React.Component<ContentInt> {
               {name.name}
           </span>
           ))}
-          <span
-            style={{
-              float: 'left',
-              height: 'calc(100vh - ' + this.state.typeList.length * 44 + 'px)',
-              width: '100%',
-              position: 'fixed',
-              borderRight: '1px solid #ececec'
-            }}
-          />
+
 
         </div>
         <div style={{width: '80%', overflow: 'hidden', float: 'right'}}>
@@ -238,8 +231,8 @@ export class Content extends React.Component<ContentInt> {
                   >
                   <span style={{color: '#fe4365'}}>￥{name.price}</span>/份
                   <span style={{float: 'right'}}>
-                  <img style={{width: '20px', height: '20px', float: 'right'}} src="./content/images/cut.png"/>
-                  <span style={{float: 'right'}}>- 1 -</span>
+                  <img style={{width: '20px', height: '20px', float: 'right'}}  src="./content/images/cut.png"/>
+                  <span style={{float: 'right'}}>- {} -</span>
                   <img style={{width: '20px', height: '20px', float: 'right'}} src="./content/images/plus.png"/>
                   </span>
                   </span>
