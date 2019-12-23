@@ -1,24 +1,19 @@
 import React from 'react';
 
 export interface ILongMenuProps {
-  num:number;
-  sum:String;
+  num: number;
+  sum: String;
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    console.log(props);
-    console.log(this.props.num);
-    console.log(this.props.sum);
+    // console.log(props);
+    // console.log(this.props.num);
+    // console.log(this.props.sum);
   }
-  state:ILongMenuProps={
-    num:this.props.num,
-    sum:this.props.sum
-
-};
-  render(){
+  render() {
     function goBack() {
       history.go(-1);
     }
@@ -68,7 +63,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
             fontFamily: 'SimHei'
           }}
         >
-        {this.state.num}
+        {this.props.num}
       </span>
         <h5
           style={{
@@ -78,7 +73,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
             float: 'left'
           }}
         >
-          ￥{this.state.sum}
+          ￥{this.props.sum}
         </h5>
         <div style={{ height: '48px' }} />
       </div>

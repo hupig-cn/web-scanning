@@ -1,77 +1,72 @@
 import React from 'react';
 
-import {IRootState} from 'app/shared/reducers';
-import {merchantDishestype} from 'app/requests/menu/menu.reducer';
-import {takingOrders} from 'app/requests/menu/menu.reducer';
-import {takingOrdersNum} from 'app/requests/menu/menu.reducer';
-import {merchantOrders2} from 'app/requests/menu/menu.reducer';
-import {inAllOrders} from 'app/requests/menu/menu.reducer';
-import {connect} from 'react-redux';
+import { IRootState } from 'app/shared/reducers';
+import { merchantDishestype , takingOrders , takingOrdersNum , merchantOrders2 , inAllOrders } from 'app/requests/menu/menu.reducer';
+import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 
 export interface IContentInt2 {
-  num:Number;
-  sum:String;
+  num: Number;
+  sum: String;
   typeList: [];
-  iocId:String;
-  merchatid:String;
-  name1:String;
-  cailist:[];
+  iocId: String;
+  merchatid: String;
+  name1: String;
+  cailist: [];
 }
-
 
 export interface IContentInt extends StateProps, DispatchProps {}
 
-export const type = [
-  {
-    position: '1',
-    name: '热销'
-  },
-  {
-    position: '2',
-    name: '套餐'
-  },
-  {
-    position: '3',
-    name: '小炒'
-  },
-  {
-    position: '4',
-    name: '主食'
-  },
-  {
-    position: '5',
-    name: '酒水'
-  }
-];
+// export const type = [
+//   {
+//     position: '1',
+//     name: '热销'
+//   },
+//   {
+//     position: '2',
+//     name: '套餐'
+//   },
+//   {
+//     position: '3',
+//     name: '小炒'
+//   },
+//   {
+//     position: '4',
+//     name: '主食'
+//   },
+//   {
+//     position: '5',
+//     name: '酒水'
+//   }
+// ];
 
-export const food = [
-  {
-    name: '肉末茄子',
-    price: '17',
-    img: './content/images/value1.png'
-  },
-  {
-    name: '鱼香肉丝',
-    price: '14',
-    img: './content/images/value2.png'
-  },
-  {
-    name: '芹菜炒腊肉',
-    price: '14',
-    img: './content/images/value3.png'
-  },
-  {
-    name: '宫保鸡丁',
-    price: '14',
-    img: './content/images/value4.png'
-  },
-  {
-    name: '糖醋里脊',
-    price: '21',
-    img: './content/images/value5.png'
-  }
-];
+// export const food = [
+//   {
+//     name: '肉末茄子',
+//     price: '17',
+//     img: './content/images/value1.png'
+//   },
+//   {
+//     name: '鱼香肉丝',
+//     price: '14',
+//     img: './content/images/value2.png'
+//   },
+//   {
+//     name: '芹菜炒腊肉',
+//     price: '14',
+//     img: './content/images/value3.png'
+//   },
+//   {
+//     name: '宫保鸡丁',
+//     price: '14',
+//     img: './content/images/value4.png'
+//   },
+//   {
+//     name: '糖醋里脊',
+//     price: '21',
+//     img: './content/images/value5.png'
+//   }
+// ];
 
 // var itemDom = true;// You want to check
 //
@@ -92,15 +87,14 @@ export const food = [
 
 export class Content extends React.Component<IContentInt> {
   state = {
-    num:0,
-    sum:"",
+    num: 0,
+    sum: '',
     typeList: [],
-    iocId:"",
-    merchatid:"",
-    name1:"",
-    cailist:[]
+    iocId: '',
+    merchatid: '',
+    name1: '',
+    cailist: []
   };
-
 
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
@@ -129,7 +123,7 @@ export class Content extends React.Component<IContentInt> {
               .substring(1)
               .split('&')[1]
               .split('=')[1],
-            merchatid:window.location.search
+            merchatid : window.location.search
               .substring(1)
               .split('&')[0]
               .split('=')[1]
@@ -139,7 +133,7 @@ export class Content extends React.Component<IContentInt> {
       this.props.inAllOrders(window.location.search
         .substring(1)
         .split('&')[1]
-        .split('=')[1],window.location.search
+        .split('=')[1], window.location.search
         .substring(1)
         .split('&')[0]
         .split('=')[1]).then(res => {
@@ -155,30 +149,29 @@ export class Content extends React.Component<IContentInt> {
       });
   }
 
-  handleLogin = (iocId: any, param2: any, merchatid: any, name: any)=> {
-    this.props.takingOrders(iocId,param2,merchatid,name);
+  handleLogin = (iocId: any, param2: any, merchatid: any, name: any) => {
+    this.props.takingOrders(iocId, param2, merchatid, name);
     location.reload();
-    //window.opener.location.href=window.opener.location.href;
+    // window.opener.location.href=window.opener.location.href;
   }
-  handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor)=> {
-    this.props.takingOrdersNum(iocId,merchatid);
-    //window.opener.location.href=window.opener.location.href;
-  }
-
-  handleLogin3 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor, other: any)=> {
-    this.props.merchantOrders2(iocId,merchatid,other);
-    //window.opener.location.href=window.opener.location.href;
-  }
-  handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor)=> {
-    this.props.inAllOrders(iocId,merchatid);
-    //window.opener.location.href=window.opener.location.href;
+  handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor) => {
+    this.props.takingOrdersNum(iocId, merchatid);
+    // window.opener.location.href=window.opener.location.href;
   }
 
-  scrollToAnchor = (anchorName) => {
-    var aa = anchorName.nativeEvent.target.innerText;
-    if (aa) {
-        let anchorElement = document.getElementById(aa);
-        if(anchorElement) { anchorElement.scrollIntoView(); }
+  handleLogin3 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor, other: any) => {
+    this.props.merchantOrders2(iocId, merchatid, other);
+    // window.opener.location.href=window.opener.location.href;
+  }
+  handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor) => {
+    this.props.inAllOrders(iocId, merchatid);
+    // window.opener.location.href=window.opener.location.href;
+  }
+
+  scrollToAnchor = anchorName => {
+    if (anchorName.name) {
+        const anchorElement = document.getElementById(anchorName.name);
+        if (anchorElement) { anchorElement.scrollIntoView(); }
     }
   }
   render() {
@@ -192,7 +185,7 @@ export class Content extends React.Component<IContentInt> {
 
     ))}
   </div>*/
-      <div style={{position:'relative'}}>
+      <div style={{ position: 'relative' }}>
         <div
           style={{
             width: '20%',
@@ -203,15 +196,15 @@ export class Content extends React.Component<IContentInt> {
             textAlign: 'center'
           }}
         >
-          {...this.state.typeList.map((name, index) => (
+          {...this.state.typeList.map(nameMun => (
             <span
-              key={index}
+              key={nameMun.id}
               id="pig"
               style={{
                 float: 'left',
-                backgroundColor: name.id === '1' ? '#ffffff' : '#f8f8f8',
-                borderRight: name.id === '1' ? 'none' : '1px solid #ececec',
-                borderLeft: name.id === '1' ? '1px solid #fe4365' : 'none',
+                backgroundColor: nameMun.id === '1' ? '#ffffff' : '#f8f8f8',
+                borderRight: nameMun.id === '1' ? 'none' : '1px solid #ececec',
+                borderLeft: nameMun.id === '1' ? '1px solid #fe4365' : 'none',
                 width: '100%',
                 padding: '10px',
                 textAlign: 'center',
@@ -219,36 +212,28 @@ export class Content extends React.Component<IContentInt> {
                 color: '#00000095'
               }}
             >
-              <a onClick={({...name})=>this.scrollToAnchor({...name})}>
-              {name.name}
+              <a onClick= { this.scrollToAnchor.bind(this, { ...nameMun })}>
+              {nameMun.name}
               </a>
             </span>
           ))}
-          {/*<span*/}
-            {/*style={{*/}
-              {/*float: 'left',*/}
-              {/*height: 'calc(100vh - ' + this.state.typeList.length * 44 + 'px)',*/}
-              {/*width: '100%',*/}
-              {/*position: 'fixed',*/}
-              {/*borderRight: '1px solid #ececec'*/}
-            {/*}}*/}
-          {/*/>*/}
+
         </div>
-        <div style={{ width: '80%', overflow: 'auto', float: 'right',position:'fixed',left:'20%',top:'120px',bottom:'7%' }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '120px' , bottom: '7%' }}>
           <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div>
-          {...this.state.typeList.map((name, index) => (
+          {...this.state.typeList.map(name => (
             <div
-              key={index}
+              key={name.id}
               style={{
                 padding: '10px',
                 borderBottom: '1px solid #ececec',
                 overflow: 'hidden'
               }}
             >
-              <div id={name.name}>{name.name}</div>
-              {name.list.map((name, index) => (
+              <div id={ name.name }>{ name.name }</div>
+              { name.list.map(newName => (
                 <div
-                  key={index}
+                  key={newName.id}
                   style={{
                     padding: '10px',
                     borderBottom: '1px solid #ececec',
@@ -262,7 +247,7 @@ export class Content extends React.Component<IContentInt> {
                         height: '50px',
                         float: 'left'
                       }}
-                      src={name.url}
+                      src={newName.url}
                     />
                   </span>
                   <span
@@ -274,7 +259,7 @@ export class Content extends React.Component<IContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                    {name.cainame}
+                    {newName.cainame}
                   </span>
                   <span
                     style={{
@@ -285,11 +270,15 @@ export class Content extends React.Component<IContentInt> {
                       textAlign: 'left'
                     }}
                   >
-                    <span style={{ color: '#fe4365' }}>￥{name.caiprice}</span>/份
+                    <span style={{ color: '#fe4365' }}>￥{newName.caiprice}</span>/份
                     <span style={{ float: 'right' }}>
-                      <img style={{ width: '20px', height: '20px', float: 'right' }}  src="./content/images/cut.png" onClick={()=>takingOrders(this.state.iocId,name.cainum+1,this.state.merchatid,name.name)}/>
-                      <span style={{ float: 'right' }}>- {name.cainum} -</span>
-                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" onClick={()=>this.handleLogin(this.state.iocId,parseInt(name.cainum)+1,this.state.merchatid,name.cainame)}/>
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png"
+                      onClick={ takingOrders.bind(this, this.state.iocId, newName.cainum + 1, this.state.merchatid, newName.name)}
+                      />
+                      <span style={{ float: 'right' }}>- {newName.cainum} -</span>
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png"
+                      onClick={ ()=>this.handleLogin(this.state.iocId,parseInt(newName.cainum)+1,this.state.merchatid,newName.cainame)}
+                      />
                     </span>
                   </span>
                 </div>
@@ -305,13 +294,12 @@ export class Content extends React.Component<IContentInt> {
   // <div></div>
 }
 
-
 const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { merchantDishestype ,takingOrders,takingOrdersNum,inAllOrders,merchantOrders2};
+const mapDispatchToProps = { merchantDishestype , takingOrders, takingOrdersNum, inAllOrders, merchantOrders2 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
