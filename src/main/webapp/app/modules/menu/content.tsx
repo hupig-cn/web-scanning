@@ -186,6 +186,14 @@ export class Content extends React.Component<IContentInt> {
     // this.state.checkFlg = e.target.checked;
     console.log('选中状态1：' + this.state.checkFlg);
   }
+
+  scrollToAnchor = (anchorName) => {
+    var aa = anchorName.nativeEvent.target.innerText;
+    if (aa) {
+        let anchorElement = document.getElementById(aa);
+        if(anchorElement) { anchorElement.scrollIntoView(); }
+    }
+  }
   render() {
 
     return (
@@ -198,7 +206,7 @@ export class Content extends React.Component<IContentInt> {
 
     ))}
   </div>*/
-      <div>
+      <div style={{position:'relative'}}>
         <div
           style={{
             width: '20%',
@@ -225,7 +233,9 @@ export class Content extends React.Component<IContentInt> {
                 color: '#00000095'
               }}
             >
+              <a onClick={({...name})=>this.scrollToAnchor({...name})}>
               {name.name}
+              </a>
             </span>
           ))}
           {/*<span*/}
@@ -238,7 +248,7 @@ export class Content extends React.Component<IContentInt> {
             {/*}}*/}
           {/*/>*/}
         </div>
-        <div style={{ width: '80%', overflow: 'hidden', float: 'right' }}>
+        <div style={{ width: '80%', overflow: 'auto', float: 'right',position:'fixed',left:'20%',top:'120px',bottom:'7%' }}>
           <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div>
           {...this.state.typeList.map((name, index) => (
             <div
@@ -249,7 +259,7 @@ export class Content extends React.Component<IContentInt> {
                 overflow: 'hidden'
               }}
             >
-              <div>{name.name}</div>
+              <div id={name.name}>{name.name}</div>
               {name.list.map((name, index) => (
                 <div
                   key={index}
@@ -300,7 +310,6 @@ export class Content extends React.Component<IContentInt> {
               ))}
             </div>
           ))}
-          <div style={{ height: '49px', width: '100%' }} />
         </div>
         <Lowercolumn num={this.state.num} sum={this.state.sum}/>
       </div>
