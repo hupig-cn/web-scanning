@@ -92,8 +92,8 @@ export const food = [
 
 export class Content extends React.Component<IContentInt> {
   state = {
-    num:0,
-    sum:"",
+    num:1,
+    sum:"2",
     typeList: [],
     iocId:"",
     merchatid:"",
@@ -107,6 +107,23 @@ export class Content extends React.Component<IContentInt> {
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     // @ts-ignore
     // this.props.menu("12","34")
+    this.props.inAllOrders(window.location.search
+      .substring(1)
+      .split('&')[1]
+      .split('=')[1],window.location.search
+      .substring(1)
+      .split('&')[0]
+      .split('=')[1]).then(res => {
+      // console.log(res);
+      if (res.value.data.data) {
+        // let reactor = "1";
+        // console.log(res.value.data.data);
+        this.setState({
+          num: res.value.data.totalElements,
+          sum: res.value.data.message
+        });
+      }
+    });
     this.props
       .merchantDishestype(
         window.location.search
@@ -136,28 +153,16 @@ export class Content extends React.Component<IContentInt> {
           });
         }
       });
-      this.props.inAllOrders(window.location.search
-        .substring(1)
-        .split('&')[1]
-        .split('=')[1],window.location.search
-        .substring(1)
-        .split('&')[0]
-        .split('=')[1]).then(res => {
-        // console.log(res);
-        if (res.value.data.data) {
-          // let reactor = "1";
-          // console.log(res.value.data.data);
-          this.setState({
-            num: res.value.data.totalElements,
-            sum: res.value.data.message
-          });
-        }
-      });
+
   }
 
   handleLogin = (iocId: any, param2: any, merchatid: any, name: any)=> {
-    this.props.takingOrders(iocId,param2,merchatid,name);
-    location.reload();
+    this.props.takingOrders(iocId,param2,merchatid,name).then(res =>{
+      if (res.value.data.data){
+        this.shouldComponentUpdate();
+      }
+    });
+
     //window.opener.location.href=window.opener.location.href;
   }
   handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor)=> {
@@ -172,8 +177,17 @@ export class Content extends React.Component<IContentInt> {
   handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor)=> {
     this.props.inAllOrders(iocId,merchatid);
     //window.opener.location.href=window.opener.location.href;
+  };
+
+  checkInfo = (e)=>{ //该方法是点击checkbox调用的方法
+    this.setState({
+      checkFlg:e.target.checked
+    });
+    // this.state.checkFlg = e.target.checked;
+    console.log('选中状态1：' + this.state.checkFlg);
   }
   render() {
+
     return (
       /*<div>
     {...this.state.getAllOrderList.map(order => (
@@ -295,6 +309,7 @@ export class Content extends React.Component<IContentInt> {
 
   // <div></div>
 }
+
 
 
 const mapStateToProps = ({ authentication }: IRootState) => ({

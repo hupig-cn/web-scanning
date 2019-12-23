@@ -10,8 +10,6 @@ class LongMenu extends React.Component<ILongMenuProps> {
   constructor(props){
     super(props);
     console.log(props);
-    console.log(this.props.num);
-    console.log(this.props.sum);
   }
   state:ILongMenuProps={
     num:this.props.num,
