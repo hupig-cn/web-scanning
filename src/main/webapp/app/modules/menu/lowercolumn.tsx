@@ -9,13 +9,9 @@ class LongMenu extends React.Component<ILongMenuProps> {
 
   constructor(props) {
     super(props);
-<<<<<<< HEAD
     // console.log(props);
     // console.log(this.props.num);
     // console.log(this.props.sum);
-=======
-    console.log(props);
->>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
   render() {
     function goBack() {
