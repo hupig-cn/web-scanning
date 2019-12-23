@@ -1,9 +1,24 @@
 import React from 'react';
 
-import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype, merchantName } from 'app/requests/menu/menu.reducer';
-import { connect } from 'react-redux';
+import {IRootState} from 'app/shared/reducers';
+import {merchantDishestype} from 'app/requests/menu/menu.reducer';
+import {takingOrders} from 'app/requests/menu/menu.reducer';
+import {takingOrdersNum} from 'app/requests/menu/menu.reducer';
+import {merchantOrders2} from 'app/requests/menu/menu.reducer';
+import {inAllOrders} from 'app/requests/menu/menu.reducer';
+import {connect} from 'react-redux';
 import Lowercolumn from './lowercolumn';
+
+export interface IContentInt2 {
+  num:Number;
+  sum:String;
+  typeList: [];
+  iocId:String;
+  merchatid:String;
+  name1:String;
+  cailist:[];
+}
+
 
 export interface IContentInt extends StateProps, DispatchProps {}
 
@@ -77,42 +92,21 @@ export const food = [
 
 export class Content extends React.Component<IContentInt> {
   state = {
-    getAllOrderList: [],
-    order: {
-      id: Number,
-      ordercode: '',
-      orderstatus: '',
-      sum: '',
-      userid: '',
-      payee: '',
-      payway: '',
-      payresult: '',
-      paytime: '',
-      concession: '',
-      rebate: '',
-      creator: '',
-      createdate: '',
-      modifier: '',
-      modifierdate: '',
-      modifiernum: '',
-      logicdelete: '',
-      other: '',
-      expressCompany: '',
-      expressNo: ''
-    },
-    // type:{
-    //   name:String,
-    //   id:Number
-    // }
-    typeList: []
+    num:0,
+    sum:"",
+    typeList: [],
+    iocId:"",
+    merchatid:"",
+    name1:"",
+    cailist:[]
   };
+
 
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     // @ts-ignore
     // this.props.menu("12","34")
-
     this.props
       .merchantDishestype(
         window.location.search
@@ -130,12 +124,55 @@ export class Content extends React.Component<IContentInt> {
           // let reactor = "1";
           // console.log(res.value.data.data);
           this.setState({
-            typeList: res.value.data.data
+            typeList: res.value.data.data,
+            iocId: window.location.search
+              .substring(1)
+              .split('&')[1]
+              .split('=')[1],
+            merchatid:window.location.search
+              .substring(1)
+              .split('&')[0]
+              .split('=')[1]
+          });
+        }
+      });
+      this.props.inAllOrders(window.location.search
+        .substring(1)
+        .split('&')[1]
+        .split('=')[1],window.location.search
+        .substring(1)
+        .split('&')[0]
+        .split('=')[1]).then(res => {
+        // console.log(res);
+        if (res.value.data.data) {
+          // let reactor = "1";
+          // console.log(res.value.data.data);
+          this.setState({
+            num: res.value.data.totalElements,
+            sum: res.value.data.message
           });
         }
       });
   }
 
+  handleLogin = (iocId: any, param2: any, merchatid: any, name: any)=> {
+    this.props.takingOrders(iocId,param2,merchatid,name);
+    location.reload();
+    //window.opener.location.href=window.opener.location.href;
+  }
+  handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor)=> {
+    this.props.takingOrdersNum(iocId,merchatid);
+    //window.opener.location.href=window.opener.location.href;
+  }
+
+  handleLogin3 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor, other: any)=> {
+    this.props.merchantOrders2(iocId,merchatid,other);
+    //window.opener.location.href=window.opener.location.href;
+  }
+  handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor)=> {
+    this.props.inAllOrders(iocId,merchatid);
+    //window.opener.location.href=window.opener.location.href;
+  }
   render() {
     return (
       /*<div>
@@ -177,17 +214,18 @@ export class Content extends React.Component<IContentInt> {
               {name.name}
             </span>
           ))}
-          <span
-            style={{
-              float: 'left',
-              height: 'calc(100vh - ' + this.state.typeList.length * 44 + 'px)',
-              width: '100%',
-              position: 'fixed',
-              borderRight: '1px solid #ececec'
-            }}
-          />
+          {/*<span*/}
+            {/*style={{*/}
+              {/*float: 'left',*/}
+              {/*height: 'calc(100vh - ' + this.state.typeList.length * 44 + 'px)',*/}
+              {/*width: '100%',*/}
+              {/*position: 'fixed',*/}
+              {/*borderRight: '1px solid #ececec'*/}
+            {/*}}*/}
+          {/*/>*/}
         </div>
         <div style={{ width: '80%', overflow: 'hidden', float: 'right' }}>
+          <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div>
           {...this.state.typeList.map((name, index) => (
             <div
               key={index}
@@ -239,9 +277,9 @@ export class Content extends React.Component<IContentInt> {
                   >
                     <span style={{ color: '#fe4365' }}>￥{name.caiprice}</span>/份
                     <span style={{ float: 'right' }}>
-                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png" />
+                      <img style={{ width: '20px', height: '20px', float: 'right' }}  src="./content/images/cut.png" onClick={()=>takingOrders(this.state.iocId,name.cainum+1,this.state.merchatid,name.name)}/>
                       <span style={{ float: 'right' }}>- {name.cainum} -</span>
-                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" />
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png" onClick={()=>this.handleLogin(this.state.iocId,parseInt(name.cainum)+1,this.state.merchatid,name.cainame)}/>
                     </span>
                   </span>
                 </div>
@@ -250,19 +288,21 @@ export class Content extends React.Component<IContentInt> {
           ))}
           <div style={{ height: '49px', width: '100%' }} />
         </div>
-        <Lowercolumn />
+        <Lowercolumn num={this.state.num} sum={this.state.sum}/>
       </div>
     );
   }
 
   // <div></div>
 }
+
+
 const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { merchantDishestype };
+const mapDispatchToProps = { merchantDishestype ,takingOrders,takingOrdersNum,inAllOrders,merchantOrders2};
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

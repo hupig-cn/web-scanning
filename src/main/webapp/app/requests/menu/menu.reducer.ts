@@ -28,29 +28,29 @@ export const merchantDishestype = (id: any, loc: any) => async dispatch => {
   return result;
 };
 
-
-export const takingOrders = (iocId: any, num: any,merchatid: any,name: any) => async dispatch => {
+//点餐
+export const takingOrders = (iocId: any , num: any , merchatid: any , name: any) => async dispatch => {
   const result = await dispatch({
     payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrders?iocId=' + `${iocId}`+'&num=' + `${num}`+'&merchatid=' + `${merchatid}`+'&name=' + `${name}`)
   });
   return result;
 };
-
+//重置
 export const takingOrdersNum = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({
     payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrdersNum?iocId=' + `${iocId}`+'&merchatid=' + `${merchatid}`)
   });
   return result;
 };
-
+//详情
 export const merchantOrders2 = (iocId: any, merchatid: any,other: any) => async dispatch => {
   const result = await dispatch({
     payload: axios.post('http://localhost:8084/services/merchant/api/public/post/merchantOrders2?iocId=' + `${iocId}`+'&merchatid=' + `${merchatid}`+'&other=' + `${other}`)
   });
   return result;
 };
-
-export const inAllOrders = (iocId: any, num: any,merchatid: any) => async dispatch => {
+//总价
+export const inAllOrders = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({
     payload: axios.post('http://localhost:8084/services/merchant/api/public/post/inAllOrders?iocId=' + `${iocId}`+'&merchatid=' + `${merchatid}`)
   });
