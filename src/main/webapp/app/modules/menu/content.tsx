@@ -87,8 +87,13 @@ export interface IContentInt extends StateProps, DispatchProps {}
 
 export class Content extends React.Component<IContentInt> {
   state = {
+<<<<<<< HEAD
     num: 0,
     sum: '',
+=======
+    num:1,
+    sum:"2",
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
     typeList: [],
     iocId: '',
     merchatid: '',
@@ -101,6 +106,23 @@ export class Content extends React.Component<IContentInt> {
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     // @ts-ignore
     // this.props.menu("12","34")
+    this.props.inAllOrders(window.location.search
+      .substring(1)
+      .split('&')[1]
+      .split('=')[1],window.location.search
+      .substring(1)
+      .split('&')[0]
+      .split('=')[1]).then(res => {
+      // console.log(res);
+      if (res.value.data.data) {
+        // let reactor = "1";
+        // console.log(res.value.data.data);
+        this.setState({
+          num: res.value.data.totalElements,
+          sum: res.value.data.message
+        });
+      }
+    });
     this.props
       .merchantDishestype(
         window.location.search
@@ -130,6 +152,7 @@ export class Content extends React.Component<IContentInt> {
           });
         }
       });
+<<<<<<< HEAD
       this.props.inAllOrders(window.location.search
         .substring(1)
         .split('&')[1]
@@ -147,12 +170,26 @@ export class Content extends React.Component<IContentInt> {
           });
         }
       });
+=======
+
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
 
+<<<<<<< HEAD
   handleLogin = (iocId: any, param2: any, merchatid: any, name: any) => {
     this.props.takingOrders(iocId, param2, merchatid, name);
     location.reload();
     // window.opener.location.href=window.opener.location.href;
+=======
+  handleLogin = (iocId: any, param2: any, merchatid: any, name: any)=> {
+    this.props.takingOrders(iocId,param2,merchatid,name).then(res =>{
+      if (res.value.data.data){
+        this.shouldComponentUpdate();
+      }
+    });
+
+    //window.opener.location.href=window.opener.location.href;
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
   handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor) => {
     this.props.takingOrdersNum(iocId, merchatid);
@@ -163,9 +200,23 @@ export class Content extends React.Component<IContentInt> {
     this.props.merchantOrders2(iocId, merchatid, other);
     // window.opener.location.href=window.opener.location.href;
   }
+<<<<<<< HEAD
   handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor) => {
     this.props.inAllOrders(iocId, merchatid);
     // window.opener.location.href=window.opener.location.href;
+=======
+  handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor)=> {
+    this.props.inAllOrders(iocId,merchatid);
+    //window.opener.location.href=window.opener.location.href;
+  };
+
+  checkInfo = (e)=>{ //该方法是点击checkbox调用的方法
+    this.setState({
+      checkFlg:e.target.checked
+    });
+    // this.state.checkFlg = e.target.checked;
+    console.log('选中状态1：' + this.state.checkFlg);
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
 
   scrollToAnchor = anchorName => {
@@ -175,6 +226,7 @@ export class Content extends React.Component<IContentInt> {
     }
   }
   render() {
+
     return (
       /*<div>
     {...this.state.getAllOrderList.map(order => (
@@ -294,6 +346,11 @@ export class Content extends React.Component<IContentInt> {
   // <div></div>
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
 const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
