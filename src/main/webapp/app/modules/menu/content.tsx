@@ -15,8 +15,6 @@ export interface IContentInt2 {
   typeList: [];
   iocId:String;
   merchatid:String;
-  name1:String;
-  cailist:[];
 }
 
 
@@ -98,7 +96,8 @@ export class Content extends React.Component<IContentInt> {
     iocId:"",
     merchatid:"",
     name1:"",
-    cailist:[]
+    cailist:[],
+    shuaxin:1
   };
 
 
@@ -154,17 +153,26 @@ export class Content extends React.Component<IContentInt> {
         }
       });
 
+
   }
 
   handleLogin = (iocId: any, param2: any, merchatid: any, name: any)=> {
-    this.props.takingOrders(iocId,param2,merchatid,name).then(res =>{
-      if (res.value.data.data){
-        this.shouldComponentUpdate();
-      }
+    this.props.takingOrders(iocId,param2,merchatid,name);
+    this.props.inAllOrders(iocId,merchatid).then(res => {
+        this.setState({
+          num: res.value.data.totalElements,
+          sum: res.value.data.message
+        });
     });
+    this.props.merchantDishestype(iocId,merchatid).then(res => {
+          this.setState({
+            typeList: res.value.data.data
+          });
+      });
+
+    };
 
     //window.opener.location.href=window.opener.location.href;
-  }
   handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor)=> {
     this.props.takingOrdersNum(iocId,merchatid);
     //window.opener.location.href=window.opener.location.href;
@@ -178,14 +186,6 @@ export class Content extends React.Component<IContentInt> {
     this.props.inAllOrders(iocId,merchatid);
     //window.opener.location.href=window.opener.location.href;
   };
-
-  checkInfo = (e)=>{ //该方法是点击checkbox调用的方法
-    this.setState({
-      checkFlg:e.target.checked
-    });
-    // this.state.checkFlg = e.target.checked;
-    console.log('选中状态1：' + this.state.checkFlg);
-  }
 
   scrollToAnchor = (anchorName) => {
     var aa = anchorName.nativeEvent.target.innerText;
