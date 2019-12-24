@@ -6,84 +6,17 @@ import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 
 export interface IContentInt2 {
-  num: Number;
+  num: 0;
   sum: String;
   typeList: [];
   iocId: String;
   merchatid: String;
   name1: String;
   cailist: [];
+  newNum: Number;
 }
 
 export interface IContentInt extends StateProps, DispatchProps {}
-
-// export const type = [
-//   {
-//     position: '1',
-//     name: '热销'
-//   },
-//   {
-//     position: '2',
-//     name: '套餐'
-//   },
-//   {
-//     position: '3',
-//     name: '小炒'
-//   },
-//   {
-//     position: '4',
-//     name: '主食'
-//   },
-//   {
-//     position: '5',
-//     name: '酒水'
-//   }
-// ];
-
-// export const food = [
-//   {
-//     name: '肉末茄子',
-//     price: '17',
-//     img: './content/images/value1.png'
-//   },
-//   {
-//     name: '鱼香肉丝',
-//     price: '14',
-//     img: './content/images/value2.png'
-//   },
-//   {
-//     name: '芹菜炒腊肉',
-//     price: '14',
-//     img: './content/images/value3.png'
-//   },
-//   {
-//     name: '宫保鸡丁',
-//     price: '14',
-//     img: './content/images/value4.png'
-//   },
-//   {
-//     name: '糖醋里脊',
-//     price: '21',
-//     img: './content/images/value5.png'
-//   }
-// ];
-
-// var itemDom = true;// You want to check
-//
-// function checkScroll() {
-//   //滚动条高度+视窗高度 = 可见区域底部高度
-//   var visibleBottom = window.scrollY + document.documentElement.clientHeight;
-//   //可见区域顶部高度
-//   var visibleTop = window.scrollY;
-//
-//   var centerY = itemDom.offsetTop + (itemDom.offsetHeight * 0.8);
-//   var show = centerY > visibleTop && centerY < visibleBottom;
-//   if (show ) {
-//     // showing
-//   }else{
-//     // hidden
-//   }
-// }
 
 export class Content extends React.Component<IContentInt> {
   state = {
@@ -93,7 +26,15 @@ export class Content extends React.Component<IContentInt> {
     iocId: '',
     merchatid: '',
     name1: '',
-    cailist: []
+    cailist: [],
+    newName: [{
+      caiid: Number,
+      cainame: String,
+      cainum: Number, // Number,
+      caiprice: String,
+      url: String
+    }],
+    cainum: Number
   };
 
   componentDidMount() {
@@ -151,44 +92,89 @@ export class Content extends React.Component<IContentInt> {
   }
 
 
-  handleLogin = (iocId: any, param2: any, merchatid: any, name: any) => {
-    this.props.takingOrders(iocId, param2, merchatid, name);
-    location.reload();
-    // window.opener.location.href=window.opener.location.href;
-  }
-  handleLogin2 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor) => {
-    this.props.takingOrdersNum(iocId, merchatid);
-
-  }
-
-  handleLogin3 = (iocId: StringConstructor, param2: any, merchatid: StringConstructor, other: any) => {
-    this.props.merchantOrders2(iocId, merchatid, other);
-    // window.opener.location.href=window.opener.location.href;
-  }
-
-  handleLogin4 = (iocId: StringConstructor, merchatid: StringConstructor) => {
-    this.props.inAllOrders(iocId, merchatid);
-    // window.opener.location.href=window.opener.location.href;
-  }
 
   scrollToAnchor = anchorName => {
     if (anchorName.name) {
         const anchorElement = document.getElementById(anchorName.name);
         if (anchorElement) { anchorElement.scrollIntoView(); }
+        console.log(anchorName);
+        
+        document.getElementById(anchorName.id).style.background = '#ffffff';
+        document.getElementById(anchorName.id).style.borderRight = 'none';
+        document.getElementById(anchorName.id).style.borderLeft = '1px solid #fe4365';
     }
   }
+  clickCut(name ,nameNum ,indexs, e) {
+
+    // this.setState({
+    //   e : name+1
+    // })
+    console.log('----------', this.state);
+    if (parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'])>0) {
+      const newSum = parseFloat(this.state.sum)-parseFloat(name.caiprice);
+      const newAllNum = this.state.num - 1;
+      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum']) - 1;
+
+
+      const _tmp_ = this.state.typeList;
+      const _stateData_ = this.state;
+      _stateData_.sum = ''+newSum;
+      _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
+      _stateData_.num = newAllNum;
+      sessionStorage.setItem('userId', '10');
+      // _tmp_.sum=newSum;
+      this.setState({
+        typeList : _tmp_,
+        lastSum : _stateData_.sum,
+        lastNum : _stateData_.num
+      });
+    }
+    console.log(name, indexs, nameNum * 1 - 1 );
+    console.log('2222222222222', this.state);
+  }
+    clickPlus(name ,nameNum ,indexs, e) {
+
+      // this.setState({
+      //   e : name+1
+      // })
+      console.log('----------', this.state);
+        
+      let newSum = parseFloat(this.state.sum)+parseFloat(name.caiprice);
+      let newAllNum = this.state.num + 1;
+      let newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum']) + 1;
+        
+        let _tmp_ = this.state.typeList;
+        let _stateData_ = this.state;
+        _stateData_.sum = ''+newSum;
+        _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
+        _stateData_.num = newAllNum;
+    
+        this.setState({
+          typeList : _tmp_,
+          lastSum : _stateData_.sum,
+          lastNum : _stateData_.num
+        });
+      
+      console.log(name, indexs, nameNum * 1 - 1 );
+      console.log('2222222222222', this.state);
+    }
+    // let "shopid_1_categoryid_2_dish_3" = newTotals;
+    //TODO cookie 
+    //TODO this.state 
+
+
+    // _newName_["cainum"] = parseInt(nameNum) + 1;
+
+    // this.setState({
+    //   newName : _newName_
+    // });
+  
+    //console.log(parseInt(nameNum)+1);
+
+
   render() {
-
     return (
-      /*<div>
-    {...this.state.getAllOrderList.map(order => (
-      // console.log(order.id)
-      <div key={order.id}>
-        {order.id}
-      </div>
 
-    ))}
-  </div>*/
       <div style={{ position: 'relative' }}>
         <div
           style={{
@@ -201,9 +187,10 @@ export class Content extends React.Component<IContentInt> {
           }}
         >
           {...this.state.typeList.map(nameMun => (
+            
             <span
               key={nameMun.id}
-              id="pig"
+              id={nameMun.id}
               style={{
                 float: 'left',
                 backgroundColor: nameMun.id === '1' ? '#ffffff' : '#f8f8f8',
@@ -225,19 +212,19 @@ export class Content extends React.Component<IContentInt> {
         </div>
         <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '120px' , bottom: '7%' }}>
           <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div>
-          {...this.state.typeList.map(name => (
+          {...this.state.typeList.map((item, index) => (
             <div
-              key={name.id}
+              key={item.name}
               style={{
                 padding: '10px',
                 borderBottom: '1px solid #ececec',
                 overflow: 'hidden'
               }}
             >
-              <div id={ name.name }>{ name.name }</div>
-              { name.list.map(newName => (
+              <div id={ item.name }>{ item.name }@@@@</div>
+              { item.list.map((newName, inx) => (
                 <div
-                  key={newName.id}
+                  key={newName.name}
                   style={{
                     padding: '10px',
                     borderBottom: '1px solid #ececec',
@@ -276,13 +263,17 @@ export class Content extends React.Component<IContentInt> {
                   >
                     <span style={{ color: '#fe4365' }}>￥{newName.caiprice}</span>/份
                     <span style={{ float: 'right' }}>
-                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png"
-                      onClick={ takingOrders.bind(this, this.state.iocId, newName.cainum + 1, this.state.merchatid, newName.name)}
-                      />
-                      <span style={{ float: 'right' }}>- {newName.cainum} -</span>
                       <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png"
-                      onClick={ ()=>this.handleLogin(this.state.iocId,parseInt(newName.cainum)+1,this.state.merchatid,newName.cainame)}
-                      />
+                      onClick={this.clickPlus.bind(this, newName,  parseInt(newName.cainum), [index, inx] )}
+                          // ()=>this.handleLogin(this.state.iocId,parseInt(newName.cainum)+1,this.state.merchatid,newName.cainame)}
+                        />
+                        {/* {
+                        //console.log(newName)
+                        
+                      }shopid_1_categoryid_2_dish_3 */}
+                   <span style={{ float: 'right' }}>- {newName.cainum} -</span> {/*  {shopid10}  _{index} _ {inx} */}
+                      <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png"
+                      onClick = { this.clickCut.bind(this, newName,  parseInt(newName.cainum), [index, inx] )} />
                     </span>
                   </span>
                 </div>
@@ -290,6 +281,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
+        
         <Lowercolumn num={this.state.num} sum={this.state.sum}/>
       </div>
     );
