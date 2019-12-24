@@ -34,7 +34,9 @@ export class Content extends React.Component<IContentInt> {
       caiprice: String,
       url: String
     }],
-    cainum: Number
+    cainum: Number,
+    initTypeStyle: true,
+    typeNum: 0
   };
 
   componentDidMount() {
@@ -48,7 +50,8 @@ export class Content extends React.Component<IContentInt> {
       .split('=')[1], window.location.search
       .substring(1)
       .split('&')[0]
-      .split('=')[1]).then( res => {
+      // @ts-ignore
+      .split('=')[1]).then(res => {
       // console.log(res);
       if (res.value.data.data) {
         // let reactor = "1";
@@ -70,7 +73,8 @@ export class Content extends React.Component<IContentInt> {
           .split('&')[1]
           .split('=')[1]
       )
-      .then( res => {
+      // @ts-ignore
+      .then(res => {
         // console.log(res);
         if (res.value.data.data) {
           // let reactor = "1";
@@ -88,40 +92,42 @@ export class Content extends React.Component<IContentInt> {
           });
         }
       });
-
   }
 
-
-
-  scrollToAnchor = anchorName => {
+  scrollToAnchor (anchorName, typeIndex, e) {
+    // console.log(anchorName);
+    // console.log(typeIndex);
+    // console.log(this.state.typeList[(anchorName.id-1)])
     if (anchorName.name) {
         const anchorElement = document.getElementById(anchorName.name);
         if (anchorElement) { anchorElement.scrollIntoView(); }
-        console.log(anchorName);
-        
-        document.getElementById(anchorName.id).style.background = '#ffffff';
-        document.getElementById(anchorName.id).style.borderRight = 'none';
-        document.getElementById(anchorName.id).style.borderLeft = '1px solid #fe4365';
+        const num = typeIndex;
+        const douType = false ;
+        const _systemType_ = this.state.initTypeStyle = false;
+        const _typeNumber_ = this.state.typeNum = typeIndex;
+        this.setState({
+          _systemType_ : douType ,
+          _typeNumber_ : num
+        });
+        // document.getElementById(anchorName.id).style.background = '#ffffff';
+        // document.getElementById(anchorName.id).style.borderRight = 'none';
+        // document.getElementById(anchorName.id).style.borderLeft = '1px solid #fe4365';
     }
   }
-  clickCut(name ,nameNum ,indexs, e) {
-
+  clickCut(name, nameNum , indexs, e) {
     // this.setState({
     //   e : name+1
     // })
-    console.log('----------', this.state);
-    if (parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'])>0) {
-      const newSum = parseFloat(this.state.sum)-parseFloat(name.caiprice);
+    // console.log('----------', this.state);
+    if (parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) > 0) {
+      const newSum = parseFloat(this.state.sum) - parseFloat(name.caiprice);
       const newAllNum = this.state.num - 1;
-      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum']) - 1;
-
-
+      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) - 1;
       const _tmp_ = this.state.typeList;
       const _stateData_ = this.state;
-      _stateData_.sum = ''+newSum;
+      _stateData_.sum = '' + newSum;
       _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
       _stateData_.num = newAllNum;
-      sessionStorage.setItem('userId', '10');
       // _tmp_.sum=newSum;
       this.setState({
         typeList : _tmp_,
@@ -129,52 +135,39 @@ export class Content extends React.Component<IContentInt> {
         lastNum : _stateData_.num
       });
     }
-    console.log(name, indexs, nameNum * 1 - 1 );
-    console.log('2222222222222', this.state);
+    // console.log(name, indexs, nameNum * 1 - 1 );
+    // console.log('2222222222222', this.state);
   }
-    clickPlus(name ,nameNum ,indexs, e) {
-
+    clickPlus(name, nameNum, indexs, e) {
       // this.setState({
       //   e : name+1
       // })
-      console.log('----------', this.state);
-        
-      let newSum = parseFloat(this.state.sum)+parseFloat(name.caiprice);
-      let newAllNum = this.state.num + 1;
-      let newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum']) + 1;
-        
-        let _tmp_ = this.state.typeList;
-        let _stateData_ = this.state;
-        _stateData_.sum = ''+newSum;
+      // console.log('----------', this.state);
+      const newSum = parseFloat(this.state.sum) + parseFloat(name.caiprice);
+      const newAllNum = this.state.num + 1;
+      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) + 1;
+      const _tmp_ = this.state.typeList;
+      const _stateData_ = this.state;
+        _stateData_.sum = '' + newSum;
         _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
         _stateData_.num = newAllNum;
-    
         this.setState({
           typeList : _tmp_,
           lastSum : _stateData_.sum,
           lastNum : _stateData_.num
         });
-      
-      console.log(name, indexs, nameNum * 1 - 1 );
-      console.log('2222222222222', this.state);
+      // console.log(name, indexs, nameNum * 1 - 1 );
+      // console.log('2222222222222', this.state);
     }
     // let "shopid_1_categoryid_2_dish_3" = newTotals;
-    //TODO cookie 
-    //TODO this.state 
-
-
+    // TODO cookie TODO this.state
     // _newName_["cainum"] = parseInt(nameNum) + 1;
-
     // this.setState({
     //   newName : _newName_
     // });
-  
-    //console.log(parseInt(nameNum)+1);
-
-
+    // console.log(parseInt(nameNum)+1);
   render() {
     return (
-
       <div style={{ position: 'relative' }}>
         <div
           style={{
@@ -186,16 +179,15 @@ export class Content extends React.Component<IContentInt> {
             textAlign: 'center'
           }}
         >
-          {...this.state.typeList.map(nameMun => (
-            
+          {...this.state.typeList.map((nameMun, typeIndex) => (
             <span
               key={nameMun.id}
               id={nameMun.id}
               style={{
                 float: 'left',
-                backgroundColor: nameMun.id === '1' ? '#ffffff' : '#f8f8f8',
-                borderRight: nameMun.id === '1' ? 'none' : '1px solid #ececec',
-                borderLeft: nameMun.id === '1' ? '1px solid #fe4365' : 'none',
+                backgroundColor: this.state.initTypeStyle ? (typeIndex === 0 ? '#f8f8f8' : '#ffffff') : (typeIndex === this.state.typeNum ? '#f8f8f8' : '#ffffff'),
+                borderRight: this.state.initTypeStyle ? (typeIndex === 0 ? 'none' : '1px solid #ececec') : (typeIndex === this.state.typeNum ? 'none' : '1px solid #ececec'),
+                borderLeft: this.state.initTypeStyle ? (typeIndex === 0 ? '1px solid #fe4365' : 'none') : (typeIndex === this.state.typeNum ? '1px solid #fe4365' : 'none'),
                 width: '100%',
                 padding: '10px',
                 textAlign: 'center',
@@ -203,15 +195,14 @@ export class Content extends React.Component<IContentInt> {
                 color: '#00000095'
               }}
             >
-              <a onClick= { this.scrollToAnchor.bind(this, { ...nameMun })}>
+              <a onClick= { this.scrollToAnchor.bind(this, { ...nameMun } , typeIndex)}>
               {nameMun.name}
               </a>
             </span>
           ))}
-
         </div>
         <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '120px' , bottom: '7%' }}>
-          <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div>
+          {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div
               key={item.name}
@@ -221,7 +212,7 @@ export class Content extends React.Component<IContentInt> {
                 overflow: 'hidden'
               }}
             >
-              <div id={ item.name }>{ item.name }@@@@</div>
+              <div id={ item.name }>{ item.name }</div>
               { item.list.map((newName, inx) => (
                 <div
                   key={newName.name}
@@ -264,16 +255,15 @@ export class Content extends React.Component<IContentInt> {
                     <span style={{ color: '#fe4365' }}>￥{newName.caiprice}</span>/份
                     <span style={{ float: 'right' }}>
                       <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/plus.png"
-                      onClick={this.clickPlus.bind(this, newName,  parseInt(newName.cainum), [index, inx] )}
+                      onClick={this.clickPlus.bind(this, newName, parseInt(newName.cainum, 10), [index, inx])}
                           // ()=>this.handleLogin(this.state.iocId,parseInt(newName.cainum)+1,this.state.merchatid,newName.cainame)}
                         />
                         {/* {
                         //console.log(newName)
-                        
                       }shopid_1_categoryid_2_dish_3 */}
                    <span style={{ float: 'right' }}>- {newName.cainum} -</span> {/*  {shopid10}  _{index} _ {inx} */}
                       <img style={{ width: '20px', height: '20px', float: 'right' }} src="./content/images/cut.png"
-                      onClick = { this.clickCut.bind(this, newName,  parseInt(newName.cainum), [index, inx] )} />
+                      onClick = { this.clickCut.bind(this, newName, parseInt(newName.cainum, 10), [index, inx])} />
                     </span>
                   </span>
                 </div>
@@ -281,22 +271,17 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        
         <Lowercolumn num={this.state.num} sum={this.state.sum}/>
       </div>
     );
   }
-
   // <div></div>
 }
-
 const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-
 const mapDispatchToProps = { merchantDishestype , takingOrders, takingOrdersNum, inAllOrders, merchantOrders2 };
-
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(
