@@ -36,7 +36,9 @@ export class Content extends React.Component<IContentInt> {
     }],
     cainum: Number,
     initTypeStyle: true,
-    typeNum: 0
+    typeNum: 0,
+    menuList: [],
+    menuAllCount: 0
   };
 
   componentDidMount() {
@@ -81,6 +83,7 @@ export class Content extends React.Component<IContentInt> {
           // console.log(res.value.data.data);
           this.setState({
             typeList: res.value.data.data,
+            menuAllCount: res.value.data.totalElements,
             iocId: window.location.search
               .substring(1)
               .split('&')[1]
@@ -119,12 +122,15 @@ export class Content extends React.Component<IContentInt> {
     //   e : name+1
     // })
     // console.log('----------', this.state);
+    // console.log(this.state.typeList[(indexs[0])]['list']);
     if (parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) > 0) {
-      const newSum = parseFloat(this.state.sum) - parseFloat(name.caiprice);
+      const newSum = ((parseFloat(this.state.sum))*1000 - (parseFloat(name.caiprice))*1000)/1000;
       const newAllNum = this.state.num - 1;
       const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) - 1;
       const _tmp_ = this.state.typeList;
       const _stateData_ = this.state;
+      
+      const _menuList_ = this.state.menuList = [];
       _stateData_.sum = '' + newSum;
       _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
       _stateData_.num = newAllNum;
@@ -134,6 +140,22 @@ export class Content extends React.Component<IContentInt> {
         lastSum : _stateData_.sum,
         lastNum : _stateData_.num
       });
+      for (let typeCount = 0; typeCount < this.state.typeList.length; typeCount++) {
+        // _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum']
+        for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
+          // console.log(this.state.typeList[typeCount]['list'][index]['cainum']);
+          if ( this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
+            // console.log(this.state.typeList[typeCount]['list'][index]);
+            _menuList_.push(this.state.typeList[typeCount]['list'][index]);
+            
+          }
+          
+        }
+      }
+      this.setState({
+        newMenuList: _menuList_
+      });
+      // console.log(this.state.menuList);
     }
     // console.log(name, indexs, nameNum * 1 - 1 );
     // console.log('2222222222222', this.state);
@@ -143,19 +165,31 @@ export class Content extends React.Component<IContentInt> {
       //   e : name+1
       // })
       // console.log('----------', this.state);
-      const newSum = parseFloat(this.state.sum) + parseFloat(name.caiprice);
+      const newSum = ((parseFloat(this.state.sum)) * 1000 + (parseFloat(name.caiprice)) * 1000) / 1000;
       const newAllNum = this.state.num + 1;
-      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) + 1;
+      const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'], 10) + 1;
       const _tmp_ = this.state.typeList;
       const _stateData_ = this.state;
-        _stateData_.sum = '' + newSum;
-        _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
-        _stateData_.num = newAllNum;
-        this.setState({
-          typeList : _tmp_,
-          lastSum : _stateData_.sum,
-          lastNum : _stateData_.num
-        });
+      const _menuList_ = this.state.menuList = [];
+      _stateData_.sum = '' + newSum;
+      _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
+      _stateData_.num = newAllNum;
+      this.setState({
+        typeList: _tmp_,
+        lastSum: _stateData_.sum,
+        lastNum: _stateData_.num
+      });
+      for (let typeCount = 0; typeCount < this.state.typeList.length; typeCount++) {
+        for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
+          if (this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
+            _menuList_.push(this.state.typeList[typeCount]['list'][index]);
+          }
+        }
+      }
+      this.setState({
+        newMenuList: _menuList_
+      });
+      // console.log(this.state.menuList);
       // console.log(name, indexs, nameNum * 1 - 1 );
       // console.log('2222222222222', this.state);
     }
@@ -201,7 +235,7 @@ export class Content extends React.Component<IContentInt> {
             </span>
           ))}
         </div>
-        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '120px' , bottom: '7%' }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '105px' , bottom: '5%' }}>
           {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div
@@ -271,7 +305,8 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum}/>
+        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList}/>
+        {/* {console.log(this.state.typeList)} */}
       </div>
     );
   }
