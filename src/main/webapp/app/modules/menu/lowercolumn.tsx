@@ -25,9 +25,6 @@ class LongMenu extends React.Component<ILongMenuProps> {
     
     // console.log(this.props.num);
     // console.log(this.props.sum);
-    this.setState({
-     
-    })
   }
 
   kanCaiDan(hideData,e) {
@@ -37,7 +34,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
     this.setState({
       sureHide: _changeHide_.hide
     })
-    console.log(this.props.menuList);
+    // console.log(this.props.menuList);
   }
   render() {
     function goBack() {
