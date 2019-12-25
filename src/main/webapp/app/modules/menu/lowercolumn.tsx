@@ -3,20 +3,28 @@ import React from 'react';
 export interface ILongMenuProps {
   num: number;
   sum: String;
+  typeList: any[];
+  handleLogin: Function;
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
+
+  handleSubmit = (typeList) => {
+    const { handleLogin } = this.props;
+    handleLogin(typeList);
+  };
 
   constructor(props) {
     super(props);
     // console.log(props);
     // console.log(this.props.num);
     // console.log(this.props.sum);
+    this.setState({
+     
+    })
   }
-  render() {
-    function goBack() {
-      history.go(-1);
-    }
+  
+  render() {   
     return (
       <div
         style={{
@@ -30,11 +38,11 @@ class LongMenu extends React.Component<ILongMenuProps> {
         }}
       >
       <span
-        onClick={goBack}
+        onClick={this.handleSubmit}
         style={{
           float: 'right',
           backgroundColor: '#fe4365',
-          color: '#fffde5',
+          color: '#fffde5s',
           padding: '15px 25px 15px 25px'
         }}
       >

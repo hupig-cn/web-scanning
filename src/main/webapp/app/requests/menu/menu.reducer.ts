@@ -36,6 +36,15 @@ export const takingOrders = (iocId: any , num: any , merchatid: any , name: any)
   });
   return result;
 };
+
+// 点餐
+export const takingOrders2 = (chishi:any[]) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrders2?chishi=' +`${chishi}`)
+  });
+  return result;
+};
+
 // 重置
 export const takingOrdersNum = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({

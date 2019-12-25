@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype , takingOrders , takingOrdersNum , merchantOrders2 , inAllOrders } from 'app/requests/menu/menu.reducer';
+import { merchantDishestype  ,inAllOrders, takingOrders2 } from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 
@@ -135,7 +135,7 @@ export class Content extends React.Component<IContentInt> {
         lastNum : _stateData_.num
       });
     }
-    // console.log(name, indexs, nameNum * 1 - 1 );
+    console.log(this.state.typeList);
     // console.log('2222222222222', this.state);
   }
     clickPlus(name, nameNum, indexs, e) {
@@ -156,6 +156,7 @@ export class Content extends React.Component<IContentInt> {
           lastSum : _stateData_.sum,
           lastNum : _stateData_.num
         });
+        console.log(this.state.typeList);
       // console.log(name, indexs, nameNum * 1 - 1 );
       // console.log('2222222222222', this.state);
     }
@@ -166,6 +167,10 @@ export class Content extends React.Component<IContentInt> {
     //   newName : _newName_
     // });
     // console.log(parseInt(nameNum)+1);
+    handleLogin = (chishi: any[]) => {
+      this.props.takingOrders2(chishi);
+      // window.opener.location.href=window.opener.location.href;
+    }
   render() {
     return (
       <div style={{ position: 'relative' }}>
@@ -271,7 +276,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum}/>
+        <Lowercolumn num={this.state.num} sum={this.state.sum} typeList={this.state.typeList} handleLogin={this.handleLogin}/>
       </div>
     );
   }
@@ -281,7 +286,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { merchantDishestype , takingOrders, takingOrdersNum, inAllOrders, merchantOrders2 };
+const mapDispatchToProps = { merchantDishestype , takingOrders2 ,inAllOrders };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(
