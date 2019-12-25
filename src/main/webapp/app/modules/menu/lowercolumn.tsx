@@ -44,15 +44,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
       history.go(-1);
     }
     return (
-      <div style={{
-        position: 'absolute',
-        bottom: '0px',
-        zIndex: 1200,
-        width: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.80)',
-        height: '52px',
-        textAlign: 'center'
-      }}>
+      <div >
         <MenuCart menuList={this.props.menuList} hide={this.state.hide} />
         <div
           style={{
@@ -61,13 +53,14 @@ class LongMenu extends React.Component<ILongMenuProps> {
             zIndex: 1000,
             width: '100%',
             backgroundColor: 'rgba(0, 0, 0, 0.80)',
-            height: '52px',
+            height: '6.3%',
             textAlign: 'center'
           }}
         >
           <span
             onClick={goBack}
             style={{
+              height:'100%',
               float: 'right',
               backgroundColor: '#fe4365',
               color: '#fffde5',
@@ -81,7 +74,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
             style={{
               float: 'left',
               width: '30px',
-              height: '30px',
+              height: '55%',
               margin: '8px 15px 15px 15px'
             }}
             src="./content/images/num.png"

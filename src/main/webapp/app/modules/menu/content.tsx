@@ -212,9 +212,10 @@ export class Content extends React.Component<IContentInt> {
           style={{
             width: '20%',
             float: 'left',
-            overflow: 'hidden',
+            overflow: 'auto',
             position: 'fixed',
             zIndex: 1000,
+            top: '12.5%',
             textAlign: 'center'
           }}
         >
@@ -240,7 +241,7 @@ export class Content extends React.Component<IContentInt> {
             </span>
           ))}
         </div>
-        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '105px' , bottom: '5%' }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%' }}>
           {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div
@@ -310,7 +311,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList}/>
+        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList} typeList = {this.state.typeList} handleLogin = {this.handleLogin}/>
         {/* {console.log(this.state.typeList)} */}
       </div>
     );

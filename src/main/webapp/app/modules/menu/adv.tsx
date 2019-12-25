@@ -43,15 +43,16 @@ export class Title extends React.Component<IContentInt> {
             key={merchant.id}
             style={{
               width: '100%',
+              height: '7.5%',
               position: 'fixed',
-              top: '40px',
+              top: '5%',
               zIndex: 1000
             }}
           >
-            <img style={{ width: '100%', height: '65px' }} src={merchant.merchantphoto} />
+            <img style={{ width: '100%', height: '100%' }} src={merchant.merchantphoto} />
           </div>
         ))}
-        <div style={{ height: '45px' }} />
+        {/* <div style={{ height: '45px' }} /> */}
       </div>
     );
   }
