@@ -189,7 +189,11 @@ export class Content extends React.Component<IContentInt> {
     // console.log(parseInt(nameNum)+1);
     handleLogin = () => {
       var test=JSON.stringify(this.state.menuList)
+<<<<<<< HEAD
       this.props.takingOrders2(test);
+=======
+      this.props.takingOrders2(this.state.merchatid,this.state.iocId,"388",this.state.sum,this.state.menuList);
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
       // window.opener.location.href=window.opener.location.href;
     }
   render() {

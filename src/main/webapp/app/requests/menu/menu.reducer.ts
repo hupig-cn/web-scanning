@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export const menu = (userId: any, loc: any) => async dispatch => {
   const result = await dispatch({
@@ -38,9 +39,9 @@ export const takingOrders = (iocId: any , num: any , merchatid: any , name: any)
 };
 
 // 点餐
-export const takingOrders2 = (chishi:any[]) => async dispatch => {
+export const takingOrders2 = (mid:any ,ioc:any ,userid:any,sum:any,chishi:any[]) => async dispatch => {
   const result = await dispatch({
-    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrders2?chishi=' +`${chishi}`)
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrders2',{ mid , ioc , userid , sum , chishi })
   });
   return result;
 };

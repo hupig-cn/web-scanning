@@ -10,7 +10,16 @@ export interface ILongMenuProps {
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
+<<<<<<< HEAD
   state = {
+=======
+  handleSubmit = () => {
+    const { handleLogin } = this.props;
+    handleLogin();
+  };
+
+  state={
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
     hide: true,
     menuList: []
   }
