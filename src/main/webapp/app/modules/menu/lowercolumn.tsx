@@ -10,9 +10,9 @@ export interface ILongMenuProps {
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
-  handleSubmit = (typeList) => {
+  handleSubmit = (menuList) => {
     const { handleLogin } = this.props;
-    handleLogin(typeList);
+    handleLogin(menuList);
   };
 
   state={
@@ -55,7 +55,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
           }}
         >
           <span
-            onClick={goBack}
+            onClick={this.handleSubmit}
             style={{
               height:'100%',
               float: 'right',
