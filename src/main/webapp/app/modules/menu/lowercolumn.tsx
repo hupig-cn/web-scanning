@@ -10,26 +10,25 @@ export interface ILongMenuProps {
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
-  handleSubmit = (menuList) => {
-    const { handleLogin } = this.props;
-    handleLogin(menuList);
-  };
-
-  state={
+  state = {
     hide: true,
     menuList: []
   }
 
+  handleSubmit = () => {
+    const { handleLogin } = this.props;
+    handleLogin();
+  };
   constructor(props) {
     super(props);
-    
+
     // console.log(this.props.num);
     // console.log(this.props.sum);
   }
 
-  kanCaiDan(hideData,e) {
-    let _changeHide_ = this.state;
-    const changeHide = ( hideData? false : true );
+  kanCaiDan(hideData, e) {
+    const _changeHide_ = this.state;
+    const changeHide = (hideData ? false : true);
     _changeHide_.hide = changeHide;
     this.setState({
       sureHide: _changeHide_.hide
@@ -42,7 +41,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
     }
     return (
       <div >
-          <div style={{
+        <div style={{
           width: '100%',
           height: '25%',
           zIndex: 1000,
@@ -52,7 +51,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
           bottom: '50%',
           left: '0px'
         }}
-        onClick={this.kanCaiDan.bind(this,this.state.hide)}
+          onClick={this.kanCaiDan.bind(this, this.state.hide)}
         >
         </div>
         <MenuCart menuList={this.props.menuList} hide={this.state.hide} />
@@ -70,11 +69,12 @@ class LongMenu extends React.Component<ILongMenuProps> {
           <span
             onClick={this.handleSubmit}
             style={{
-              height:'100%',
+              height: '100%',
               float: 'right',
               backgroundColor: '#fe4365',
               color: '#fffde5',
-              padding: '15px 25px 15px 25px'
+              display: 'block',
+              padding: '12px 25px 15px 25px'
             }}
           >
             提交订单

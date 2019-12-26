@@ -5,6 +5,8 @@ import { merchantDishestype  ,inAllOrders, takingOrders2 } from 'app/requests/me
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 
+
+
 export interface IContentInt2 {
   num: 0;
   sum: String;
@@ -16,15 +18,16 @@ export interface IContentInt2 {
   newNum: Number;
 }
 
-export interface IContentInt extends StateProps, DispatchProps {}
+export interface IContentInt extends StateProps, DispatchProps {
+  iocId: String,
+  merchatid: String
+}
 
 export class Content extends React.Component<IContentInt> {
   state = {
     num: 0,
     sum: '',
     typeList: [],
-    iocId: '',
-    merchatid: '',
     name1: '',
     cailist: [],
     newName: [{
@@ -46,14 +49,12 @@ export class Content extends React.Component<IContentInt> {
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     // @ts-ignore
     // this.props.menu("12","34")
-    this.props.inAllOrders(window.location.search
-      .substring(1)
-      .split('&')[1]
-      .split('=')[1], window.location.search
-      .substring(1)
-      .split('&')[0]
-      // @ts-ignore
-      .split('=')[1]).then(res => {
+
+    console.log(this.props.merchatid);
+    console.log(this.props.iocId);
+    this.props.inAllOrders(this.props.iocId, this.props.merchatid)
+    // @ts-ignore
+    .then(res => {
       // console.log(res);
       if (res.value.data.data) {
         // let reactor = "1";
@@ -65,16 +66,7 @@ export class Content extends React.Component<IContentInt> {
       }
     });
     this.props
-      .merchantDishestype(
-        window.location.search
-          .substring(1)
-          .split('&')[0]
-          .split('=')[1],
-        window.location.search
-          .substring(1)
-          .split('&')[1]
-          .split('=')[1]
-      )
+      .merchantDishestype(this.props.merchatid, this.props.iocId)
       // @ts-ignore
       .then(res => {
         // console.log(res);
@@ -83,18 +75,12 @@ export class Content extends React.Component<IContentInt> {
           // console.log(res.value.data.data);
           this.setState({
             typeList: res.value.data.data,
-            menuAllCount: res.value.data.totalElements,
-            iocId: window.location.search
-              .substring(1)
-              .split('&')[1]
-              .split('=')[1],
-            merchatid : window.location.search
-              .substring(1)
-              .split('&')[0]
-              .split('=')[1]
+            menuAllCount: res.value.data.totalElements
           });
         }
       });
+
+      
   }
 
   scrollToAnchor (anchorName, typeIndex, e) {
@@ -201,8 +187,9 @@ export class Content extends React.Component<IContentInt> {
     //   newName : _newName_
     // });
     // console.log(parseInt(nameNum)+1);
-    handleLogin = (chishi: any[]) => {
-      this.props.takingOrders2(chishi);
+    handleLogin = () => {
+      var test=JSON.stringify(this.state.menuList)
+      this.props.takingOrders2(test);
       // window.opener.location.href=window.opener.location.href;
     }
   render() {
@@ -255,7 +242,7 @@ export class Content extends React.Component<IContentInt> {
               <div id={ item.name }>{ item.name }</div>
               { item.list.map((newName, inx) => (
                 <div
-                  key={newName.name}
+                  key={inx}
                   style={{
                     padding: '10px',
                     borderBottom: '1px solid #ececec',
