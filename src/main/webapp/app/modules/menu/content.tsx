@@ -241,13 +241,13 @@ export class Content extends React.Component<IContentInt> {
             </span>
           ))}
         </div>
-        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%' }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%',borderLeft: '1px solid #ececec', }}>
           {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div
               key={item.name}
               style={{
-                padding: '10px',
+                padding: '10px 10px 0px 10px',
                 borderBottom: '1px solid #ececec',
                 overflow: 'hidden'
               }}

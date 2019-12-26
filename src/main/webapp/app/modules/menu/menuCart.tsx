@@ -15,14 +15,14 @@ class MenuCart extends React.Component<IMenuCartProps> {
     super(props);
 
   }
-  backMenu(){
-    
+  backMenu() {
+
   }
   render() {
 
     return (
       <div>
-        <div style={{
+        {/* <div style={{
           width: '100%',
           height: '25%',
           zIndex: 1000,
@@ -34,13 +34,13 @@ class MenuCart extends React.Component<IMenuCartProps> {
         }}
         onClick={this.backMenu.bind(this)}
         >
-        </div>
+        </div> */}
 
         <div style={{
           width: '100%',
           height: '5%',
           zIndex: 1000,
-          background: 'rgba(225, 225, 225, 1)',
+          background: '#C8C7C5',
           position: 'fixed',
           top: this.props.hide ? '137.5%' : '37.5%',
           left: '0px'
@@ -60,7 +60,7 @@ class MenuCart extends React.Component<IMenuCartProps> {
         }}>
           {...this.props.menuList.map((item, index) => (
             <div
-              key={item.name}
+              key={index}
               style={{
                 height: '70px',
                 width: '100%',
@@ -112,7 +112,7 @@ class MenuCart extends React.Component<IMenuCartProps> {
                 float: 'right'
               }}>
                 <span style={{
-                  color: '#fe4365', 
+                  color: '#fe4365',
                   width: '50%',
                   fontSize: '0.93rem',
                   textAlign: 'left'

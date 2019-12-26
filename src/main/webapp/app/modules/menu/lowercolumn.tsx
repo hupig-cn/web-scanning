@@ -42,6 +42,19 @@ class LongMenu extends React.Component<ILongMenuProps> {
     }
     return (
       <div >
+          <div style={{
+          width: '100%',
+          height: '25%',
+          zIndex: 1000,
+          background: 'rgba(0, 0, 0, 0.50)',
+          position: 'fixed',
+          top: this.state.hide ? '112.5%' : '12.5%',
+          bottom: '50%',
+          left: '0px'
+        }}
+        onClick={this.kanCaiDan.bind(this,this.state.hide)}
+        >
+        </div>
         <MenuCart menuList={this.props.menuList} hide={this.state.hide} />
         <div
           style={{
