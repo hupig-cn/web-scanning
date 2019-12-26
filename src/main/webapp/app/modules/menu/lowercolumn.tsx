@@ -10,9 +10,9 @@ export interface ILongMenuProps {
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
-  handleSubmit = (menuList) => {
+  handleSubmit = () => {
     const { handleLogin } = this.props;
-    handleLogin(menuList);
+    handleLogin();
   };
 
   state={
