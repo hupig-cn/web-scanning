@@ -10,10 +10,10 @@ class MenuCart extends React.Component<IMenuCartProps> {
   state = {
     hide: Boolean,
     menuList: []
-  }
+  };
+
   constructor(props) {
     super(props);
-
   }
   backMenu() {
 
@@ -36,7 +36,7 @@ class MenuCart extends React.Component<IMenuCartProps> {
         >
         </div> */}
 
-        <div style={{
+        <div style = {{
           width: '100%',
           height: '5%',
           zIndex: 1000,
@@ -44,10 +44,7 @@ class MenuCart extends React.Component<IMenuCartProps> {
           position: 'fixed',
           top: this.props.hide ? '137.5%' : '37.5%',
           left: '0px'
-        }}>
-
-        </div>
-
+        }}/>
         <div style={{
           width: '100%',
           height: '51.2%',
@@ -129,4 +126,5 @@ class MenuCart extends React.Component<IMenuCartProps> {
     );
   }
 }
+
 export default MenuCart;

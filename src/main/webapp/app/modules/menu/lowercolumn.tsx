@@ -14,7 +14,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
   state = {
     hide: true,
     menuList: []
-  }
+  };
 
   handleSubmit = () => {
     const { handleLogin } = this.props;
@@ -33,7 +33,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
     _changeHide_.hide = changeHide;
     this.setState({
       sureHide: _changeHide_.hide
-    })
+    });
     // console.log(this.props.menuList);
   }
   render() {
@@ -53,8 +53,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
           left: '0px'
         }}
           onClick={this.kanCaiDan.bind(this, this.state.hide)}
-        >
-        </div>
+        />
         <MenuCart menuList={this.props.menuList} hide={this.state.hide} />
         <div
           style={{
@@ -122,4 +121,5 @@ class LongMenu extends React.Component<ILongMenuProps> {
     );
   }
 }
+
 export default LongMenu;

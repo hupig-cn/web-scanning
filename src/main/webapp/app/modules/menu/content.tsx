@@ -1,11 +1,9 @@
 import React from 'react';
 
 import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype  ,inAllOrders, takingOrders2 } from 'app/requests/menu/menu.reducer';
+import { merchantDishestype , inAllOrders, takingOrders2 } from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
-
-
 
 export interface IContentInt2 {
   num: 0;
@@ -19,8 +17,8 @@ export interface IContentInt2 {
 }
 
 export interface IContentInt extends StateProps, DispatchProps {
-  iocId: String,
-  merchatid: String
+  iocId: String;
+  merchatid: String;
 }
 
 export class Content extends React.Component<IContentInt> {
@@ -47,11 +45,6 @@ export class Content extends React.Component<IContentInt> {
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
-    // @ts-ignore
-    // this.props.menu("12","34")
-
-    console.log(this.props.merchatid);
-    console.log(this.props.iocId);
     this.props.inAllOrders(this.props.iocId, this.props.merchatid)
     // @ts-ignore
     .then(res => {
@@ -79,8 +72,6 @@ export class Content extends React.Component<IContentInt> {
           });
         }
       });
-
-      
   }
 
   scrollToAnchor (anchorName, typeIndex, e) {
@@ -110,12 +101,11 @@ export class Content extends React.Component<IContentInt> {
     // console.log('----------', this.state);
     // console.log(this.state.typeList[(indexs[0])]['list']);
     if (parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) > 0) {
-      const newSum = ((parseFloat(this.state.sum))*1000 - (parseFloat(name.caiprice))*1000)/1000;
+      const newSum = ((parseFloat(this.state.sum)) * 1000 - (parseFloat(name.caiprice)) * 1000) / 1000;
       const newAllNum = this.state.num - 1;
       const newTotals = parseInt(this.state.typeList[(indexs[0])]['list'][(indexs[1])]['cainum'] , 10) - 1;
       const _tmp_ = this.state.typeList;
       const _stateData_ = this.state;
-      
       const _menuList_ = this.state.menuList = [];
       _stateData_.sum = '' + newSum;
       _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum'] = newTotals;
@@ -130,12 +120,10 @@ export class Content extends React.Component<IContentInt> {
         // _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum']
         for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
           // console.log(this.state.typeList[typeCount]['list'][index]['cainum']);
-          if ( this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
+          if (this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
             // console.log(this.state.typeList[typeCount]['list'][index]);
             _menuList_.push(this.state.typeList[typeCount]['list'][index]);
-            
           }
-          
         }
       }
       this.setState({
@@ -143,7 +131,7 @@ export class Content extends React.Component<IContentInt> {
       });
       // console.log(this.state.menuList);
     }
-    console.log(this.state.typeList);
+    // console.log(this.state.typeList);
     // console.log('2222222222222', this.state);
   }
     clickPlus(name, nameNum, indexs, e) {
@@ -185,7 +173,7 @@ export class Content extends React.Component<IContentInt> {
     // });
     // console.log(parseInt(nameNum)+1);
     handleLogin = () => {
-      this.props.takingOrders2(this.props.merchatid,this.props.iocId,"388",this.state.sum,this.state.menuList);
+      this.props.takingOrders2(this.props.merchatid, this.props.iocId, '388', this.state.sum, this.state.menuList);
     }
   render() {
     return (
@@ -223,7 +211,7 @@ export class Content extends React.Component<IContentInt> {
             </span>
           ))}
         </div>
-        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%',borderLeft: '1px solid #ececec', }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%', borderLeft: '1px solid #ececec' }}>
           {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div
@@ -304,7 +292,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { merchantDishestype , takingOrders2 ,inAllOrders };
+const mapDispatchToProps = { merchantDishestype , takingOrders2 , inAllOrders };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(

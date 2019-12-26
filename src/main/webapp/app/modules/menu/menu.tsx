@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { IRootState } from 'app/shared/reducers';
-import { getSession } from 'app/shared/reducers/authentication';
+import { getSession, registerRandom } from 'app/shared/reducers/authentication';
 import Titles from './titles';
 import Adv from './adv';
 import Content from './content';
-import { registerRandom } from 'app/shared/reducers/authentication';
 import {
   queryAlipayUser,
   createUserByScanningMerchant,
@@ -20,7 +19,7 @@ export class Menu extends React.Component<IMenuProp> {
   state = {
     iocId: window.location.search.substring(1).split('&')[1].split('=')[1],
     merchatid: window.location.search.substring(1).split('&')[0].split('=')[1]
-  }
+  };
   componentDidMount() {
     this.props.getSession();
     const url = location.search;
@@ -50,8 +49,7 @@ export class Menu extends React.Component<IMenuProp> {
           'state%3D' +
           state
       );
-    }
-    else if (str[0].match(/code/i)) {
+    } else if (str[0].match(/code/i)) {
       const state = decodeURIComponent(str[1].replace('state=', ''));
       if (state.match(/WeChat/i)) {
         // tslint:disable-next-line: no-invalid-this
