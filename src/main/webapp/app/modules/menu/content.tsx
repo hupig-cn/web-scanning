@@ -116,13 +116,21 @@ export class Content extends React.Component<IContentInt> {
         lastSum : _stateData_.sum,
         lastNum : _stateData_.num
       });
-      for (let typeCount = 0; typeCount < this.state.typeList.length; typeCount++) {
-        // _tmp_[(indexs[0])]['list'][(indexs[1])]['cainum']
-        for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
-          // console.log(this.state.typeList[typeCount]['list'][index]['cainum']);
-          if (this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
-            // console.log(this.state.typeList[typeCount]['list'][index]);
-            _menuList_.push(this.state.typeList[typeCount]['list'][index]);
+      // for (let typeCount = 0; typeCount < this.state.typeList.length; typeCount++) {
+      //   console.log(typeCount);
+      //   for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
+      //     // console.log(this.state.typeList[typeCount]['list'][index]['cainum']);
+      //     if ( this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
+      //       // console.log(this.state.typeList[typeCount]['list'][index]);
+      //       _menuList_.push(this.state.typeList[typeCount]['list'][index]);
+      //     }
+      //   }
+      // }
+      for (const [typeOneIndex, typeOneCount] of this.state.typeList.entries()) {
+        // console.log(this.state.typeList[typeOneIndex]);
+        for (const [typeTowIndex, typeSecCount] of this.state.typeList[typeOneIndex]['list'].entries()) {
+          if (this.state.typeList[typeOneIndex]['list'][typeTowIndex]['cainum'] > 0) {
+            _menuList_.push(this.state.typeList[typeOneIndex]['list'][typeTowIndex]);
           }
         }
       }
@@ -154,13 +162,15 @@ export class Content extends React.Component<IContentInt> {
         lastSum: _stateData_.sum,
         lastNum: _stateData_.num
       });
-      for (let typeCount = 0; typeCount < this.state.typeList.length; typeCount++) {
-        for (let index = 0; index < this.state.typeList[typeCount]['list'].length; index++) {
-          if (this.state.typeList[typeCount]['list'][index]['cainum'] > 0) {
-            _menuList_.push(this.state.typeList[typeCount]['list'][index]);
+      for (const [typeOneIndex, typeOneCount] of this.state.typeList.entries()) {
+        // console.log(this.state.typeList[typeOneIndex]);
+        for (const [typeTowIndex, typeSecCount] of this.state.typeList[typeOneIndex]['list'].entries()) {
+          if (this.state.typeList[typeOneIndex]['list'][typeTowIndex]['cainum'] > 0) {
+            _menuList_.push(this.state.typeList[typeOneIndex]['list'][typeTowIndex]);
           }
         }
       }
+      // console.log(this.state.menuList);
       this.setState({
         newMenuList: _menuList_
       });
@@ -292,7 +302,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { merchantDishestype , takingOrders2 , inAllOrders };
+const mapDispatchToProps = { merchantDishestype , takingOrders2, inAllOrders };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(
