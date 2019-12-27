@@ -18,10 +18,14 @@ export interface IMenuProp extends StateProps, DispatchProps {}
 export class Menu extends React.Component<IMenuProp> {
   state = {
     iocId: window.location.search.substring(1).split('&')[1].split('=')[1],
+<<<<<<< HEAD
     merchatid: window.location.search.substring(1).split('&')[0].split('=')[1],
     userid:"",
     typecc:"0",
     ac:"",
+=======
+    merchantid: window.location.search.substring(1).split('&')[0].split('=')[1]
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   };
   componentDidMount() {
     this.props.getSession();
@@ -114,6 +118,7 @@ export class Menu extends React.Component<IMenuProp> {
   }
 
   render() {
+<<<<<<< HEAD
     if (this.state.typecc === "0") {
       return (
      
@@ -143,6 +148,15 @@ export class Menu extends React.Component<IMenuProp> {
         </div>
       );
     }
+=======
+    return (
+      <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
+        <Titles />
+        <Adv />
+        <Content iocId={this.state.iocId} merchantId={this.state.merchantid} />
+      </div>
+    );
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
 }
 

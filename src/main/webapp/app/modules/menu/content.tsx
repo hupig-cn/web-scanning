@@ -18,12 +18,17 @@ export interface IContentInt2 {
 }
 
 export interface IContentInt extends StateProps, DispatchProps {
+<<<<<<< HEAD
   iocId: string;
   merchatid: string;
   userid:string;
   auth_code: string;
   wechat: string;
   typecc:string;
+=======
+  iocId: String;
+  merchantId: String;
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
 }
 
 export class Content extends React.Component<IContentInt> {
@@ -50,7 +55,7 @@ export class Content extends React.Component<IContentInt> {
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
-    this.props.inAllOrders(this.props.iocId, this.props.merchatid)
+    this.props.inAllOrders(this.props.iocId, this.props.merchantId)
     // @ts-ignore
     .then(res => {
       // console.log(res);
@@ -64,7 +69,7 @@ export class Content extends React.Component<IContentInt> {
       }
     });
     this.props
-      .merchantDishestype(this.props.merchatid, this.props.iocId)
+      .merchantDishestype(this.props.merchantId, this.props.iocId)
       // @ts-ignore
       .then(res => {
         // console.log(res);
@@ -187,11 +192,17 @@ export class Content extends React.Component<IContentInt> {
     //   newName : _newName_
     // });
     // console.log(parseInt(nameNum)+1);
+<<<<<<< HEAD
     handleLogin = () => {
        return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
     }
 // <Pay2 id={this.props.iocId} userid="" auth_code="" wechat={this.props.wechat} sum={this.state.sum}/>
 //this.props.takingOrders2(this.props.merchatid, this.props.iocId, this.props.wechat, this.state.sum, this.state.menuList);
+=======
+    // handleLogin = () => {
+    //   this.props.takingOrders2(this.props.merchatid, this.props.iocId, '388', this.state.sum, this.state.menuList);
+    // }
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   render() {
     return (
       <div style={{ position: 'relative' }}>
@@ -298,7 +309,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList} typeList = {this.state.typeList} handleLogin = {this.handleLogin}/>
+        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList} typeList = {this.state.typeList}  iocId={this.props.iocId} merchantId={this.props.merchantId} />
         {/* {console.log(this.state.typeList)} */}
       </div>
     );
