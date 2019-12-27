@@ -17,11 +17,12 @@ import {
   createUserByShareLink,
   queryWeChatUser
 } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { Payt } from '../pay/payt';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 
 export class Scanning extends React.Component<IScanningProp> {
-  state = { userid: '' };
+  state = { userid: '',sum:"",order:"" };
   componentDidMount() {
     this.props.getSession();
   }
@@ -63,6 +64,20 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
+      } else if (str.length > 1 && str[1].match(/sum/i)) {
+        this.setState({
+          sum:window.location.search
+          .substring(1)
+          .split('&')[1]
+          .split('=')[1],
+          order:window.location.search
+          .substring(1)
+          .split('&')[2]
+          .split('=')[1]
+        })
+        window.location.replace(
+          'http://localhost:9000/?id=20'
+        );
       } else if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3
         const userAgent = navigator.userAgent.toLowerCase();
@@ -261,6 +276,9 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
+          if (this.state.sum !="") {
+            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={this.state.sum} order={this.state.order}/>
+          }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
           ) : (

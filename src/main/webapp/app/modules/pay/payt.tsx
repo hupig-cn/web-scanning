@@ -12,15 +12,16 @@ import FirstSetPayPass from 'app/modules/pay/firstSetPayPass';
 import Payment from 'app/modules/pay/payment';
 import { passwordCheck } from 'app/shared/reducers/authentication';
 
-export interface IPay2Prop extends StateProps, DispatchProps {
+export interface IPaytProp extends StateProps, DispatchProps {
   id: string;
   userid: string;
   auth_code: string;
   wechat: string;
   sum: string;
+  order:String;
 }
 
-export class Pay2 extends React.Component<IPay2Prop> {
+export class Payt extends React.Component<IPaytProp> {
   state = {
     file: '',
     fileContentType: '',
@@ -323,4 +324,4 @@ type DispatchProps = typeof mapDispatchToProps;
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Pay2);
+)(Payt);

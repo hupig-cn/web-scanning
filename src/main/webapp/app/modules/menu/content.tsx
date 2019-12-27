@@ -77,11 +77,11 @@ export class Content extends React.Component<IContentInt> {
             menuAllCount: res.value.data.totalElements,
             iocId:window.location.search
                   .substring(1)
-                  .split('&')[0]
+                  .split('&')[1]
                   .split('=')[1],
             merchatid:window.location.search
                   .substring(1)
-                  .split('&')[1]
+                  .split('&')[0]
                   .split('=')[1]
                   });
         }
@@ -211,7 +211,7 @@ export class Content extends React.Component<IContentInt> {
         }
       })
       window.location.replace(
-        'https://www.baidu.com'
+        'http://localhost:9000/?id=20&sum='+`${this.state.sum}`+'&order=' + `${this.state.ac}`
       );
     }
       //  return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>

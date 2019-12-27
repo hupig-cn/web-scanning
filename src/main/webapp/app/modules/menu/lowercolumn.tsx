@@ -18,7 +18,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
   
   // this.props.takingOrders2(this.props.merchantId, this.props.iocId, '388', this.props.sum, this.state.menuList);
   handleSubmit = () => {
-      hideLoading();
+      this.props.handleLogin();
   };
   constructor(props) {
     super(props);
