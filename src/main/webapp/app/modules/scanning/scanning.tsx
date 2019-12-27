@@ -22,7 +22,7 @@ import Payt from '../pay/payt';
 export interface IScanningProp extends StateProps, DispatchProps {}
 
 export class Scanning extends React.Component<IScanningProp> {
-  state = { userid: '',sum: '',order: '' };
+  state = { userid: '', sum: '', order: '' };
   componentDidMount() {
     this.props.getSession();
   }
@@ -66,15 +66,15 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Menu />;
       } else if (str.length > 1 && str[1].match(/sum/i)) {
         this.setState({
-          sum:window.location.search
+          sum: window.location.search
           .substring(1)
           .split('&')[1]
           .split('=')[1],
-          order:window.location.search
+          order: window.location.search
           .substring(1)
           .split('&')[2]
           .split('=')[1]
-        })
+        });
         window.location.replace(
           'http://localhost:9000/?id=20'
         );
@@ -277,7 +277,7 @@ export class Scanning extends React.Component<IScanningProp> {
               }
             });
           if (this.state.sum !== '') {
-            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={this.state.sum} order={this.state.order}/>
+            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={this.state.sum} order={this.state.order} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />

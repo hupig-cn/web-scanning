@@ -54,13 +54,11 @@ export const takingOrders3 = (mid: any, ioc: any, chishi: any[]) => async dispat
   return result;
 };
 
-
-// xx
-export const createCaiOrder = (userid:any , order: any) => async dispatch => {
-    const result = await dispatch({
-      payload: axios.post('http://localhost:8084/services/merchant/api/public/post/createCaiOrder?userid=' +`${userid}` + '&order=' + `${order}`)
-    });
-    return result;
+export const createCaiOrder = (userid: any, order: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/createCaiOrder?userid=' + `${userid}` + '&order=' + `${order}`)
+  });
+  return result;
   };
 
 // 重置
