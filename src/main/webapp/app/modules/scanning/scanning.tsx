@@ -17,7 +17,7 @@ import {
   createUserByShareLink,
   queryWeChatUser
 } from 'app/entities/basic/linkuser/linkuser.reducer';
-import { Payt } from '../pay/payt';
+import Payt from '../pay/payt';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 

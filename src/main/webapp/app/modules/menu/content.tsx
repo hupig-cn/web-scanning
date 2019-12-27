@@ -4,7 +4,6 @@ import { IRootState } from 'app/shared/reducers';
 import { merchantDishestype , inAllOrders, takingOrders2 ,takingOrders3} from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
-import { Pay2 } from '../pay/pay2';
 
 export interface IContentInt extends StateProps, DispatchProps {}
 
