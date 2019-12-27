@@ -18,13 +18,45 @@ export interface IMenuProp extends StateProps, DispatchProps {}
 export class Menu extends React.Component<IMenuProp> {
   state = {
     iocId: window.location.search.substring(1).split('&')[1].split('=')[1],
-    merchatid: window.location.search.substring(1).split('&')[0].split('=')[1]
+    merchatid: window.location.search.substring(1).split('&')[0].split('=')[1],
+    userid:"",
+    typecc:"0",
+    ac:"",
   };
   componentDidMount() {
     this.props.getSession();
     const url = location.search;
     const str = url.substr(1).split('&');
     const userAgent = navigator.userAgent.toLowerCase();
+
+    if (str[0].match(/app_id/i)) {
+      const state = decodeURIComponent(str[3].replace('state=', ''));
+      if (state.match(/Alipay/i)) {
+        // tslint:disable-next-line: no-invalid-this
+        this.props
+          .queryAlipayUser(decodeURIComponent(str[4].replace('auth_code=', '')))
+          // @ts-ignore
+          .then(alipeyuser => {
+            if (alipeyuser.value.data === '获取支付宝会员信息失败') {
+              return <Info message="获取支付宝会员信息失败" />;
+            } else if (alipeyuser.value.data !== '用户存在') {
+              // tslint:disable-next-line: no-invalid-this
+              this.props
+                .registerRandom()
+                // @ts-ignore
+                .then(res => {
+                  if (!isNaN(res.value.data)) {
+                    // tslint:disable-next-line: no-invalid-this
+                    this.props.createUserByScanningMerchant(res.value.data, alipeyuser.value.data, '支付宝');
+                  } else {
+                    return <Info message={res.value.data.toString()} />;
+                  }
+                });
+            }
+          });
+          this.setState({ typecc: "1" ,ac:decodeURIComponent(str[4].replace('auth_code=', ''))});
+      }
+    }
     if (userAgent.match(/MicroMessenger/i)) {
       const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
       window.location.replace(
@@ -60,7 +92,7 @@ export class Menu extends React.Component<IMenuProp> {
             if (wechatuser.value.data === '获取微信会员信息失败') {
               return <Info message="获取微信会员信息失败" />;
             } else if (wechatuser.value.data.match(/用户/i)) {
-              this.setState({ userid: wechatuser.value.data.substring(2) });
+              this.setState({ userid: wechatuser.value.data.substring(2),typecc: "3" });
             } else {
               // tslint:disable-next-line: no-invalid-this
               this.props
@@ -70,58 +102,47 @@ export class Menu extends React.Component<IMenuProp> {
                   if (!isNaN(res.value.data)) {
                     // tslint:disable-next-line: no-invalid-this
                     this.props.createUserByScanningMerchant(res.value.data, wechatuser.value.data, '微信');
-                    this.setState({ userid: res.value.data });
+                    this.setState({ userid: res.value.data,typecc: "3"});
                   } else {
                     return <Info message={res.value.data.toString()} />;
                   }
                 });
             }
           });
-      } else if (state.match(/Article/i)) {
-        // tslint:disable-next-line: no-invalid-this
-        this.props
-          .queryWeChatUser(decodeURIComponent(str[0].replace('code=', '')))
-          // @ts-ignore
-          .then(wechatuser => {
-            if (wechatuser.value.data === '获取微信会员信息失败') {
-              return <Info message="获取微信会员信息失败" />;
-            } else if (wechatuser.value.data.match(/用户/i)) {
-              window.location.replace(
-                'http://www.yuanscore.com/ArticleDeatil.html?deailId=' +
-                  state.substring(7) +
-                  '&userid=' +
-                  wechatuser.value.data.substring(2)
-              );
-            } else {
-              // tslint:disable-next-line: no-invalid-this
-              this.props
-                .registerRandom()
-                // @ts-ignore
-                .then(res => {
-                  if (!isNaN(res.value.data)) {
-                    // tslint:disable-next-line: no-invalid-this
-                    this.props.createUserByShareLink(res.value.data, wechatuser.value.data, '微信', state.substring(7));
-                    window.location.replace(
-                      'http://www.yuanscore.com/ArticleDeatil.html?deailId=' + state.substring(7) + '&userid=' + res.value.data
-                    );
-                  } else {
-                    return <Info message={res.value.data.toString()} />;
-                  }
-                });
-            }
-          });
-      }
+      } 
     }
   }
 
   render() {
-    return (
-      <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
-        <Titles />
-        <Adv />
-        <Content iocId={this.state.iocId} merchatid={this.state.merchatid} />
-      </div>
-    );
+    if (this.state.typecc === "0") {
+      return (
+     
+        <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
+          <Titles />
+             <Adv />
+            <Content iocId={this.state.iocId} merchatid={this.state.merchatid}  userid="" auth_code="" wechat="" typecc={this.state.typecc}/>
+        </div>
+      );
+    }else if (this.state.typecc === "1") {
+      return (
+     
+        <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
+          <Titles />
+             <Adv />
+            <Content iocId={this.state.iocId} merchatid={this.state.merchatid}  userid="" auth_code={this.state.ac} wechat={this.state.userid} typecc={this.state.typecc} />
+        </div>
+      );
+    }else if (this.state.typecc === "3") {
+      return (
+     
+        <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
+          <Titles />
+             <Adv />
+             
+            <Content iocId={this.state.iocId} merchatid={this.state.merchatid} userid="" auth_code="" wechat={this.state.userid} typecc={this.state.typecc}/>
+        </div>
+      );
+    }
   }
 }
 

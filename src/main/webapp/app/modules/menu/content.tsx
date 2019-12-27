@@ -4,21 +4,26 @@ import { IRootState } from 'app/shared/reducers';
 import { merchantDishestype , inAllOrders, takingOrders2 } from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
+import { Pay2 } from '../pay/pay2';
 
 export interface IContentInt2 {
   num: 0;
-  sum: String;
+  sum: string;
   typeList: [];
-  iocId: String;
-  merchatid: String;
-  name1: String;
+  iocId: string;
+  merchatid: string;
+  name1: string;
   cailist: [];
-  newNum: Number;
+  newNum: number;
 }
 
 export interface IContentInt extends StateProps, DispatchProps {
-  iocId: String;
-  merchatid: String;
+  iocId: string;
+  merchatid: string;
+  userid:string;
+  auth_code: string;
+  wechat: string;
+  typecc:string;
 }
 
 export class Content extends React.Component<IContentInt> {
@@ -183,8 +188,10 @@ export class Content extends React.Component<IContentInt> {
     // });
     // console.log(parseInt(nameNum)+1);
     handleLogin = () => {
-      this.props.takingOrders2(this.props.merchatid, this.props.iocId, '388', this.state.sum, this.state.menuList);
+       return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
     }
+// <Pay2 id={this.props.iocId} userid="" auth_code="" wechat={this.props.wechat} sum={this.state.sum}/>
+//this.props.takingOrders2(this.props.merchatid, this.props.iocId, this.props.wechat, this.state.sum, this.state.menuList);
   render() {
     return (
       <div style={{ position: 'relative' }}>
