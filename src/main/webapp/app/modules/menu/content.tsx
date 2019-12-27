@@ -1,30 +1,12 @@
 import React from 'react';
 
 import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype , inAllOrders, takingOrders2 } from 'app/requests/menu/menu.reducer';
+import { merchantDishestype , inAllOrders, takingOrders2 ,takingOrders3} from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
 import { Pay2 } from '../pay/pay2';
 
-export interface IContentInt2 {
-  num: 0;
-  sum: string;
-  typeList: [];
-  iocId: string;
-  merchatid: string;
-  name1: string;
-  cailist: [];
-  newNum: number;
-}
-
-export interface IContentInt extends StateProps, DispatchProps {
-  iocId: string;
-  userid:string;
-  auth_code: string;
-  wechat: string;
-  typecc:string;
-  merchantId: string;
-}
+export interface IContentInt extends StateProps, DispatchProps {}
 
 export class Content extends React.Component<IContentInt> {
   state = {
@@ -44,13 +26,24 @@ export class Content extends React.Component<IContentInt> {
     initTypeStyle: true,
     typeNum: 0,
     menuList: [],
-    menuAllCount: 0
+    menuAllCount: 0,
+    iocId:"",
+    merchatid:"",
+    ac:Number
   };
 
   componentDidMount() {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
-    this.props.inAllOrders(this.props.iocId, this.props.merchantId)
+    this.props.inAllOrders(
+      window.location.search
+      .substring(1)
+      .split('&')[0]
+      .split('=')[1],
+    window.location.search
+      .substring(1)
+      .split('&')[1]
+      .split('=')[1])
     // @ts-ignore
     .then(res => {
       // console.log(res);
@@ -64,7 +57,15 @@ export class Content extends React.Component<IContentInt> {
       }
     });
     this.props
-      .merchantDishestype(this.props.merchantId, this.props.iocId)
+      .merchantDishestype(
+        window.location.search
+        .substring(1)
+        .split('&')[0]
+        .split('=')[1],
+      window.location.search
+        .substring(1)
+        .split('&')[1]
+        .split('=')[1])
       // @ts-ignore
       .then(res => {
         // console.log(res);
@@ -73,8 +74,16 @@ export class Content extends React.Component<IContentInt> {
           // console.log(res.value.data.data);
           this.setState({
             typeList: res.value.data.data,
-            menuAllCount: res.value.data.totalElements
-          });
+            menuAllCount: res.value.data.totalElements,
+            iocId:window.location.search
+                  .substring(1)
+                  .split('&')[0]
+                  .split('=')[1],
+            merchatid:window.location.search
+                  .substring(1)
+                  .split('&')[1]
+                  .split('=')[1]
+                  });
         }
       });
   }
@@ -188,11 +197,25 @@ export class Content extends React.Component<IContentInt> {
     // });
     // console.log(parseInt(nameNum)+1);
 
-    // handleLogin = () => {
-    //    return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
-    // }
+    handleLogin = () => {
+      this.props.takingOrders3(this.state.merchatid, this.state.iocId, this.state.menuList)
+      //@ts-ignore
+      .then(res => {
+        // console.log(res);
+        if (res.value.data.data) {
+          // let reactor = "1";
+          // console.log(res.value.data.data);
+          this.setState({
+            ac:res.value.data.data
+          });
+        }
+      })
+      window.location.replace(
+        'https://www.baidu.com'
+      );
+    }
+      //  return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
 // <Pay2 id={this.props.iocId} userid="" auth_code="" wechat={this.props.wechat} sum={this.state.sum}/>
-//this.props.takingOrders2(this.props.merchatid, this.props.iocId, this.props.wechat, this.state.sum, this.state.menuList);
     // handleLogin = () => {
     //   this.props.takingOrders2(this.props.merchatid, this.props.iocId, '388', this.state.sum, this.state.menuList);
     // }
@@ -302,7 +325,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList} typeList = {this.state.typeList}  iocId={this.props.iocId} merchantId={this.props.merchantId} />
+        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList}  handleLogin={this.handleLogin}/>
         {/* {console.log(this.state.typeList)} */}
       </div>
     );
@@ -313,7 +336,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { merchantDishestype , takingOrders2, inAllOrders };
+const mapDispatchToProps = { merchantDishestype , takingOrders2, inAllOrders,takingOrders3 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(

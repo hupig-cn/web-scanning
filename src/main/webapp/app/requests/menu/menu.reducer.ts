@@ -46,6 +46,13 @@ export const takingOrders2 = (mid: any, ioc: any, userid: any, sum: any, merchan
   return result;
 };
 
+// 点餐
+export const takingOrders3 = (mid: any, ioc: any, chishi: any[]) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/takingOrders3', { mid, ioc, chishi })
+  });
+  return result;
+};
 // 重置
 export const takingOrdersNum = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({

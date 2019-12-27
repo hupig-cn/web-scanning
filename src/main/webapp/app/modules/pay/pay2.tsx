@@ -33,7 +33,8 @@ export class Pay2 extends React.Component<IPay2Prop> {
     coupon: false,
     paymethod: '',
     money: '',
-    statics: 1
+    statics: 1,
+    merchantCode:Number
   };
   componentDidMount() {
     if (this.state.userid !== '') {
@@ -109,7 +110,8 @@ export class Pay2 extends React.Component<IPay2Prop> {
                 // tslint:disable-next-line: only-arrow-functions
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                    window.location.replace('http://app.yuanscore.com/?resapp=' + nums);
+                    //给钱成功
+
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
                   } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
