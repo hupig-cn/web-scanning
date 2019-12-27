@@ -1,13 +1,12 @@
 import React from 'react';
 import MenuCart from './menuCart';
+import { hideLoading } from 'react-redux-loading-bar';
 
 export interface ILongMenuProps {
   num: number;
   sum: String;
   menuList: any[];
-  typeList: any[];
-  iocId: String;
-  merchantId: String;
+  handleLogin:Function;
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
@@ -19,7 +18,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
   
   // this.props.takingOrders2(this.props.merchantId, this.props.iocId, '388', this.props.sum, this.state.menuList);
   handleSubmit = () => {
-
+      hideLoading();
   };
   constructor(props) {
     super(props);
