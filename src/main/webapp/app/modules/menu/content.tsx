@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { IRootState } from 'app/shared/reducers';
-import { merchantDishestype , inAllOrders, takingOrders2 ,takingOrders3} from 'app/requests/menu/menu.reducer';
+import { merchantDishestype , inAllOrders, takingOrders2 , takingOrders3 } from 'app/requests/menu/menu.reducer';
 import { connect } from 'react-redux';
 import Lowercolumn from './lowercolumn';
-import { Pay2 } from '../pay/pay2';
 
 export interface IContentInt extends StateProps, DispatchProps {}
 
@@ -27,9 +26,9 @@ export class Content extends React.Component<IContentInt> {
     typeNum: 0,
     menuList: [],
     menuAllCount: 0,
-    iocId:"",
-    merchatid:"",
-    ac:Number
+    iocId: '',
+    merchatid: '',
+    ac: Number
   };
 
   componentDidMount() {
@@ -75,11 +74,11 @@ export class Content extends React.Component<IContentInt> {
           this.setState({
             typeList: res.value.data.data,
             menuAllCount: res.value.data.totalElements,
-            iocId:window.location.search
+            iocId: window.location.search
                   .substring(1)
                   .split('&')[1]
                   .split('=')[1],
-            merchatid:window.location.search
+            merchatid: window.location.search
                   .substring(1)
                   .split('&')[0]
                   .split('=')[1]
@@ -199,19 +198,19 @@ export class Content extends React.Component<IContentInt> {
 
     handleLogin = () => {
       this.props.takingOrders3(this.state.merchatid, this.state.iocId, this.state.menuList)
-      //@ts-ignore
+      // @ts-ignore
       .then(res => {
         // console.log(res);
         if (res.value.data.data) {
           // let reactor = "1";
           // console.log(res.value.data.data);
           this.setState({
-            ac:res.value.data.data
+            ac: res.value.data.data
           });
         }
-      })
+      });
       window.location.replace(
-        'http://localhost:9000/?id=20&sum='+`${this.state.sum}`+'&order=' + `${this.state.ac}`
+        'http://localhost:9000/?id=20&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
       );
     }
       //  return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
@@ -325,7 +324,7 @@ export class Content extends React.Component<IContentInt> {
             </div>
           ))}
         </div>
-        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList}  handleLogin={this.handleLogin}/>
+        <Lowercolumn num={this.state.num} sum={this.state.sum} menuList={this.state.menuList} handleLogin={this.handleLogin}/>
         {/* {console.log(this.state.typeList)} */}
       </div>
     );
@@ -336,7 +335,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { merchantDishestype , takingOrders2, inAllOrders,takingOrders3 };
+const mapDispatchToProps = { merchantDishestype , takingOrders2, inAllOrders, takingOrders3 };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(

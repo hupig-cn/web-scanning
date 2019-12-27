@@ -18,7 +18,7 @@ export interface IPaytProp extends StateProps, DispatchProps {
   auth_code: string;
   wechat: string;
   sum: string;
-  order:String;
+  order: string;
 }
 
 export class Payt extends React.Component<IPaytProp> {
@@ -29,13 +29,14 @@ export class Payt extends React.Component<IPaytProp> {
     userid: this.props.userid,
     auth_code: this.props.auth_code,
     wechat: this.props.wechat,
-    sum:this.props.sum,
+    sum: this.props.sum,
+    order: this.props.order,
     balance: false,
     coupon: false,
     paymethod: '',
     money: '',
     statics: 1,
-    merchantCode:Number
+    merchantCode: Number
   };
   componentDidMount() {
     if (this.state.userid !== '') {
@@ -111,8 +112,7 @@ export class Payt extends React.Component<IPaytProp> {
                 // tslint:disable-next-line: only-arrow-functions
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                    //给钱成功
-
+                    // 给钱成功
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
                   } else if (res.err_msg === 'get_brand_wcpay_request:fail') {

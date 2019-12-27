@@ -6,7 +6,7 @@ export interface ILongMenuProps {
   num: number;
   sum: String;
   menuList: any[];
-  handleLogin:Function;
+  handleLogin: Function;
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
@@ -15,7 +15,6 @@ class LongMenu extends React.Component<ILongMenuProps> {
     hide: true,
     menuList: []
   };
-  
   // this.props.takingOrders2(this.props.merchantId, this.props.iocId, '388', this.props.sum, this.state.menuList);
   handleSubmit = () => {
       this.props.handleLogin();

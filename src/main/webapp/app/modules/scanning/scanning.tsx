@@ -17,12 +17,12 @@ import {
   createUserByShareLink,
   queryWeChatUser
 } from 'app/entities/basic/linkuser/linkuser.reducer';
-import { Payt } from '../pay/payt';
+import Payt from '../pay/payt';
 
 export interface IScanningProp extends StateProps, DispatchProps {}
 
 export class Scanning extends React.Component<IScanningProp> {
-  state = { userid: '',sum:"",order:"" };
+  state = { userid: '',sum: '',order: '' };
   componentDidMount() {
     this.props.getSession();
   }
@@ -276,7 +276,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (this.state.sum !="") {
+          if (this.state.sum !== '') {
             return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={this.state.sum} order={this.state.order}/>
           }
           return this.state.userid ? (
