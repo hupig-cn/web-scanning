@@ -4,9 +4,10 @@ import MenuCart from './menuCart';
 export interface ILongMenuProps {
   num: number;
   sum: String;
-  typeList: any[];
-  handleLogin: Function;
   menuList: any[];
+  typeList: any[];
+  iocId: String;
+  merchantId: String;
 }
 
 class LongMenu extends React.Component<ILongMenuProps> {
@@ -15,10 +16,10 @@ class LongMenu extends React.Component<ILongMenuProps> {
     hide: true,
     menuList: []
   };
-
+  
+  // this.props.takingOrders2(this.props.merchantId, this.props.iocId, '388', this.props.sum, this.state.menuList);
   handleSubmit = () => {
-    const { handleLogin } = this.props;
-    handleLogin();
+
   };
   constructor(props) {
     super(props);
@@ -27,13 +28,15 @@ class LongMenu extends React.Component<ILongMenuProps> {
     // console.log(this.props.sum);
   }
 
-  kanCaiDan(hideData, e) {
-    const _changeHide_ = this.state;
-    const changeHide = (hideData ? false : true);
-    _changeHide_.hide = changeHide;
-    this.setState({
-      sureHide: _changeHide_.hide
-    });
+  kanCaiDan(hideData, num, e) {
+    if (num > 0) {
+      const _changeHide_ = this.state;
+      const changeHide = (hideData ? false : true);
+      _changeHide_.hide = changeHide;
+      this.setState({
+        sureHide: _changeHide_.hide
+      });
+    }
     // console.log(this.props.menuList);
   }
   render() {
@@ -80,7 +83,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
             提交订单
       </span>
           <img
-            onClick={this.kanCaiDan.bind(this, this.state.hide)}
+            onClick={this.kanCaiDan.bind(this, this.state.hide, this.props.num)}
             style={{
               float: 'left',
               width: '30px',

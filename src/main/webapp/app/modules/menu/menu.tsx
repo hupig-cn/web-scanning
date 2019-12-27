@@ -18,7 +18,7 @@ export interface IMenuProp extends StateProps, DispatchProps {}
 export class Menu extends React.Component<IMenuProp> {
   state = {
     iocId: window.location.search.substring(1).split('&')[1].split('=')[1],
-    merchatid: window.location.search.substring(1).split('&')[0].split('=')[1]
+    merchantid: window.location.search.substring(1).split('&')[0].split('=')[1]
   };
   componentDidMount() {
     this.props.getSession();
@@ -119,7 +119,7 @@ export class Menu extends React.Component<IMenuProp> {
       <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
         <Titles />
         <Adv />
-        <Content iocId={this.state.iocId} merchatid={this.state.merchatid} />
+        <Content iocId={this.state.iocId} merchantId={this.state.merchantid} />
       </div>
     );
   }
