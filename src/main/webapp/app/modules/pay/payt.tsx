@@ -8,6 +8,7 @@ import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
 import { merchantPayment, paymethods, merchantPaymentWeChat } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { createCaiOrder } from 'app/requests/menu/menu.reducer';
 import FirstSetPayPass from 'app/modules/pay/firstSetPayPass';
 import Payment from 'app/modules/pay/payment';
 import { passwordCheck } from 'app/shared/reducers/authentication';
@@ -315,7 +316,8 @@ const mapDispatchToProps = {
   queryBalance,
   merchantPayment,
   paymethods,
-  merchantPaymentWeChat
+  merchantPaymentWeChat,
+  createCaiOrder
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
