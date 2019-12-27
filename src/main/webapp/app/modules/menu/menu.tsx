@@ -118,14 +118,13 @@ export class Menu extends React.Component<IMenuProp> {
   }
 
   render() {
-<<<<<<< HEAD
     if (this.state.typecc === "0") {
       return (
      
         <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
           <Titles />
              <Adv />
-            <Content iocId={this.state.iocId} merchatid={this.state.merchatid}  userid="" auth_code="" wechat="" typecc={this.state.typecc}/>
+            <Content iocId={this.state.iocId} merchantId={this.state.merchatid}  userid="" auth_code="" wechat="" typecc={this.state.typecc}/>
         </div>
       );
     }else if (this.state.typecc === "1") {
@@ -134,7 +133,7 @@ export class Menu extends React.Component<IMenuProp> {
         <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
           <Titles />
              <Adv />
-            <Content iocId={this.state.iocId} merchatid={this.state.merchatid}  userid="" auth_code={this.state.ac} wechat={this.state.userid} typecc={this.state.typecc} />
+            <Content iocId={this.state.iocId} merchantId={this.state.merchatid}  userid="" auth_code={this.state.ac} wechat={this.state.userid} typecc={this.state.typecc} />
         </div>
       );
     }else if (this.state.typecc === "3") {
@@ -144,19 +143,10 @@ export class Menu extends React.Component<IMenuProp> {
           <Titles />
              <Adv />
              
-            <Content iocId={this.state.iocId} merchatid={this.state.merchatid} userid="" auth_code="" wechat={this.state.userid} typecc={this.state.typecc}/>
+            <Content iocId={this.state.iocId} merchantId={this.state.merchatid} userid="" auth_code="" wechat={this.state.userid} typecc={this.state.typecc}/>
         </div>
       );
     }
-=======
-    return (
-      <div style={{ backgroundColor: '#f2f2f2', width: '100%' }}>
-        <Titles />
-        <Adv />
-        <Content iocId={this.state.iocId} merchantId={this.state.merchantid} />
-      </div>
-    );
->>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   }
 }
 

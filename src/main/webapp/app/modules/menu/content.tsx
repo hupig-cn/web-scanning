@@ -18,17 +18,12 @@ export interface IContentInt2 {
 }
 
 export interface IContentInt extends StateProps, DispatchProps {
-<<<<<<< HEAD
   iocId: string;
-  merchatid: string;
   userid:string;
   auth_code: string;
   wechat: string;
   typecc:string;
-=======
-  iocId: String;
-  merchantId: String;
->>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
+  merchantId: string;
 }
 
 export class Content extends React.Component<IContentInt> {
@@ -192,17 +187,15 @@ export class Content extends React.Component<IContentInt> {
     //   newName : _newName_
     // });
     // console.log(parseInt(nameNum)+1);
-<<<<<<< HEAD
-    handleLogin = () => {
-       return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
-    }
+
+    // handleLogin = () => {
+    //    return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
+    // }
 // <Pay2 id={this.props.iocId} userid="" auth_code="" wechat={this.props.wechat} sum={this.state.sum}/>
 //this.props.takingOrders2(this.props.merchatid, this.props.iocId, this.props.wechat, this.state.sum, this.state.menuList);
-=======
     // handleLogin = () => {
     //   this.props.takingOrders2(this.props.merchatid, this.props.iocId, '388', this.state.sum, this.state.menuList);
     // }
->>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
   render() {
     return (
       <div style={{ position: 'relative' }}>
