@@ -2,6 +2,7 @@ import './scanning.scss';
 import React from 'react';
 import Pay from '../pay/pay';
 import Menu from '../menu/menu';
+import MenuDetails from '../menuDetails/menuDetails';
 import Register from '../register/register';
 import Alipay from '../authorization/alipay';
 import Wechat from '../authorization/wechat';
@@ -64,6 +65,8 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
+      } else if (str.length > 1 && str[1].match(/details/i)) {
+        return <MenuDetails />;
       } else if (str.length > 1 && str[1].match(/sum/i)) {
         this.setState({
           sum: window.location.search
