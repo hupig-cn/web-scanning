@@ -210,7 +210,7 @@ export class Content extends React.Component<IContentInt> {
         }
       });
       window.location.replace(
-        'http://localhost:9000/?id=20&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
+        'http://localhost:9000/?id='+`${this.state.merchatid}`+'&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
       );
     }
       //  return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>

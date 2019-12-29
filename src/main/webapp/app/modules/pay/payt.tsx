@@ -74,7 +74,7 @@ export class Payt extends React.Component<IPaytProp> {
   }
 
   Payment = () => {
-    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    const key = this.props.sum;
     const nums = (Number(key) * this.props.merchantEntity.rebate) / 100;
     if (Number(key) > 0) {
       if (this.state.statics === 2) {
@@ -114,6 +114,10 @@ export class Payt extends React.Component<IPaytProp> {
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     // 给钱成功
+                    this.props.createCaiOrder(this.props.wechat,this.props.order);
+                    window.location.replace(
+                      'http://localhost:9000/?details='+`${this.props.order}`
+                    );
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
                   } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
