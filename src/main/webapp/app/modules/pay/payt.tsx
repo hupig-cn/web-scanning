@@ -120,7 +120,7 @@ export class Payt extends React.Component<IPaytProp> {
                     // 给钱成功
                     this.props.createCaiOrder(this.props.wechat, this.state.order);
                     window.location.replace(
-                      'http://localhost:8084/?details=' + `${this.state.order}`
+                      'http://app.yuanscore.com/?details=' + `${this.state.order}`
                     );
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
