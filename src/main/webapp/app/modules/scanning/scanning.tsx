@@ -58,8 +58,7 @@ export class Scanning extends React.Component<IScanningProp> {
               }
             });
             if (this.state.sum !== '') {
-              return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))}
-              wechat="" sum={this.state.sum} order={this.state.order} />;
+        return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={this.state.sum} order={this.state.order}/>;
             }
           return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
@@ -133,6 +132,9 @@ export class Scanning extends React.Component<IScanningProp> {
         } else if (userAgent.match(/Weisen/i)) {
           const { account } = this.props;
           if (account && account.login) {
+            if (this.state.sum !== '') {
+              return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={this.state.sum} order={this.state.order}/>;
+            }
             return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
           } else {
             return (
