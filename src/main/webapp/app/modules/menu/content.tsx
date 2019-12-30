@@ -208,7 +208,7 @@ export class Content extends React.Component<IContentInt> {
             ac: res.value.data.data
           });
           window.location.replace(
-            'http://localhost:8084/?id=' + `${this.state.merchatid}` + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
+            'http://app.yuanscore.com/?id=' + `${this.state.merchatid}` + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
           );
         }
       });
