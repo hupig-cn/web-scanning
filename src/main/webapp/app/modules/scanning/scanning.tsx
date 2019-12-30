@@ -57,6 +57,9 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
+            if (this.state.sum !== '') {
+              <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={this.state.sum} order={this.state.order}/>
+            }
           return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
           return <Alipay auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} state={state} />;
@@ -65,7 +68,7 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
-      } else if (str.length > 1 && str[0].match(/details/i)) {
+      } else if (str[0].match(/details/i)) {
         return <MenuDetails />;
       } else if (str.length > 1 && str[1].match(/sum/i)) {
         this.setState({
@@ -79,7 +82,10 @@ export class Scanning extends React.Component<IScanningProp> {
           .split('=')[1]
         });
         window.location.replace(
-          'http://localhost:9000/?id=20'
+          'http://localhost:9000/?id='+`${ window.location.search
+          .substring(1)
+          .split('&')[0]
+          .split('=')[1]}`
         );
       } else if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3

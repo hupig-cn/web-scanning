@@ -207,11 +207,11 @@ export class Content extends React.Component<IContentInt> {
           this.setState({
             ac: res.value.data.data
           });
+          window.location.replace(
+            'http://localhost:9000/?id='+`${this.state.merchatid}`+'&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
+          );
         }
       });
-      window.location.replace(
-        'http://localhost:9000/?id='+`${this.state.merchatid}`+'&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
-      );
     }
       //  return <Pay2 id={this.props.iocId} userid="" auth_code={this.props.auth_code} wechat="" sum={this.state.sum}/>
 // <Pay2 id={this.props.iocId} userid="" auth_code="" wechat={this.props.wechat} sum={this.state.sum}/>
