@@ -57,8 +57,8 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-            if (this.state.sum !== '') {
-        return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={this.state.sum} order={this.state.order}/>;
+            if (str.length > 1 && str[1].match(/sum/i)) {
+        return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
             }
           return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
@@ -70,23 +70,6 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Menu />;
       } else if (str[0].match(/details/i)) {
         return <MenuDetails />;
-      } else if (str.length > 1 && str[1].match(/sum/i)) {
-        this.setState({
-          sum: window.location.search
-          .substring(1)
-          .split('&')[1]
-          .split('=')[1],
-          order: window.location.search
-          .substring(1)
-          .split('&')[2]
-          .split('=')[1]
-        });
-        window.location.replace(
-          'http://localhost:9000/?id=' + `${window.location.search
-          .substring(1)
-          .split('&')[0]
-          .split('=')[1]}`
-        );
       } else if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3
         const userAgent = navigator.userAgent.toLowerCase();
@@ -132,8 +115,8 @@ export class Scanning extends React.Component<IScanningProp> {
         } else if (userAgent.match(/Weisen/i)) {
           const { account } = this.props;
           if (account && account.login) {
-            if (this.state.sum !== '') {
-              return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={this.state.sum} order={this.state.order}/>;
+            if (str.length > 1 && str[1].match(/sum/i)) {
+              return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat=""/>;
             }
             return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
           } else {
@@ -288,8 +271,8 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (this.state.sum !== '') {
-            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={this.state.sum} order={this.state.order} />;
+          if (str.length > 1 && str[1].match(/sum/i)) {
+            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
