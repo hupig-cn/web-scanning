@@ -61,6 +61,13 @@ export const createCaiOrder = (userid: any, order: any) => async dispatch => {
   return result;
   };
 
+export const caiorder = (orderid: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('http://localhost:8084/services/merchant/api/public/post/caiorder?orderid=' + `${orderid}`)
+  });
+  return result;
+  };
+
 // 重置
 export const takingOrdersNum = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({

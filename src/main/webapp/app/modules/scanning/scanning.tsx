@@ -58,7 +58,8 @@ export class Scanning extends React.Component<IScanningProp> {
               }
             });
             if (this.state.sum !== '') {
-              <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={this.state.sum} order={this.state.order}/>
+              return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))}
+              wechat="" sum={this.state.sum} order={this.state.order} />;
             }
           return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
@@ -82,7 +83,7 @@ export class Scanning extends React.Component<IScanningProp> {
           .split('=')[1]
         });
         window.location.replace(
-          'http://localhost:9000/?id='+`${ window.location.search
+          'http://localhost:9000/?id=' + `${window.location.search
           .substring(1)
           .split('&')[0]
           .split('=')[1]}`

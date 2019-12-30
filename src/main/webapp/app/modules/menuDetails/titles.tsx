@@ -56,7 +56,6 @@ export class Title extends React.Component<IContentInt> {
             </h5>
           {/* {titleName} */}
         </div>
-        <div style={{ height: '40px' }} />
       </div>
     );
   }
