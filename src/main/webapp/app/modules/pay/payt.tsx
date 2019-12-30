@@ -7,7 +7,7 @@ import Header from 'app/modules/pay/header';
 import { getMyImg } from 'app/entities/basic/files.reducer';
 import { queryBalance } from 'app/entities/basic/userassets.reducer';
 import { toast } from 'react-toastify';
-import { merchantPayment, paymethods, merchantPaymentWeChat } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { merchantPayment2, paymethods, merchantPaymentWeChat } from 'app/entities/basic/linkuser/linkuser.reducer';
 import { createCaiOrder } from 'app/requests/menu/menu.reducer';
 import FirstSetPayPass from 'app/modules/pay/firstSetPayPass';
 import Payment from 'app/modules/pay/payment';
@@ -137,13 +137,14 @@ export class Payt extends React.Component<IPaytProp> {
           });
       } else if (userAgent.match(/Alipay/i)) {
         this.props
-          .merchantPayment(
+          .merchantPayment2(
             this.state.auth_code,
             key,
             this.props.merchantEntity.userid,
             this.props.merchantEntity.concession,
             this.props.merchantEntity.rebate,
-            this.props.merchantEntity.name
+            this.props.merchantEntity.name,
+            this.state.order
           )
           // @ts-ignore
           .then(val => {
@@ -324,7 +325,7 @@ const mapDispatchToProps = {
   getMerchantsEntity,
   getMyImg,
   queryBalance,
-  merchantPayment,
+  merchantPayment2,
   paymethods,
   merchantPaymentWeChat,
   createCaiOrder

@@ -68,7 +68,7 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
-      } else if (str[0].match(/details/i)) {
+      } else if (str[1].match(/details/i)) {
         return <MenuDetails />;
       } else if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3
