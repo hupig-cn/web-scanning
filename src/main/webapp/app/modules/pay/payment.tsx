@@ -32,6 +32,9 @@ export class Payment extends React.Component<IPaymentProp> {
   };
   superHandleSubmit = (event, errors, { password }) => {
     const { paymethod, userid, money, merchantid, concession, rebate } = this.props;
+    console.log(window.location.search
+      .substring(1)
+      .split('&')[1]);
     if (paymethod === 'yue') {
       if (this.state.statics === 2) {
         toast.info('请勿在同一时间多次支付订单。');
@@ -48,7 +51,14 @@ export class Payment extends React.Component<IPaymentProp> {
           // tslint:disable-next-line: no-shadowed-variable
           result.then(res => {
             if (res.value.data.code === 1) {
-              window.location.replace('http://app.yuanscore.com/?resapp=' + String((Number(money) * rebate) / 100));
+              // if ( == 'sum') {
+              //     window.location.replace(
+              //       'http://localhost:8084/?details=' + `${window.location.search.substring(1)
+              //       .split('&')[2]
+              //       .split('=')[1]}`
+              //     );
+              // }
+              window.location.replace('http://localhost:9000/?resapp=' + String((Number(money) * rebate) / 100));
             } else {
               toast.error('错误：' + res.value.data.message.toString());
             }
