@@ -114,9 +114,9 @@ export class Payt extends React.Component<IPaytProp> {
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     // 给钱成功
-                    this.props.createCaiOrder(this.props.wechat,this.props.order);
+                    this.props.createCaiOrder(this.props.wechat, this.props.order);
                     window.location.replace(
-                      'http://localhost:9000/?details='+`${this.props.order}`
+                      'http://localhost:9000/?details=' + `${this.props.order}`
                     );
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
