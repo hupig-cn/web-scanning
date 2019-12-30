@@ -28,8 +28,6 @@ export class Payt extends React.Component<IPaytProp> {
     userid: this.props.userid,
     auth_code: this.props.auth_code,
     wechat: this.props.wechat,
-    sum: this.props.sum,
-    order: this.props.order,
     balance: false,
     coupon: false,
     paymethod: '',
@@ -80,7 +78,7 @@ export class Payt extends React.Component<IPaytProp> {
   }
 
   Payment = () => {
-    const key = 100;
+    const key = this.state.sum;
     const nums = (Number(key) * this.props.merchantEntity.rebate) / 100;
     if (Number(key) > 0) {
       if (this.state.statics === 2) {
@@ -122,7 +120,7 @@ export class Payt extends React.Component<IPaytProp> {
                     // 给钱成功
                     this.props.createCaiOrder(this.props.wechat, this.state.order);
                     window.location.replace(
-                      'http://localhost:8080/?details=' + `${this.props.order}`
+                      'http://localhost:8084/?details=' + `${this.state.order}`
                     );
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
@@ -164,7 +162,7 @@ export class Payt extends React.Component<IPaytProp> {
   };
 
   balancePay = () => {
-    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    const key = this.state.sum;
     if (Number(key) > 0) {
       if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
         toast.error('提示：余额不足，请更换其他支付方式。');
@@ -226,11 +224,12 @@ export class Payt extends React.Component<IPaytProp> {
             <p className={'jh-amount-h6'}>付款金额</p>
             <div>
               <h1>￥</h1>
-              <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} />
+              <span id="amount" className={'jh-amount'} >{this.state.sum} </span>
+              {/* <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} /> */}
             </div>
             <Hrmargin />
             <label id="bonusValue" className="jh-integral">
-              0
+            { Number(this.state.sum) * this.props.merchantEntity.rebate/100 }
             </label>
             <p>可获得积分:</p>
             <button type="button" onClick={this.Payment} id="thisbuttonpay">
@@ -248,6 +247,7 @@ export class Payt extends React.Component<IPaytProp> {
               }}
             />
           </div>
+          { console.log(1) }
           <div
             id="bottomdiv"
             style={{
