@@ -110,15 +110,9 @@ export class Scanning extends React.Component<IScanningProp> {
           );
         }
       } else if (str[0].match(/id/i)) {
-        if (str[1].match(/sum/i) && str[2].match(/order/i)) {
-          const id = decodeURIComponent(str[0].replace('id=', ''));
-          const sum = decodeURIComponent(str[1].replace('sum=', ''));
-          const order = decodeURIComponent(str[2].replace('order=', ''));
-          return <Payt id={id} userid="" auth_code="" wechat="" sum={sum} order={order} />;
-        }
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
-          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+          if (str[2].match(/sum/i) && str[3].match(/order/i)) {
             const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
             '&order=' + decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
@@ -145,9 +139,9 @@ export class Scanning extends React.Component<IScanningProp> {
             );
           }
         } else if (userAgent.match(/Alipay/i)) {
-          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
-            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
-            '&order=' + decodeURIComponent(str[2].replace('order=', ''));
+          if (str[2].match(/sum/i) && str[3].match(/order/i)) {
+            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[2].replace('sum=', '')) +
+            '&order=' + decodeURIComponent(str[3].replace('order=', ''));
             window.location.replace(
               'alipays://platformapi/startapp?' +
                 'appId=20000067&' +
@@ -175,8 +169,14 @@ export class Scanning extends React.Component<IScanningProp> {
           const { account } = this.props;
           if (account && account.login) {
             if (str.length > 1 && str[1].match(/sum/i)) {
-              const sum = decodeURIComponent(str[1].replace('sum=', ''));
-              const order = decodeURIComponent(str[2].replace('order=', ''));
+              const sum =window.location.search
+              .substring(1)
+              .split('&')[1]
+              .split('=')[1];
+              const order = window.location.search
+              .substring(1)
+              .split('&')[2]
+              .split('=')[1]
               return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={sum} order={order} />;
             }else{
               return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;

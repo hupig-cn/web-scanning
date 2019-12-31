@@ -40,6 +40,7 @@ export class Payt extends React.Component<IPaytProp> {
     order: this.props.order
   };
   componentDidMount() {
+    if (this.state.userid !== '') {
       this.props.queryBalance(this.state.userid);
       this.props
         .paymethods(false, navigator.userAgent.toLowerCase().match(/iphone/i) ? 'ios' : 'android')
@@ -55,6 +56,7 @@ export class Payt extends React.Component<IPaytProp> {
             });
           }
         });
+    }
     this.props
       .getMerchantsEntity(this.state.id)
       // @ts-ignore
@@ -154,6 +156,9 @@ export class Payt extends React.Component<IPaytProp> {
         toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
       }
     }
+    const userAgent = navigator.userAgent.toLowerCase();
+    const type = userAgent.match(/MicroMessenger/i)? "WeChat" : "Alipay" ;
+    window.location.replace('http://localhost:9000/?id=' + `${this.state.id}` + '&type=' + type + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.order}` );
   };
 
   balancePay = () => {
