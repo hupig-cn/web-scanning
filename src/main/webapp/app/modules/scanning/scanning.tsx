@@ -169,16 +169,16 @@ export class Scanning extends React.Component<IScanningProp> {
           const { account } = this.props;
           if (account && account.login) {
             if (str.length > 1 && str[1].match(/sum/i)) {
-              const sum =window.location.search
+              const sum = window.location.search
               .substring(1)
               .split('&')[1]
               .split('=')[1];
               const order = window.location.search
               .substring(1)
               .split('&')[2]
-              .split('=')[1]
+              .split('=')[1];
               return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={sum} order={order} />;
-            }else{
+            } else {
               return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
             }
           } else {

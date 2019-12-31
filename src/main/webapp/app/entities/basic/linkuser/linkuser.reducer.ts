@@ -243,7 +243,6 @@ export const createUserByShareLink = (userid: string, token: string, accounttype
 };
 
 export const paymethods = (online: boolean, os: string) => async dispatch => {
-  console.log(online+os);
   const result = await dispatch({
     payload: axios.post('http://192.168.1.142:8084/services/basic/api/get-paymethods', { online, os })
   });
