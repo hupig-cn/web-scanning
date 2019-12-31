@@ -110,6 +110,12 @@ export class Scanning extends React.Component<IScanningProp> {
           );
         }
       } else if (str[0].match(/id/i)) {
+        if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+          const id = decodeURIComponent(str[0].replace('id=', ''));
+          const sum = decodeURIComponent(str[1].replace('sum=', ''));
+          const order = decodeURIComponent(str[2].replace('order=', ''));
+          return <Payt id={id} userid="" auth_code="" wechat="" sum={sum} order={order} />;
+        }
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
           if (str[1].match(/sum/i) && str[2].match(/order/i)) {
@@ -172,8 +178,9 @@ export class Scanning extends React.Component<IScanningProp> {
               const sum = decodeURIComponent(str[1].replace('sum=', ''));
               const order = decodeURIComponent(str[2].replace('order=', ''));
               return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={sum} order={order} />;
+            }else{
+              return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
             }
-            return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
           } else {
             return (
               <Info
