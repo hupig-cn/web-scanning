@@ -40,7 +40,6 @@ export class Payt extends React.Component<IPaytProp> {
     order: this.props.order
   };
   componentDidMount() {
-    if (this.state.userid !== '') {
       this.props.queryBalance(this.state.userid);
       this.props
         .paymethods(false, navigator.userAgent.toLowerCase().match(/iphone/i) ? 'ios' : 'android')
@@ -56,7 +55,6 @@ export class Payt extends React.Component<IPaytProp> {
             });
           }
         });
-    }
     this.props
       .getMerchantsEntity(this.state.id)
       // @ts-ignore
