@@ -32,9 +32,9 @@ export class Payment extends React.Component<IPaymentProp> {
   };
   superHandleSubmit = (event, errors, { password }) => {
     const { paymethod, userid, money, merchantid, concession, rebate } = this.props;
-    console.log(window.location.search
-      .substring(1)
-      .split('&')[1]);
+    // console.log(window.location.search
+    //   .substring(1)
+    //   .split('&')[1]);
     if (paymethod === 'yue') {
       if (this.state.statics === 2) {
         toast.info('请勿在同一时间多次支付订单。');

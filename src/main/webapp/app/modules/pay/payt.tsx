@@ -18,6 +18,8 @@ export interface IPaytProp extends StateProps, DispatchProps {
   userid: string;
   auth_code: string;
   wechat: string;
+  sum: string;
+  order: string;
 }
 
 export class Payt extends React.Component<IPaytProp> {
@@ -34,14 +36,8 @@ export class Payt extends React.Component<IPaytProp> {
     money: '',
     statics: 1,
     merchantCode: Number,
-    sum: window.location.search
-          .substring(1)
-          .split('&')[1]
-          .split('=')[1],
-    order: window.location.search
-          .substring(1)
-          .split('&')[2]
-          .split('=')[1]
+    sum: this.props.sum,
+    order: this.props.order
   };
   componentDidMount() {
     if (this.state.userid !== '') {
@@ -78,7 +74,7 @@ export class Payt extends React.Component<IPaytProp> {
   }
 
   Payment = () => {
-    const key = this.state.sum;
+    const key = this.props.sum;
     const nums = (Number(key) * this.props.merchantEntity.rebate) / 100;
     if (Number(key) > 0) {
       if (this.state.statics === 2) {
@@ -118,9 +114,9 @@ export class Payt extends React.Component<IPaytProp> {
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     // 给钱成功
-                    this.props.createCaiOrder(this.props.wechat, this.state.order);
+                    this.props.createCaiOrder(this.props.wechat, this.props.order);
                     window.location.replace(
-                      'http://app.yuanscore.com/?result=1&details=' + `${this.state.order}`
+                      'http://app.yuanscore.com/?result=1&details=' + `${this.props.order}`
                     );
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
@@ -144,7 +140,7 @@ export class Payt extends React.Component<IPaytProp> {
             this.props.merchantEntity.concession,
             this.props.merchantEntity.rebate,
             this.props.merchantEntity.name,
-            this.state.order
+            this.props.order
           )
           // @ts-ignore
           .then(val => {
@@ -163,7 +159,7 @@ export class Payt extends React.Component<IPaytProp> {
   };
 
   balancePay = () => {
-    const key = this.state.sum;
+    const key = this.props.sum;
     if (Number(key) > 0) {
       if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.usablebalance) < Number(key)) {
         toast.error('提示：余额不足，请更换其他支付方式。');
@@ -225,12 +221,12 @@ export class Payt extends React.Component<IPaytProp> {
             <p className={'jh-amount-h6'}>付款金额</p>
             <div>
               <h1>￥</h1>
-              <span id="amount" className={'jh-amount'} >{this.state.sum} </span>
+              <span id="amount" className={'jh-amount'} >{this.props.sum} </span>
               {/* <input type="number" id="amount" className={'jh-amount'} onInput={AmountOnInput} onClick={bottomdivheight} /> */}
             </div>
             <Hrmargin />
             <label id="bonusValue" className="jh-integral">
-            { Number(this.state.sum) * this.props.merchantEntity.rebate/100 }
+              {Number(this.props.sum) * this.props.merchantEntity.rebate / 100}
             </label>
             <p>可获得积分:</p>
             <button type="button" onClick={this.Payment} id="thisbuttonpay">
@@ -248,7 +244,7 @@ export class Payt extends React.Component<IPaytProp> {
               }}
             />
           </div>
-          { console.log(1) }
+          {/* { console.log(1) } */}
           <div
             id="bottomdiv"
             style={{

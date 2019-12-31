@@ -34,7 +34,33 @@ export class Scanning extends React.Component<IScanningProp> {
       const str = url.substr(1).split('&');
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
-        if (state.match(/Alipay/i)) {
+        if (str[4].match(/sum/i) && str[5].match(/order/i)) {
+        const sum = decodeURIComponent(str[4].replace('sum=', ''));
+        const order = decodeURIComponent(str[5].replace('order=', ''));
+          // tslint:disable-next-line: no-invalid-this
+          this.props
+            .queryAlipayUser(decodeURIComponent(str[6].replace('auth_code=', '')))
+            // @ts-ignore
+            .then(alipeyuser => {
+              if (alipeyuser.value.data === '获取支付宝会员信息失败') {
+                return <Info message="获取支付宝会员信息失败" />;
+              } else if (alipeyuser.value.data !== '用户存在') {
+                // tslint:disable-next-line: no-invalid-this
+                this.props
+                  .registerRandom()
+                  // @ts-ignore
+                  .then(res => {
+                    if (!isNaN(res.value.data)) {
+                      // tslint:disable-next-line: no-invalid-this
+                      this.props.createUserByScanningMerchant(res.value.data, alipeyuser.value.data, '支付宝');
+                    } else {
+                      return <Info message={res.value.data.toString()} />;
+                    }
+                  });
+              }
+            });
+            return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
+        } else if (state.match(/Alipay/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
             .queryAlipayUser(decodeURIComponent(str[4].replace('auth_code=', '')))
@@ -57,9 +83,6 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-            if (str.length > 1 && str[1].match(/sum/i)) {
-        return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
-            }
           return <Pay id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" />;
         } else if (Number(state) > 0) {
           return <Alipay auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} state={state} />;
@@ -89,35 +112,65 @@ export class Scanning extends React.Component<IScanningProp> {
       } else if (str[0].match(/id/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
-          const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
-          window.location.replace(
-            'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-              'appid=wx5450b0124166c23d&' +
-              'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
-              'response_type=code&' +
-              'scope=snsapi_base&' +
-              'state=' +
-              state +
-              '#wechat_redirect'
-          );
+          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+            const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
+            '&order=' + decodeURIComponent(str[2].replace('order=', ''));
+            window.location.replace(
+              'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+                'appid=wx5450b0124166c23d&' +
+                'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+                'response_type=code&' +
+                'scope=snsapi_base&' +
+                'state=' +
+                state +
+                '#wechat_redirect'
+            );
+          } else {
+            const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', ''));
+            window.location.replace(
+              'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+                'appid=wx5450b0124166c23d&' +
+                'redirect_uri=http%3A%2F%2Fapp.yuanscore.com%2F&' +
+                'response_type=code&' +
+                'scope=snsapi_base&' +
+                'state=' +
+                state +
+                '#wechat_redirect'
+            );
+          }
         } else if (userAgent.match(/Alipay/i)) {
-          const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
-          window.location.replace(
-            'alipays://platformapi/startapp?' +
-              'appId=20000067&' +
-              'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
-              'app_id%3D2019031963563747%26' +
-              'scope%3Dauth_base%26' +
-              'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
-              'state%3D' +
-              state
-          );
+          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
+            '&order=' + decodeURIComponent(str[2].replace('order=', ''));
+            window.location.replace(
+              'alipays://platformapi/startapp?' +
+                'appId=20000067&' +
+                'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
+                'app_id%3D2019031963563747%26' +
+                'scope%3Dauth_base%26' +
+                'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
+                'state%3D' +
+                state
+            );
+          } else {
+            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
+            window.location.replace(
+              'alipays://platformapi/startapp?' +
+                'appId=20000067&' +
+                'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
+                'app_id%3D2019031963563747%26' +
+                'scope%3Dauth_base%26' +
+                'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
+                'state%3D' +
+                state
+            );
+          }
         } else if (userAgent.match(/Weisen/i)) {
           const { account } = this.props;
           if (account && account.login) {
-            if (str.length > 1 && str[1].match(/sum/i)) {
-              return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat=""/>;
-            }
+            // if (str.length > 1 && str[1].match(/sum/i)) {
+            //   return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat=""/>;
+            // }
             return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
           } else {
             return (
@@ -245,6 +298,8 @@ export class Scanning extends React.Component<IScanningProp> {
         );
       } else if (str[0].match(/code/i)) {
         const state = decodeURIComponent(str[1].replace('state=', ''));
+        const sum = decodeURIComponent(str[2].replace('sum=', ''));
+        const order = decodeURIComponent(str[3].replace('order=', ''));
         if (state.match(/WeChat/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
@@ -271,8 +326,8 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (str.length > 1 && str[1].match(/sum/i)) {
-            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />;
+          if (sum !== null && sum !== '') {
+            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
