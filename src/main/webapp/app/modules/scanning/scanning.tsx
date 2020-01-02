@@ -112,7 +112,7 @@ export class Scanning extends React.Component<IScanningProp> {
       } else if (str[0].match(/id/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
-          if (str[2].match(/sum/i) && str[3].match(/order/i)) {
+          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
             const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
             '&order=' + decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
@@ -139,9 +139,12 @@ export class Scanning extends React.Component<IScanningProp> {
             );
           }
         } else if (userAgent.match(/Alipay/i)) {
-          if (str[2].match(/sum/i) && str[3].match(/order/i)) {
-            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[2].replace('sum=', '')) +
-            '&order=' + decodeURIComponent(str[3].replace('order=', ''));
+        if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+         const newSum =  decodeURIComponent(str[1].replace('sum=', ''));
+         const newOrder =  decodeURIComponent(str[2].replace('order=', ''));
+            const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
+            // + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) + '&order=' + decodeURIComponent(str[2].replace('order=', ''));
+          	// alert('3' + state);
             window.location.replace(
               'alipays://platformapi/startapp?' +
                 'appId=20000067&' +
@@ -149,8 +152,8 @@ export class Scanning extends React.Component<IScanningProp> {
                 'app_id%3D2019031963563747%26' +
                 'scope%3Dauth_base%26' +
                 'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
-                'state%3D' +
-                state
+                'state=' +
+                state + '-sum-' + newSum + '-order-' + newOrder
             );
           } else {
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
