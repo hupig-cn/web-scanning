@@ -35,7 +35,6 @@ export class Scanning extends React.Component<IScanningProp> {
       const str = url.substr(1).split('&');
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
-        al
         if (str[4].match(/sum/i) && str[5].match(/order/i)) {
         const sum = decodeURIComponent(str[4].replace('sum=', ''));
         const order = decodeURIComponent(str[5].replace('order=', ''));
@@ -115,10 +114,7 @@ export class Scanning extends React.Component<IScanningProp> {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
           if (str[1].match(/sum/i) && str[2].match(/order/i)) {
-<<<<<<< HEAD
-=======
             // http://192.168.1.142:8080/?id=20&sum=35.5&order=2020-01-02%2010:01:29::20::1
->>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
             const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
             '&order=' + decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
