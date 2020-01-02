@@ -61,7 +61,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-            return <Payt id={decodeURIComponent(newStr[0]).substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
+            return <Payt id={newStr[0].substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
         } else if (state.match(/Alipay/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
