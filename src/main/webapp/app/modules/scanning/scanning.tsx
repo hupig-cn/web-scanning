@@ -29,11 +29,13 @@ export class Scanning extends React.Component<IScanningProp> {
   }
   ScanningType = () => {
     const url = location.search;
+    alert(url);
     // tslint:disable-next-line: triple-equals
     if (url.indexOf('?') != -1) {
       const str = url.substr(1).split('&');
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
+        al
         if (str[4].match(/sum/i) && str[5].match(/order/i)) {
         const sum = decodeURIComponent(str[4].replace('sum=', ''));
         const order = decodeURIComponent(str[5].replace('order=', ''));
@@ -113,6 +115,10 @@ export class Scanning extends React.Component<IScanningProp> {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
           if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+<<<<<<< HEAD
+=======
+            // http://192.168.1.142:8080/?id=20&sum=35.5&order=2020-01-02%2010:01:29::20::1
+>>>>>>> branch 'code' of git@github.com:hupig-cn/web-scanning.git
             const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
             '&order=' + decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
@@ -139,21 +145,22 @@ export class Scanning extends React.Component<IScanningProp> {
             );
           }
         } else if (userAgent.match(/Alipay/i)) {
-        if (str[1].match(/sum/i) && str[2].match(/order/i)) {
-         const newSum =  decodeURIComponent(str[1].replace('sum=', ''));
-         const newOrder =  decodeURIComponent(str[2].replace('order=', ''));
+
+          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+            const newSum = decodeURIComponent(str[1].replace('sum=', ''));
+            const newOrder = decodeURIComponent(str[2].replace('order=', ''));
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
             // + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) + '&order=' + decodeURIComponent(str[2].replace('order=', ''));
-          	// alert('3' + state);
+            // alert('3' + state);
             window.location.replace(
               'alipays://platformapi/startapp?' +
-                'appId=20000067&' +
-                'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
-                'app_id%3D2019031963563747%26' +
-                'scope%3Dauth_base%26' +
-                'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
-                'state=' +
-                state + '-sum-' + newSum + '-order-' + newOrder
+              'appId=20000067&' +
+              'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
+              'app_id%3D2019031963563747%26' +
+              'scope%3Dauth_base%26' +
+              'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
+              'state=' +
+              state + '-sum-' + newSum + '-order-' + newOrder
             );
           } else {
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
