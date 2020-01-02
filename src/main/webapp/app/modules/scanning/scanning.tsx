@@ -36,8 +36,8 @@ export class Scanning extends React.Component<IScanningProp> {
         const state = decodeURIComponent(str[3].replace('state=', ''));
         const newStr = state.substr(1).split('-');
         if (newStr[3] !== null || newStr[3] !== '') {
-        const sum = decodeURIComponent(newStr[2]);
-        const order = decodeURIComponent(newStr[4]);
+          const sum = decodeURIComponent(newStr[2]);
+          const order = decodeURIComponent(newStr[4]);
           // tslint:disable-next-line: no-invalid-this
           this.props
             .queryAlipayUser(decodeURIComponent(str[6].replace('auth_code=', '')))
@@ -60,7 +60,16 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-            return <Payt id={newStr[0].substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
+          return (
+            <Payt
+              id={newStr[0].substring(6)}
+              userid=""
+              auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))}
+              wechat=""
+              sum={sum}
+              order={order}
+            />
+          );
         } else if (state.match(/Alipay/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
@@ -92,7 +101,7 @@ export class Scanning extends React.Component<IScanningProp> {
         return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
       } else if (str.length > 1 && str[1].match(/loc/i)) {
         return <Menu />;
-      } else if (str[1].match(/details/i)) {
+      } else if (str.length > 1 && str[1].match(/details/i)) {
         return <MenuDetails />;
       } else if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3
@@ -113,10 +122,15 @@ export class Scanning extends React.Component<IScanningProp> {
       } else if (str[0].match(/id/i)) {
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
-          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+          if (str.length > 2 && str[1].match(/sum/i) && str[2].match(/order/i)) {
             // http://192.168.1.142:8080/?id=20&sum=35.5&order=2020-01-02%2010:01:29::20::1
-            const state = 'WeChat' + decodeURIComponent(str[0].replace('id=', '')) + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) +
-            '&order=' + decodeURIComponent(str[2].replace('order=', ''));
+            const state =
+              'WeChat' +
+              decodeURIComponent(str[0].replace('id=', '')) +
+              '&sum=' +
+              decodeURIComponent(str[1].replace('sum=', '')) +
+              '&order=' +
+              decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
               'https://open.weixin.qq.com/connect/oauth2/authorize?' +
                 'appid=wx5450b0124166c23d&' +
@@ -141,19 +155,23 @@ export class Scanning extends React.Component<IScanningProp> {
             );
           }
         } else if (userAgent.match(/Alipay/i)) {
-          if (str[1].match(/sum/i) && str[2].match(/order/i)) {
+          if (str.length > 1 && str[1].match(/sum/i) && str[2].match(/order/i)) {
             const newSum = decodeURIComponent(str[1].replace('sum=', ''));
             const newOrder = decodeURIComponent(str[2].replace('order=', ''));
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
             window.location.replace(
               'alipays://platformapi/startapp?' +
-              'appId=20000067&' +
-              'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
-              'app_id%3D2019031963563747%26' +
-              'scope%3Dauth_base%26' +
-              'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
-              'state=' +
-              state + '-sum-' + newSum + '-order-' + newOrder
+                'appId=20000067&' +
+                'url=https%3A%2F%2Fopenauth.alipay.com%2Foauth2%2FpublicAppAuthorize.htm%3F' +
+                'app_id%3D2019031963563747%26' +
+                'scope%3Dauth_base%26' +
+                'redirect_uri%3Dhttp%3A%2F%2Fapp.yuanscore.com%26' +
+                'state=' +
+                state +
+                '-sum-' +
+                newSum +
+                '-order-' +
+                newOrder
             );
           } else {
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
@@ -173,14 +191,23 @@ export class Scanning extends React.Component<IScanningProp> {
           if (account && account.login) {
             if (str.length > 1 && str[1].match(/sum/i)) {
               const sum = window.location.search
-              .substring(1)
-              .split('&')[1]
-              .split('=')[1];
+                .substring(1)
+                .split('&')[1]
+                .split('=')[1];
               const order = window.location.search
-              .substring(1)
-              .split('&')[2]
-              .split('=')[1];
-              return <Payt id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" sum={sum} order={order} />;
+                .substring(1)
+                .split('&')[2]
+                .split('=')[1];
+              return (
+                <Payt
+                  id={decodeURIComponent(str[0].replace('id=', ''))}
+                  userid={account.id}
+                  auth_code=""
+                  wechat=""
+                  sum={sum}
+                  order={order}
+                />
+              );
             } else {
               return <Pay id={decodeURIComponent(str[0].replace('id=', ''))} userid={account.id} auth_code="" wechat="" />;
             }
@@ -310,8 +337,6 @@ export class Scanning extends React.Component<IScanningProp> {
         );
       } else if (str[0].match(/code/i)) {
         const state = decodeURIComponent(str[1].replace('state=', ''));
-        const sum = decodeURIComponent(str[2].replace('sum=', ''));
-        const order = decodeURIComponent(str[3].replace('order=', ''));
         if (state.match(/WeChat/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
@@ -338,8 +363,12 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (sum !== null && sum !== '') {
-            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
+          if (str.length > 2) {
+            const sum = decodeURIComponent(str[2].replace('sum=', ''));
+            const order = decodeURIComponent(str[3].replace('order=', ''));
+            if (sum !== null && sum !== '') {
+              return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
+            }
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
