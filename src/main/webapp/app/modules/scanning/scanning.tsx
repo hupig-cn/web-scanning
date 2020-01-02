@@ -32,7 +32,6 @@ export class Scanning extends React.Component<IScanningProp> {
     // tslint:disable-next-line: triple-equals
     if (url.indexOf('?') != -1) {
       const str = url.substr(1).split('&');
-      alert('44444--' + str);
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
         const newStr = state.substr(1).split('-');
@@ -146,9 +145,6 @@ export class Scanning extends React.Component<IScanningProp> {
             const newSum = decodeURIComponent(str[1].replace('sum=', ''));
             const newOrder = decodeURIComponent(str[2].replace('order=', ''));
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
-            alert('state=' + state + '-sum-' + newSum + '-order-' + newOrder);
-            // + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) + '&order=' + decodeURIComponent(str[2].replace('order=', ''));
-            // alert('3' + state);
             window.location.replace(
               'alipays://platformapi/startapp?' +
               'appId=20000067&' +
