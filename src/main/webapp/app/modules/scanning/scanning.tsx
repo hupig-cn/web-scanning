@@ -35,10 +35,10 @@ export class Scanning extends React.Component<IScanningProp> {
       alert('44444--' + str);
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
-        newState = state.substr(1).split('-');
-        if (newState[3] !== null || newState[3] !== '' ) {
-        const sum = decodeURIComponent(str[2]);
-        const order = decodeURIComponent(str[4]);
+        const newStr = state.substr(1).split('-');
+        if (newStr[3] !== null || newStr[3] !== '' ) {
+        const sum = decodeURIComponent(newStr[2]);
+        const order = decodeURIComponent(newStr[4]);
           // tslint:disable-next-line: no-invalid-this
           this.props
             .queryAlipayUser(decodeURIComponent(str[6].replace('auth_code=', '')))
@@ -61,7 +61,7 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-            return <Payt id={state.substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
+            return <Payt id={decodeURIComponent(newStr[0]).substring(6)} userid="" auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} wechat="" sum={sum} order={order} />;
         } else if (state.match(/Alipay/i)) {
           // tslint:disable-next-line: no-invalid-this
           this.props
@@ -146,6 +146,7 @@ export class Scanning extends React.Component<IScanningProp> {
             const newSum = decodeURIComponent(str[1].replace('sum=', ''));
             const newOrder = decodeURIComponent(str[2].replace('order=', ''));
             const state = 'Alipay' + decodeURIComponent(str[0].replace('id=', ''));
+            alert('state=' + state + '-sum-' + newSum + '-order-' + newOrder);
             // + '&sum=' + decodeURIComponent(str[1].replace('sum=', '')) + '&order=' + decodeURIComponent(str[2].replace('order=', ''));
             // alert('3' + state);
             window.location.replace(
