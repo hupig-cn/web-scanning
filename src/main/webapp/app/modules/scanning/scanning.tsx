@@ -29,15 +29,16 @@ export class Scanning extends React.Component<IScanningProp> {
   }
   ScanningType = () => {
     const url = location.search;
-    alert(url);
     // tslint:disable-next-line: triple-equals
     if (url.indexOf('?') != -1) {
       const str = url.substr(1).split('&');
+      alert('44444--' + str);
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
-        if (str[4].match(/sum/i) && str[5].match(/order/i)) {
-        const sum = decodeURIComponent(str[4].replace('sum=', ''));
-        const order = decodeURIComponent(str[5].replace('order=', ''));
+        newState = state.substr(1).split('-');
+        if (newState[3] !== null || newState[3] !== '' ) {
+        const sum = decodeURIComponent(str[2]);
+        const order = decodeURIComponent(str[4]);
           // tslint:disable-next-line: no-invalid-this
           this.props
             .queryAlipayUser(decodeURIComponent(str[6].replace('auth_code=', '')))
@@ -141,7 +142,6 @@ export class Scanning extends React.Component<IScanningProp> {
             );
           }
         } else if (userAgent.match(/Alipay/i)) {
-
           if (str[1].match(/sum/i) && str[2].match(/order/i)) {
             const newSum = decodeURIComponent(str[1].replace('sum=', ''));
             const newOrder = decodeURIComponent(str[2].replace('order=', ''));
