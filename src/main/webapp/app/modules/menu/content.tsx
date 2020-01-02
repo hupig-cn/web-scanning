@@ -228,8 +228,9 @@ export class Content extends React.Component<IContentInt> {
             overflow: 'auto',
             position: 'fixed',
             zIndex: 1000,
-            top: '12.5%',
-            textAlign: 'center'
+            top: '118px',
+            textAlign: 'center',
+            bottom: '6.3%'
           }}
         >
           {...this.state.typeList.map((nameMun, typeIndex) => (
@@ -254,7 +255,7 @@ export class Content extends React.Component<IContentInt> {
             </span>
           ))}
         </div>
-        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '12.5%' , bottom: '6.3%', borderLeft: '1px solid #ececec' }}>
+        <div style= {{ width: '80%', overflow: 'auto' , float: 'right' , position: 'fixed' , left: '20%' , top: '118px' , bottom: '6.3%', borderLeft: '1px solid #ececec' }}>
           {/* <div>{this.state.num}+++{this.state.sum}+++{this.state.iocId}+++{this.state.merchatid}</div> */}
           {...this.state.typeList.map((item, index) => (
             <div

@@ -156,9 +156,6 @@ export class Payt extends React.Component<IPaytProp> {
         toast.info('不支持除支付宝，微信，元积分之外的支付方式。');
       }
     }
-    const userAgentName = navigator.userAgent.toLowerCase();
-    const type = userAgentName.match(/MicroMessenger/i) ? 'WeChat' : 'Alipay' ;
-    window.location.replace('http://localhost:9000/?id=' + `${this.state.id}` + '&type=' + type + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.order}`);
   };
 
   balancePay = () => {

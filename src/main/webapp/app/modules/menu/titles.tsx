@@ -47,7 +47,7 @@ export class Title extends React.Component<IContentInt> {
         <div
           style={{
             backgroundColor: '#fe4365',
-            height: '5%',
+            height: '43px',
             textAlign: 'center',
             padding: '7px',
             width: '100%',

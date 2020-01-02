@@ -98,7 +98,7 @@ class LongMenu extends React.Component<ILongMenuProps> {
               width: '20px',
               height: '20px',
               borderRadius: '50px',
-              fontSize: '0.1em',
+              fontSize: '0.8em',
               position: 'absolute',
               left: '35px',
               fontFamily: 'SimHei'

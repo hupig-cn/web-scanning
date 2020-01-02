@@ -43,10 +43,12 @@ export class Title extends React.Component<IContentInt> {
             key={merchant.id}
             style={{
               width: '100%',
-              height: '7.5%',
+              minHeight: '60px',
+              maxHeight: '75px',
               position: 'fixed',
-              top: '5%',
-              zIndex: 1000
+              top: '43px',
+              zIndex: 1000,
+              overflow: 'hidden'
             }}
           >
             <img style={{ width: '100%', height: '100%' }} src={merchant.merchantphoto} />

@@ -51,14 +51,7 @@ export class Payment extends React.Component<IPaymentProp> {
           // tslint:disable-next-line: no-shadowed-variable
           result.then(res => {
             if (res.value.data.code === 1) {
-              // if ( == 'sum') {
-              //     window.location.replace(
-              //       'http://localhost:8084/?details=' + `${window.location.search.substring(1)
-              //       .split('&')[2]
-              //       .split('=')[1]}`
-              //     );
-              // }
-              window.location.replace('http://localhost:9000/?resapp=' + String((Number(money) * rebate) / 100));
+              window.location.replace('http://app.yuanscore.com/?resapp=' + String((Number(money) * rebate) / 100));
             } else {
               toast.error('错误：' + res.value.data.message.toString());
             }
