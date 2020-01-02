@@ -35,7 +35,7 @@ export class Scanning extends React.Component<IScanningProp> {
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
         const newStr = state.substr(1).split('-');
-        if (newStr[3] !== null || newStr[3] !== '' ) {
+        if (newStr[3] !== null || newStr[3] !== '') {
         const sum = decodeURIComponent(newStr[2]);
         const order = decodeURIComponent(newStr[4]);
           // tslint:disable-next-line: no-invalid-this
