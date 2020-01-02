@@ -191,7 +191,7 @@ export const merchantPayment = (authCode: string, money: string, merchantid: str
 
 export const merchantPayment2 = (authCode: string, money: string, merchantid: string, concession: number, rebate: number, name: string, order: string) => {
   // tslint:disable-next-line: max-line-length
-  const requestUrl = `services/basic/api/public/merchantPayment/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}&order=${order}`;
+  const requestUrl = `services/basic/api/public/merchantPayment2/?authCode=${authCode}&money=${money}&merchantid=${merchantid}&concession=${concession}&rebate=${rebate}&name=${name}&order=${order}`;
   return {
     payload: axios.get(requestUrl)
   };
