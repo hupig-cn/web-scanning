@@ -35,7 +35,7 @@ export class Scanning extends React.Component<IScanningProp> {
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
         const newStr = state.substr(1).split('-');
-        if (newStr[3] !== null || newStr[3] !== '') {
+        if (newStr.length > 3) {
           const sum = decodeURIComponent(newStr[2]);
           const order = decodeURIComponent(newStr[4]);
           // tslint:disable-next-line: no-invalid-this
@@ -62,7 +62,7 @@ export class Scanning extends React.Component<IScanningProp> {
             });
           return (
             <Payt
-              id={newStr[0].substring(6)}
+              id={(newStr[0]).substring(6)}
               userid=""
               auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))}
               wechat=""
@@ -127,9 +127,9 @@ export class Scanning extends React.Component<IScanningProp> {
             const state =
               'WeChat' +
               decodeURIComponent(str[0].replace('id=', '')) +
-              '&sum=' +
+              '-sum-' +
               decodeURIComponent(str[1].replace('sum=', '')) +
-              '&order=' +
+              '-order-' +
               decodeURIComponent(str[2].replace('order=', ''));
             window.location.replace(
               'https://open.weixin.qq.com/connect/oauth2/authorize?' +
