@@ -97,13 +97,16 @@ export class Scanning extends React.Component<IScanningProp> {
         } else if (Number(state) > 0) {
           return <Alipay auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} state={state} />;
         }
-      } else if (str.length > 1 && str[1].match(/share/i)) {
-        return <Register id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />;
-      } else if (str.length > 1 && str[1].match(/loc/i)) {
-        return <Menu />;
-      } else if (str.length > 1 && str[1].match(/details/i)) {
-        return <MenuDetails />;
-      } else if (str[0].match(/articleid/i)) {
+      }
+      const shuZhu = ['share', 'loc', 'details'];
+      const yeShuZhu = [<Register key={1} id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />,
+      <Menu key={2}/>, <MenuDetails key={3}/>];
+      for (const [typeTowIndex, typeSecCount] of shuZhu.entries()) {
+        if (str.length > 1 && str[1].substring(0).split('=')[0] === typeSecCount) {
+          return yeShuZhu[typeTowIndex];
+        }
+      }
+      if (str[0].match(/articleid/i)) {
         // http://app.yuanscore.com/?articleid=3
         const userAgent = navigator.userAgent.toLowerCase();
         if (userAgent.match(/MicroMessenger/i)) {
@@ -363,12 +366,10 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (str.length > 2) {
+          if (str.length > 2 && str[2].match(/sum/i)) {
             const sum = decodeURIComponent(str[2].replace('sum=', ''));
             const order = decodeURIComponent(str[3].replace('order=', ''));
-            if (sum !== null && sum !== '') {
-              return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
-            }
+            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
