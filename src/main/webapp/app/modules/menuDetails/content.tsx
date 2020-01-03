@@ -3,7 +3,7 @@ import React from 'react';
 import { IRootState } from 'app/shared/reducers';
 import AllPrice from './allPrice';
 import { connect } from 'react-redux';
-import { caiorder } from 'app/requests/menu/menu.reducer';
+import { caiorder, changeOrderState } from 'app/requests/menu/menu.reducer';
 
 export interface IContentInt extends StateProps, DispatchProps { }
 
@@ -13,6 +13,23 @@ export class Content extends React.Component<IContentInt> {
   };
 
   componentDidMount() {
+
+    this.props
+    .changeOrderState(
+      window.location.search
+        .substring(1)
+        .split('&')[1]
+        .split('=')[1])
+    // @ts-ignore
+    .then(res => {
+      // if (res.value.data.data) {
+      //   // console.log(res.value.data.data);
+      //   // let reactor = "1";
+      //   this.setState({
+      //     orderList: res.value.data.data
+      //   });
+      // }
+    });
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     this.props
@@ -105,7 +122,7 @@ const mapStateToProps = ({ authentication }: IRootState) => ({
   account: authentication.account,
   isAuthenticated: authentication.isAuthenticated
 });
-const mapDispatchToProps = { caiorder };
+const mapDispatchToProps = { caiorder, changeOrderState };
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 export default connect(

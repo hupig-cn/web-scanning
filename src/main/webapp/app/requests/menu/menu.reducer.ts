@@ -68,6 +68,13 @@ export const caiorder = (orderid: any) => async dispatch => {
   return result;
   };
 
+export const changeOrderState = (orderid: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('http://app.yuanscore.com/services/merchant/api/public/post/changeOrderState?orderid=' + `${orderid}`)
+  });
+  return result;
+  };
+
 // 重置
 export const takingOrdersNum = (iocId: any, merchatid: any) => async dispatch => {
   const result = await dispatch({

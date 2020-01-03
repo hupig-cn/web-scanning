@@ -40,7 +40,7 @@ export class Scanning extends React.Component<IScanningProp> {
         const order = decodeURIComponent(newStr[4]);
           // tslint:disable-next-line: no-invalid-this
           this.props
-            .queryAlipayUser(decodeURIComponent(str[6].replace('auth_code=', '')))
+            .queryAlipayUser(decodeURIComponent(str[4].replace('auth_code=', '')))
             // @ts-ignore
             .then(alipeyuser => {
               if (alipeyuser.value.data === '获取支付宝会员信息失败') {
