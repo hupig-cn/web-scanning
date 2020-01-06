@@ -19,7 +19,7 @@ export class Title extends React.Component<IContentInt> {
       .caiorder(
         window.location.search
           .substring(1)
-          .split('&')[0]
+          .split('&')[1]
           .split('=')[1])
       // @ts-ignore
       .then(res => {
@@ -36,9 +36,7 @@ export class Title extends React.Component<IContentInt> {
   render() {
     return (
       <div>
-        {...this.state.orderList.map((merchant, index) => (
         <div
-        key={index}
           style={{
             width: '100%',
             padding: '0 0 0 5%',
@@ -49,7 +47,7 @@ export class Title extends React.Component<IContentInt> {
             zIndex: 1000,
             borderBottom: '1px solid #ececec'
           }}
-          >
+        >
           <img src="http://app.yuanscore.com:8083/services/basic/api/public/getFiles/88"
             style={{
               float: 'left',
@@ -58,22 +56,21 @@ export class Title extends React.Component<IContentInt> {
               display: 'block',
               marginTop: '20px'
             }} />
-            {merchant.list.map((listOrder, ind) => (
+          {...this.state.orderList.map((merchant, index) => (
             <span
-            key={ind}
+              key={index}
               style={{
                 marginTop: '20px',
                 marginLeft: '10px',
                 float: 'left',
                 textAlign: 'left'
               }}>
-              {listOrder.mName}
+              {merchant.mName}
               <br />
-              {listOrder.iocid}号座
+              {merchant.iocid}号座
             </span>
-              ))}
-        </div>
           ))}
+        </div>
         {/* <div style={{ height: '45px' }} /> */}
       </div>
     );

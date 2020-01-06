@@ -18,7 +18,7 @@ export class Title extends React.Component<IContentInt> {
     .caiorder(
       window.location.search
         .substring(1)
-        .split('&')[0]
+        .split('&')[1]
         .split('=')[1])
     // @ts-ignore
     .then(res => {
