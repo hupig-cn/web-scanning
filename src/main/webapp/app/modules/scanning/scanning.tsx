@@ -62,7 +62,7 @@ export class Scanning extends React.Component<IScanningProp> {
             });
           return (
             <Payt
-              id={(newStr[0]).substring(6)}
+              id={newStr[0].substring(6)}
               userid=""
               auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))}
               wechat=""
@@ -98,12 +98,17 @@ export class Scanning extends React.Component<IScanningProp> {
           return <Alipay auth_code={decodeURIComponent(str[4].replace('auth_code=', ''))} state={state} />;
         }
       }
-      const shuZhu = ['share', 'loc', 'details'];
-      const yeShuZhu = [<Register key={1} id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />,
-      <Menu key={2}/>, <MenuDetails key={3}/>];
-      for (const [typeTowIndex, typeSecCount] of shuZhu.entries()) {
-        if (str.length > 1 && str[1].substring(0).split('=')[0] === typeSecCount) {
-          return yeShuZhu[typeTowIndex];
+      if (str.length > 1) {
+        const shuZhu = ['share', 'loc', 'details'];
+        const yeShuZhu = [
+          <Register key={1} id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />,
+          <Menu key={2} />,
+          <MenuDetails key={3} />
+        ];
+        for (const [typeTowIndex, typeSecCount] of shuZhu.entries()) {
+          if (str.length > 1 && str[1].substring(0).split('=')[0] === typeSecCount) {
+            return yeShuZhu[typeTowIndex];
+          }
         }
       }
       if (str[0].match(/articleid/i)) {
