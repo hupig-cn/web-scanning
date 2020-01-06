@@ -34,7 +34,7 @@ export class Scanning extends React.Component<IScanningProp> {
       const str = url.substr(1).split('&');
       if (str[0].match(/app_id/i)) {
         const state = decodeURIComponent(str[3].replace('state=', ''));
-        const newStr = state.substr(1).split('-');
+        const newStr = state.substr(0).split('-');
         if (newStr.length > 3) {
           const sum = decodeURIComponent(newStr[2]);
           const order = decodeURIComponent(newStr[4]);
@@ -374,7 +374,8 @@ export class Scanning extends React.Component<IScanningProp> {
           if (str.length > 2 && str[2].match(/sum/i)) {
             const sum = decodeURIComponent(str[2].replace('sum=', ''));
             const order = decodeURIComponent(str[3].replace('order=', ''));
-            return <Payt id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
+            const newWechatStr = state.substr(0).split('-');
+            return <Payt id={newWechatStr[0]} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
