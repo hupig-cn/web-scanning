@@ -375,7 +375,7 @@ export class Scanning extends React.Component<IScanningProp> {
             if (newWechatStr.length > 3) {
               const wechatSum = decodeURIComponent(newWechatStr[2]);
               const wechatOrder = decodeURIComponent(newWechatStr[4]);
-            return <Payt id={newWechatStr[0]} userid="" auth_code="" wechat={this.state.userid} sum={wechatSum} order={wechatOrder} />;
+            return <Payt id={newWechatStr[0].substring(6)} userid="" auth_code="" wechat={this.state.userid} sum={wechatSum} order={wechatOrder} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
