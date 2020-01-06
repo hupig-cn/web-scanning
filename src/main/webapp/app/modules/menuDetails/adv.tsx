@@ -36,7 +36,9 @@ export class Title extends React.Component<IContentInt> {
   render() {
     return (
       <div>
+        {...this.state.orderList.map((merchant, index) => (
         <div
+        key={index}
           style={{
             width: '100%',
             padding: '0 0 0 5%',
@@ -47,7 +49,7 @@ export class Title extends React.Component<IContentInt> {
             zIndex: 1000,
             borderBottom: '1px solid #ececec'
           }}
-        >
+          >
           <img src="http://app.yuanscore.com:8083/services/basic/api/public/getFiles/88"
             style={{
               float: 'left',
@@ -56,21 +58,22 @@ export class Title extends React.Component<IContentInt> {
               display: 'block',
               marginTop: '20px'
             }} />
-          {...this.state.orderList.map((merchant, index) => (
+            {merchant.list.map((listOrder, ind) => (
             <span
-              key={index}
+            key={ind}
               style={{
                 marginTop: '20px',
                 marginLeft: '10px',
                 float: 'left',
                 textAlign: 'left'
               }}>
-              {merchant.mName}
+              {listOrder.mName}
               <br />
-              {merchant.iocid}号座
+              {listOrder.iocid}号座
             </span>
-          ))}
+              ))}
         </div>
+          ))}
         {/* <div style={{ height: '45px' }} /> */}
       </div>
     );
