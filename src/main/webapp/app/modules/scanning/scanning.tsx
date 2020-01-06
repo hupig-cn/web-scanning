@@ -371,11 +371,11 @@ export class Scanning extends React.Component<IScanningProp> {
                   });
               }
             });
-          if (str.length > 2 && str[2].match(/sum/i)) {
-            const sum = decodeURIComponent(str[2].replace('sum=', ''));
-            const order = decodeURIComponent(str[3].replace('order=', ''));
             const newWechatStr = state.substr(0).split('-');
-            return <Payt id={newWechatStr[0]} userid="" auth_code="" wechat={this.state.userid} sum={sum} order={order} />;
+            if (newWechatStr.length > 3) {
+              const wechatSum = decodeURIComponent(newWechatStr[2]);
+              const wechatOrder = decodeURIComponent(newWechatStr[4]);
+            return <Payt id={newWechatStr[0]} userid="" auth_code="" wechat={this.state.userid} sum={wechatSum} order={wechatOrder} />;
           }
           return this.state.userid ? (
             <Pay id={state.substring(6)} userid="" auth_code="" wechat={this.state.userid} />
