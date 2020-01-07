@@ -48,7 +48,7 @@ export class Title extends React.Component<IContentInt> {
           key={index}
           style={{
             float: 'right',
-            margin: '30px 0 0 10px'
+            margin: '10px 0 0 10px'
           }}>
           共计 ： <span style={{ color: '#fe4365' }}>{orderListData.zongsum} ￥</span>
           </span>

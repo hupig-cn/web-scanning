@@ -54,7 +54,7 @@ export class Content extends React.Component<IContentInt> {
     return (
       <div style={{ position: 'relative' }}>
           {...this.state.orderList.map((merchant, index) => (
-            <div key={index} style={{ width: '100%', overflow: 'auto', float: 'right', position: 'fixed', top: '15%', bottom: '6.3%' }}>
+            <div key={index} style={{ width: '100%', overflow: 'auto', float: 'right', position: 'fixed', top: '133px' }}>
             {merchant.list.map((listOrder, ind) => (
             <div
               key={ind}

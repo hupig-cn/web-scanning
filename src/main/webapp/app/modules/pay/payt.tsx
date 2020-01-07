@@ -99,6 +99,9 @@ export class Payt extends React.Component<IPaytProp> {
               // @ts-ignore
               // tslint:disable-next-line: no-shadowed-variable
               const keys = val.value.data.data[0];
+              const detailsOrder = this.props.order;
+              const wechatData = this.props.wechat;
+              const orderData = this.props.order;
               // @ts-ignore
               WeixinJSBridge.invoke(
                 'getBrandWCPayRequest',
@@ -114,10 +117,9 @@ export class Payt extends React.Component<IPaytProp> {
                 function(res) {
                   if (res.err_msg === 'get_brand_wcpay_request:ok') {
                     // 给钱成功
-                    this.props.createCaiOrder(this.props.wechat, this.props.order);
-                    window.location.replace(
-                      'http://app.yuanscore.com/?result=1&details=' + `${this.props.order}`
-                    );
+                    // this.props.createCaiOrder(this.props.wechat, this.props.order);
+                    createCaiOrder(wechatData, orderData);
+                    window.location.replace('http://app.yuanscore.com/?result=1&details=' + detailsOrder);
                   } else if (res.err_msg === 'get_brand_wcpay_request:cancel') {
                     window.location.replace('http://app.yuanscore.com/?payerror=0');
                   } else if (res.err_msg === 'get_brand_wcpay_request:fail') {
