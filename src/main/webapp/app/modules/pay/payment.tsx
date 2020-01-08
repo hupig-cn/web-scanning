@@ -9,6 +9,7 @@ import {
   merchantPaymentYue,
   merchantPaymentCoupon
 } from 'app/entities/basic/linkuser/linkuser.reducer';
+import { checkIsLittleOrder } from 'app/requests/menu/menu.reducer';
 import { toast } from 'react-toastify';
 
 export interface IPaymentProp extends StateProps, DispatchProps {
@@ -28,7 +29,8 @@ export class Payment extends React.Component<IPaymentProp> {
     merchantid: this.props.merchantid,
     concession: this.props.concession,
     rebate: this.props.rebate,
-    statics: 1
+    statics: 1,
+    orderType: ''
   };
   superHandleSubmit = (event, errors, { password }) => {
     const { paymethod, userid, money, merchantid, concession, rebate } = this.props;
@@ -41,17 +43,37 @@ export class Payment extends React.Component<IPaymentProp> {
         return;
       }
       this.setState({ statics: 2 });
+      const url = location.search;
+      // console.log(url.substr(1).split('&')[2].split('=')[0]);
+      if (url.substr(1).split('&').length > 2) {
+        if (url.substr(1).split('&')[2].split('=')[0] === 'order') {
+          const littleOrderId = url.substr(1).split('&')[2].split('=')[1];
+          // console.log(littleOrderId);
+          const checkOrderType = this.props.checkIsLittleOrder(littleOrderId);
+          // @ts-ignore
+          checkOrderType.then(resultAllData => {
+            // console.log(resultAllData.value.data.message);
+            this.setState({ orderType: resultAllData.value.data.message });
+          });
+        }
+      }
       const orderResult = this.props.merchantPaymentYue(userid, money, merchantid, concession, rebate);
       // @ts-ignore
       orderResult.then(res => {
         if (res.value.data !== null) {
           const orderid = res.value.data;
+          // console.log(orderid);
+          // console.log(checkOrderType);
           const result = this.props.yuePay(orderid, password);
           // @ts-ignore
           // tslint:disable-next-line: no-shadowed-variable
           result.then(res => {
             if (res.value.data.code === 1) {
-              window.location.replace('http://app.yuanscore.com/?resapp=' + String((Number(money) * rebate) / 100));
+              if (this.state.orderType === '点餐') {
+                window.location.replace('http://localhost:8084/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
+              } else {
+                window.location.replace('http://localhost:8084/?resapp=' + String((Number(money) * rebate) / 100));
+              }
             } else {
               toast.error('错误：' + res.value.data.message.toString());
             }
@@ -61,6 +83,20 @@ export class Payment extends React.Component<IPaymentProp> {
         }
       });
     } else if (paymethod === 'coupon') {
+      const url = location.search;
+      // console.log(url.substr(1).split('&')[2].split('=')[0]);
+      if (url.substr(1).split('&').length > 2) {
+        if (url.substr(1).split('&')[2].split('=')[0] === 'order') {
+          const littleOrderId = url.substr(1).split('&')[2].split('=')[1];
+          // console.log(littleOrderId);
+          const checkOrderType = this.props.checkIsLittleOrder(littleOrderId);
+          // @ts-ignore
+          checkOrderType.then(resultAllData => {
+            // console.log(resultAllData.value.data.message);
+            this.setState({ orderType: resultAllData.value.data.message });
+          });
+        }
+      }
       const orderResult = this.props.merchantPaymentYue(userid, money, merchantid, concession, rebate);
       // @ts-ignore
       orderResult.then(res => {
@@ -71,7 +107,12 @@ export class Payment extends React.Component<IPaymentProp> {
           // tslint:disable-next-line: no-shadowed-variable
           result.then(res => {
             if (res.value.data.code === 1) {
-              window.location.replace('http://app.yuanscore.com/?resapp=coupon');
+              if (this.state.orderType === '点餐') {
+                window.location.replace('http://localhost:8084/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
+              } else {
+                window.location.replace('http://localhost:8084/?resapp=coupon');
+                // window.location.replace('http://app.yuanscore.com/?resapp=coupon');
+              }
             } else {
               toast.error('错误：' + res.value.data.message.toString());
             }
@@ -156,7 +197,7 @@ const mapStateToProps = storeState => ({
   isAuthenticated: storeState.authentication.isAuthenticated
 });
 
-const mapDispatchToProps = { getSession, yuePay, integralPay, couponPayment, passwordCheck, merchantPaymentYue, merchantPaymentCoupon };
+const mapDispatchToProps = { getSession, yuePay, integralPay, couponPayment, passwordCheck, merchantPaymentYue, merchantPaymentCoupon, checkIsLittleOrder };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

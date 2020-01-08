@@ -106,3 +106,10 @@ export const inAllOrders = (iocId: any, merchatid: any) => async dispatch => {
   });
   return result;
 };
+// 总价
+export const checkIsLittleOrder = (orderid: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/merchant/api/public/post/chackIsLittleOrder?orderid=' + `${orderid}`)
+  });
+  return result;
+};

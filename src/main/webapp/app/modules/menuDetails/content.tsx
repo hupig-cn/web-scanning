@@ -16,9 +16,7 @@ export class Content extends React.Component<IContentInt> {
     const newOrderId = window.location.search.substring(1).split('&')[1].split('=')[1];
     const wechatOrder = newOrderId.substring(0).split('-');
     const lastOrder = (wechatOrder.length > 1 ? wechatOrder[0] : newOrderId);
-    console.log(lastOrder);
     const userId = (wechatOrder.length > 1 ? wechatOrder[1] : '0');
-    console.log(userId);
     this.props
     .changeOrderState(
       lastOrder
