@@ -208,7 +208,7 @@ export class Content extends React.Component<IContentInt> {
             ac: res.value.data.data
           });
           window.location.replace(
-            'http://192.168.1.142:8080/?id=' + `${this.state.merchatid}` + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
+            'http://app.yuanscore.com?id=' + `${this.state.merchatid}` + '&sum=' + `${this.state.sum}` + '&order=' + `${this.state.ac}`
           );
         }
       });

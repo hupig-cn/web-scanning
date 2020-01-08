@@ -181,7 +181,7 @@ export class Payt extends React.Component<IPaytProp> {
   };
 
   couponPay = () => {
-    const key = (document.getElementById('amount') as HTMLInputElement).value;
+    const key = this.props.sum;
     if (Number(key) > 0) {
       if (isNaN(Number(this.props.userassetsEntity.usablebalance)) || Number(this.props.userassetsEntity.couponsum) < Number(key)) {
         toast.error('提示：优惠劵不足，请更换其他支付方式。');
