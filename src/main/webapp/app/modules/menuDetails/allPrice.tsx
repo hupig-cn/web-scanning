@@ -14,12 +14,11 @@ export class Title extends React.Component<IContentInt> {
     // let userId = (window.location.search.substring(1).split("&")[0]).split("=")[1]
     // let loc = (window.location.search.substring(1).split("&")[1]).split("=")[1]
     // @ts-ignore
+    const newOrderId = window.location.search.substring(1).split('&')[1].split('=')[1];
+    const wechatOrder = newOrderId.substring(0).split('-');
+    const lastOrder = (wechatOrder.length > 1 ? wechatOrder[0] : newOrderId);
     this.props
-    .caiorder(
-      window.location.search
-        .substring(1)
-        .split('&')[1]
-        .split('=')[1])
+    .caiorder(lastOrder)
     // @ts-ignore
     .then(res => {
       if (res.value.data.data) {

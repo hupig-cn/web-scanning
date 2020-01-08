@@ -64,7 +64,7 @@ export const takingOrders3 = (mid: any, ioc: any, chishi: any[]) => async dispat
 
 export const createCaiOrder = (userid: any, order: any) => async dispatch => {
   const result = await dispatch({
-    payload: axios.post('services/merchant/api/public/post/createCaiOrder?userid=' + `${userid}` + '&order=' + `${order}`)
+    payload: axios.post('services/merchant/api/public/post/createCaiOrder?userid=' + `${userid}` + '&orderid=' + `${order}`)
   });
   return result;
 };
