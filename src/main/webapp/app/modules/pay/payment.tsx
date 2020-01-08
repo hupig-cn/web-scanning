@@ -70,9 +70,9 @@ export class Payment extends React.Component<IPaymentProp> {
           result.then(res => {
             if (res.value.data.code === 1) {
               if (this.state.orderType === '点餐') {
-                window.location.replace('http://localhost:8084/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
+                window.location.replace('http://192.168.1.142:8080/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
               } else {
-                window.location.replace('http://localhost:8084/?resapp=' + String((Number(money) * rebate) / 100));
+                window.location.replace('http://192.168.1.142:8080/?resapp=' + String((Number(money) * rebate) / 100));
               }
             } else {
               toast.error('错误：' + res.value.data.message.toString());
@@ -108,9 +108,9 @@ export class Payment extends React.Component<IPaymentProp> {
           result.then(res => {
             if (res.value.data.code === 1) {
               if (this.state.orderType === '点餐') {
-                window.location.replace('http://localhost:8084/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
+                window.location.replace('http://192.168.1.142:8080/?result=1&details=' + url.substr(1).split('&')[2].split('=')[1] + '-' + userid);
               } else {
-                window.location.replace('http://localhost:8084/?resapp=coupon');
+                window.location.replace('http://192.168.1.142:8080/?resapp=coupon');
                 // window.location.replace('http://app.yuanscore.com/?resapp=coupon');
               }
             } else {
