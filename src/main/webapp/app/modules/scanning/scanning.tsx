@@ -3,6 +3,7 @@ import React from 'react';
 import Pay from '../pay/pay';
 import Menu from '../menu/menu';
 import MenuDetails from '../menuDetails/menuDetails';
+import MarchantMenuDetails from '../marchantMenuDetails/marchantMenuDetails';
 import Register from '../register/register';
 import Alipay from '../authorization/alipay';
 import Wechat from '../authorization/wechat';
@@ -99,11 +100,12 @@ export class Scanning extends React.Component<IScanningProp> {
         }
       }
       if (str.length > 1) {
-        const shuZhu = ['share', 'loc', 'details'];
+        const shuZhu = ['share', 'loc', 'details', 'merchantDetails'];
         const yeShuZhu = [
           <Register key={1} id={decodeURIComponent(str[0].replace('id=', ''))} name={decodeURIComponent(str[1].replace('share=', ''))} />,
           <Menu key={2} />,
-          <MenuDetails key={3} />
+          <MenuDetails key={3} />,
+          <MarchantMenuDetails key={4}/>
         ];
         for (const [typeTowIndex, typeSecCount] of shuZhu.entries()) {
           if (str.length > 1 && str[1].substring(0).split('=')[0] === typeSecCount) {

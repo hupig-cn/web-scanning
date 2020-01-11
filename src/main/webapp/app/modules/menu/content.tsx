@@ -22,7 +22,7 @@ export class Content extends React.Component<IContentInt> {
       url: String
     }],
     cainum: Number,
-    initTypeStyle: true,
+    initTypeStyle: false,
     typeNum: 0,
     menuList: [],
     menuAllCount: 0,

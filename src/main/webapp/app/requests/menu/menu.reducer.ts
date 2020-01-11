@@ -113,3 +113,24 @@ export const checkIsLittleOrder = (orderid: any) => async dispatch => {
   });
   return result;
 };
+// 查询商家所有订单
+export const merchantGetOrderList = (merchantId: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/merchant/api/post/getMerchantAllOrder?merchantId=' + `${merchantId}`)
+  });
+  return result;
+};
+// 商家获取订单详情
+export const getMerchantOrder = (bigorder: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/merchant/api/public/post/getMerchantOrder?bigorder=' + `${bigorder}`)
+  });
+  return result;
+};
+// 确认订单
+export const changeOrderStatus = (merchantId: any, bigOrder: any) => async dispatch => {
+  const result = await dispatch({
+    payload: axios.post('services/merchant/api/post/updateBigorderState?merchantId=' + `${merchantId}` + '&bigorder=' + `${bigOrder}`)
+  });
+  return result;
+};
