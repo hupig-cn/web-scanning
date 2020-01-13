@@ -79,6 +79,8 @@ export class Title extends React.Component<IContentInt> {
             const _changeStatus_ = this.state.orderList[index];
             const changeStatus = '3';
             _changeStatus_.status = changeStatus;
+            this.setState({
+            });
           }
         });
     }
